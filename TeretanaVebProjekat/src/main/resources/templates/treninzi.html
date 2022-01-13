@@ -1,0 +1,55 @@
+<!DOCTYPE html> 
+<html xmlns:th="http://www.thymeleaf.org">     
+	<head>     
+		<meta charset="UTF-8">     
+		<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
+		<title>Treninzi</title>     
+		<link rel="stylesheet"  type="text/css"  href="css/StiloviTabela.css"/>     
+	 	<link rel="stylesheet"  type="text/css" href="css/StiloviHorizontalniMeni.css"/>   
+	 </head>     
+	 <body>   
+	 	<ul>     
+	 		<li><a href="treninzi">Treninzi</a></li>      
+	 		<li><a href="korisnici">Korisnici</a></li>     
+	 	</ul>     
+	 		<table>     
+	 			<caption>Treninzi</caption>     
+	 			<tr>     
+	 				<th>R. br.</th>     
+	 				<th></th>     
+	 				<th>Naziv</th>     
+	 				<th>Trener</th>     
+	 				<th>Kratak opis</th>    
+	 				<th>Tip treninga</th>  
+	 				<th>Cena</th>
+	 				<th>Vrsta treninga</th>
+	 				<th>Nivo treninga</th>
+	 				<th>Trajanje u minutima</th>   
+	 				<th>Prosecna ocena</th>     
+	 				<th></th>    
+	 			</tr>
+	 			<tr th:each="itTrening, status: ${treninzi}">     
+	 				<td class="broj" th:text="${(status.index + 1)+'.'}"></td>     
+	 				<td><a th:href="|treninzi/details?id=${itTrening.id}|" th:text="${itTrening.naziv}"></a></td>    
+	 				<td th:text="${itTrening.naziv}"></td>    
+	 				<td th:text="${itTrening.trener}"></td>    
+	 				<td th:text="${itTrening.kratakOpis}"></td>
+	 				<td th:text="${itTrening.tipTreninga}"></td>
+	 				<td class="broj" th:text="${itTrening.cena}"></td> 
+	 				<td th:text="${itTrening.vrstaTreninga}"></td>
+	 				<td th:text="${itTrening.nivoTreninga}"></td>
+	 				<td class="broj" th:text="${itTrening.trajanjeUMinutima}"></td> 
+	 				<td class="broj" th:text="${itTrening.prosecnaOcena}"></td>    
+	 				<td>    
+	 					<form method="post" action="treninzi/delete" >     
+	 						<input type="hidden"  name="id"  th:value="${itTrening.id}">     
+	 						<input type="submit"  value="Obriši" >    
+	 					</form>    
+	 				</td>   
+	 			</tr>
+	 		</table>
+	 	<ul>     
+	 		<li><a href="treninzi/add">Dodaj trening</a></li>     
+	 	</ul>
+	 </body>   
+ </html>	

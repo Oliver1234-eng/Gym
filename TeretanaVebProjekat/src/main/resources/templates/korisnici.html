@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">     
 	<head>     
 		<meta charset="UTF-8">     
-		<base th:href="@{/TeretanaVebProjekat}"><!-- popuni href atribut vrednošću context path-a -->
+		<base th:href="@{/}"><!-- popuni href atribut vrednošću context path-a -->
 		<title>Korisnici</title>     
 		<link rel="stylesheet"  type="text/css"  href="css/StiloviTabela.css"/>     
 	 	<link rel="stylesheet"  type="text/css" href="css/StiloviHorizontalniMeni.css"/>   
@@ -30,7 +30,8 @@
 	 			<tr th:each="itKorisnik, status: ${korisnici}">  
 	 				<td th:text="${itKorisnik.korisnickoIme}"></td>    
 	 				<td th:text="${itKorisnik.lozinka}"></td>
-	 				<td th:text="${itKorisnik.ime}"></td>   
+	 				<td th:text="${itKorisnik.email}"></td>
+	 				<td th:text="${itKorisnik.ime}"></td>
 	 				<td th:text="${itKorisnik.prezime}"></td>   
 	 				<td th:text="${#temporals.format(itKorisnik.datumRodjenja, 'dd.MM.yyy')}"></td> 
 	 				<td th:text="${itKorisnik.adresa}"></td>       

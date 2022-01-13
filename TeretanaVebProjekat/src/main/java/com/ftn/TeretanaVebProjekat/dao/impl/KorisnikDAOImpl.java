@@ -148,12 +148,10 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 		return uspeh?1:0;
 	}
 	
-	//NIJE URADJENO
-	
 	@Transactional
 	@Override
 	public int update(Korisnik korisnik) {
-		String sql = "UPDATE korisnici SET ime = ?, prezime = ?, email = ?, lozinka = ? WHERE id = ?";	
+		String sql = "UPDATE korisnici SET korisnickoIme = ?, lozinka = ?, email = ?, ime = ?, prezime = ?, datumRodjenja = ?, adresa = ?, brojTelefona = ?, datumRegistracije = ?, uloga = ? WHERE id = ?";	
 		boolean uspeh = jdbcTemplate.update(sql, korisnik.getIme() , korisnik.getPrezime(), korisnik.getEmail(), korisnik.getLozinka(), korisnik.getId()) == 1;
 		
 		return uspeh?1:0;

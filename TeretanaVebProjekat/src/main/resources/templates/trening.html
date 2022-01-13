@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
+	<title>Trening</title>
+</head>
+<body>
+	<ul>    
+ 		<li><a href="treninzi">Treninzi</a></li>       
+ 		<li><a href="korisnici">Korisnici</a></li>    
+ 	</ul>  
+	<form method="post" action="treninzi/edit">
+		<input type="hidden" name="id" th:value="${trening.id}"/><!-- popuni value atribut vrednošću -->
+		<table class="forma">
+			<caption>Trening</caption>
+			<tr><th>Naziv:</th><td><input type="text" th:value="${trening.naziv}" name="naziv"/></td></tr>
+			<tr><th>Trener:</th><td><input type="text" th:value="${trening.trener}" name="trening"/></td></tr>
+			<tr><th>Kratak opis:</th><td><input type="text" th:value="${trening.kratakOpis}" name="kratakOpis"/></td></tr>
+			<tr><th>Tip treninga:</th><td><input type="text" th:value="${trening.tipTreninga}" name="tipTreninga"/></td></tr>
+			<tr><th>Cena:</th><td><input type="number" th:value="${trening.cena}" name="cena"/></td></tr>
+			<tr><th>Vrsta treninga:</th><td><input type="text" th:value="${trening.vrstaTreninga}" name="vrstaTreninga"/></td></tr>
+			<tr><th>Nivo treninga:</th><td><input type="text" th:value="${trening.nivoTreninga}" name="nivoTreninga"/></td></tr>
+			<tr><th>Trajanje u minutima:</th><td><input type="number" th:value="${trening.trajanjeUMinutima}" name="trajanjeUMinutima"/></td></tr>
+			<tr><th>Prosecna ocena:</th><td><input type="number" th:value="${trening.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
+			<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+		</table>
+	</form>
+	<form method="post" action="treninzi/delete">
+		<input type="hidden" name="id" th:value="${trening.id}"/>
+		<table class="forma">
+			<tr><th></th><td><input type="submit" value="Obriši"/></td></tr>
+		</table>
+	</form>
+	<form method="post" action="treninzi/zakazani/dodaj" th:if="${not trening.zakazan}">
+		<input type="hidden" name="idTreninga" th:value="${trening.id}">
+		<table>
+			<caption>Dodaj u zakazane treninge</caption>	
+			<tr><th></th><td><input type="submit" value="Dodaj"></td> 
+		</table> 
+	</form>
+</body>
+</html>
