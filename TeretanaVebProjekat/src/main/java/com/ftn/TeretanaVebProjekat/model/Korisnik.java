@@ -141,4 +141,11 @@ public class Korisnik {
 	public String toString() {
 		return this.ime + " " + this.prezime + " (" + this.email + ")";
 	}
+	
+	public String toFileString() {
+		return this.getId() + ";" + this.getKorisnickoIme() + ";" + this.getLozinka() + ";" + 
+				this.getIme() + ";" + this.getPrezime() + ";" + this.getDatumRodjenja() + ";" +
+				this.getAdresa() + ";" + this.getBrojTelefona() + ";" + this.getDatumRegistracije() + ";"
+				+ this.getUloga();
+	}
 }
