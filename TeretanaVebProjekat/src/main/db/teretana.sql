@@ -26,7 +26,7 @@ CREATE TABLE treninzi (
 	cena INT NOT NULL,
 	vrstaTreninga VARCHAR(15) NOT NULL,
 	nivoTreninga VARCHAR(15) NOT NULL,
-	trajanjeTreningaMinuti INT NOT NULL,
+	trajanjeUMinutima INT NOT NULL,
 	prosecnaOcena INT NOT NULL,
 	zakazan BOOLEAN NOT NULL,
 	PRIMARY KEY(id)
@@ -101,13 +101,13 @@ VALUES ('zika', 'zika123', 'zika@gmail.com', 'Zika', 'Zikic', '2000-06-11', 'Uli
 
 
 
-INSERT INTO treninzi (naziv, trener, kratakOpis, tipTreninga, cena, vrstaTreninga, nivoTreninga, trajanjeTreningaMinuti, prosecnaOcena, zakazan)
+INSERT INTO treninzi (naziv, trener, kratakOpis, tipTreninga, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
 VALUES ('trening1', 'trener1', 'Opis', 'Joga', 500, 'pojedinacni', 'amaterski', 60, 4, false);
 
-INSERT INTO treninzi (naziv, trener, kratakOpis, tipTreninga, cena, vrstaTreninga, nivoTreninga, trajanjeTreningaMinuti, prosecnaOcena, zakazan)
+INSERT INTO treninzi (naziv, trener, kratakOpis, tipTreninga, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
 VALUES ('trening2', 'trener1', 'Opis', 'Fitness', 800, 'pojedinacni', 'srednji', 70, 3, false);
 
-INSERT INTO treninzi (naziv, trener, kratakOpis, tipTreninga, cena, vrstaTreninga, nivoTreninga, trajanjeTreningaMinuti, prosecnaOcena, zakazan)
+INSERT INTO treninzi (naziv, trener, kratakOpis, tipTreninga, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
 VALUES ('trening3', 'trener1', 'Opis', 'Cardio', 1000, 'pojedinacni', 'napredni', 90, 5, false);
 
 
@@ -151,3 +151,30 @@ INSERT INTO treninziKomentari (treningId, komentarId) VALUES (1, 1);
 INSERT INTO treninziKomentari (treningId, komentarId) VALUES (2, 2);
 INSERT INTO treninziKomentari (treningId, komentarId) VALUES (3, 3);
 
+
+
+INSERT INTO termini (salaId, treningId, datum) VALUES (1, 1, '2022-06-20');
+INSERT INTO termini (salaId, treningId, datum) VALUES (2, 2, '2022-06-21');
+INSERT INTO termini (salaId, treningId, datum) VALUES (3, 3, '2022-06-22');
+
+
+
+INSERT INTO komentari (tekstKomentara, ocena, datum, status) 
+VALUES ('Tekst', 4, '2022-01-01', 'na cekanju');
+INSERT INTO komentari (tekstKomentara, ocena, datum, status) 
+VALUES ('Tekst', 3, '2022-01-02', 'odobren');
+INSERT INTO komentari (tekstKomentara, ocena, datum, status) 
+VALUES ('Tekst', 5, '2022-01-02', 'nije odobren');
+
+
+
+
+INSERT INTO korisniciKomentari(korisnikId, komentarId) VALUES (3, 1);
+INSERT INTO korisniciKomentari(korisnikId, komentarId) VALUES (3, 2);
+INSERT INTO korisniciKomentari(korisnikId, komentarId) VALUES (3, 3);
+
+
+
+INSERT INTO treninziKomentari (treningId, komentarId) VALUES (1, 1);
+INSERT INTO treninziKomentari (treningId, komentarId) VALUES (2, 2);
+INSERT INTO treninziKomentari (treningId, komentarId) VALUES (3, 3);
