@@ -1,0 +1,32 @@
+<!DOCTYPE html>    
+ <html>    
+ <head>    
+ 	<meta charset="UTF-8">    
+ 	<base href="bURL">    
+ 	<title>Dodaj trening</title>    
+ 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>    
+ 	<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>  
+ </head>    
+ <body>    
+ 	<ul>    
+ 		<li><a href="treninzi">Treninzi</a></li>        
+ 		<li><a href="korisnici">Korisnici</a></li>    
+ 	</ul>    
+ 	<form method="post" action="add">    
+ 		<table>    
+ 			<caption>Trening</caption>    
+ 			<tr><th>Naziv:</th><td><input type="text" value="" name="naziv"/></td></tr>    
+ 			<tr><th>Trener:</th><td><input type="text" value="" name="trener"/></td></tr>   
+ 			<tr><th>Kratak opis:</th><td><input type="text" value="" name="kratakOpis" /></td></tr>
+ 			<tr><th>Tip treninga:</th><td><input type="text" value="" name="tipTreninga" /></td></tr>    
+ 			<tr><th>Cena:</th><td><input type="number" min="1" name="cena"/></td></tr>
+ 			<tr><th>Vrsta treninga:</th><td><input type="text" value="" name="vrstaTreninga" /></td></tr>
+ 			<tr><th>Nivo treninga:</th><td><input type="text" value="" name="nivoTreninga" /></td></tr>
+ 			<tr><th>Trajanje u minutima:</th><td><input type="number" min="1" name="trajanjeUMinutima"/></td></tr>
+ 			<tr><th>Prosecna ocena:</th><td><input type="number" min="1" name="prosecnaOcena"/></td></tr>
+ 			<tr><th></th><td><input type="submit" value="Dodaj"/></td>    
+ 		</table>    
+ 	</form>   
+ 	<br/>  
+ </body>  
+ </html>  

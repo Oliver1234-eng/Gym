@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -59,67 +58,82 @@ public class TreninziController implements ServletContextAware {
 		return rezultat; // prosleđivanje zahteva zajedno sa podacima template-u
 	}
 	
-//	/** pribavnjanje HTML stanice za unos novog entiteta, get zahtev */
-//	@GetMapping(value="/add")
-//	public String create(HttpSession session, HttpServletResponse response){
-//		return "dodavanjeKnjige"; // stranica za dodavanje knjige
-//	}
-//
-//	/** obrada podataka forme za unos novog entiteta, post zahtev */
-//	// POST: knjige/add
-//	@SuppressWarnings("unused")
-//	@PostMapping(value="/add")
-//	public void create(@RequestParam String naziv, @RequestParam String registarskiBrojPrimerka,  
-//			@RequestParam String jezik, @RequestParam int brojStranica, 
-//			@RequestParam @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate datum, HttpServletResponse response) throws IOException {		
-//		Knjiga knjiga = new Knjiga(naziv, registarskiBrojPrimerka, jezik, brojStranica, datum);
-//		Knjiga saved = knjigaService.save(knjiga);
-//		response.sendRedirect(bURL+"knjige");
-//	}
-//	
-//	/** obrada podataka forme za izmenu postojećeg entiteta, post zahtev */
-//	// POST: knjige/edit
-//	@SuppressWarnings("unused")
-//	@PostMapping(value="/edit")
-//	public void Edit(@RequestParam Long id, @RequestParam String naziv, @RequestParam String registarskiBrojPrimerka,  
-//			@RequestParam String jezik, @RequestParam int brojStranica, 
-//			@RequestParam @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate datum , HttpServletResponse response) throws IOException {	
-//		Knjiga knjiga = knjigaService.findOne(id);
-//		if(knjiga != null) {
-//			if(naziv != null && !naziv.trim().equals(""))
-//				knjiga.setNaziv(naziv);
-//			if(jezik != null && !jezik.trim().equals(""))
-//				knjiga.setJezik(jezik);
-//			if(brojStranica > 0)
-//				knjiga.setBrojStranica(brojStranica);
-//			if(datum != null)
-//				knjiga.setDatum(datum);
-//		}
-//		Knjiga saved = knjigaService.update(knjiga);
-//		response.sendRedirect(bURL+"knjige");
-//	}
-//	
-//	/** obrada podataka forme za za brisanje postojećeg entiteta, post zahtev */
-//	// POST: knjige/delete
-//	@SuppressWarnings("unused")
-//	@PostMapping(value="/delete")
-//	public void delete(@RequestParam Long id, HttpServletResponse response) throws IOException {		
-//		Knjiga deleted = knjigaService.delete(id);
-//		response.sendRedirect(bURL+"knjige");
-//	}
-//	
-//	/** pribavnjanje HTML stanice za prikaz određenog entiteta , get zahtev */
-//	@GetMapping(value="/details")
-//	@ResponseBody
-//	public ModelAndView details(@RequestParam Long id) {	
-//		Knjiga knjiga = knjigaService.findOne(id);
-//		
-//		// podaci sa nazivom template-a
-//		ModelAndView rezultat = new ModelAndView("knjiga"); // naziv template-a
-//		rezultat.addObject("knjiga", knjiga); // podatak koji se šalje template-u
-//
-//		return rezultat; // prosleđivanje zahteva zajedno sa podacima template-u
-//	}
+	/** pribavnjanje HTML stanice za unos novog entiteta, get zahtev */
+	@GetMapping(value="/add")
+	public String create(HttpSession session, HttpServletResponse response){
+		return "dodavanjeTreninga"; // stranica za dodavanje knjige
+	}
+
+	/** obrada podataka forme za unos novog entiteta, post zahtev */
+	// POST: knjige/add
+	@SuppressWarnings("unused")
+	@PostMapping(value="/add")
+	public void create(@RequestParam String naziv, @RequestParam String trener,  
+			@RequestParam String kratakOpis, @RequestParam String tipTreninga,
+			@RequestParam int cena, @RequestParam String vrstaTreninga,
+			@RequestParam String nivoTreninga, @RequestParam int trajanjeUMinutima,
+			@RequestParam int prosecnaOcena, HttpServletResponse response) throws IOException {		
+		Trening trening = new Trening(naziv, trener, kratakOpis, tipTreninga, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena);
+		Trening saved = treningService.save(trening);
+		response.sendRedirect(bURL+"treninzi");
+	}
+	
+	/** obrada podataka forme za izmenu postojećeg entiteta, post zahtev */
+	// POST: knjige/edit
+	@SuppressWarnings("unused")
+	@PostMapping(value="/edit")
+	public void Edit(@RequestParam Long id, @RequestParam String naziv, 
+			@RequestParam String trener, @RequestParam String kratakOpis, 
+			@RequestParam String tipTreninga, @RequestParam int cena, 
+			@RequestParam String vrstaTreninga, @RequestParam String nivoTreninga, 
+			@RequestParam int trajanjeUMinutima, @RequestParam int prosecnaOcena, 
+			HttpServletResponse response) throws IOException {	
+		Trening trening = treningService.findOne(id);
+		if(trening != null) {
+			if(naziv != null && !naziv.trim().equals(""))//				
+				trening.setNaziv(naziv);
+			if(trener != null && !trener.trim().equals(""))
+				trening.setTrener(trener);
+			if(kratakOpis != null && !kratakOpis.trim().equals(""))
+				trening.setKratakOpis(kratakOpis);
+			if(tipTreninga != null && !tipTreninga.trim().equals(""))
+				trening.setTipTreninga(tipTreninga);
+			if(cena > 0)
+				trening.setCena(cena);
+			if(vrstaTreninga != null && !vrstaTreninga.trim().equals(""))
+				trening.setVrstaTreninga(vrstaTreninga);
+			if(nivoTreninga != null && !nivoTreninga.trim().equals(""))
+				trening.setNivoTreninga(nivoTreninga);
+			if(trajanjeUMinutima > 0)
+				trening.setTrajanjeUMinutima(trajanjeUMinutima);
+			if(prosecnaOcena > 0)
+				trening.setProsecnaOcena(prosecnaOcena);
+		}
+		Trening saved = treningService.update(trening);
+		response.sendRedirect(bURL+"treninzi");
+	}
+	
+	/** obrada podataka forme za za brisanje postojećeg entiteta, post zahtev */
+	//POST: knjige/delete
+	@SuppressWarnings("unused")
+	@PostMapping(value="/delete")
+	public void delete(@RequestParam Long id, HttpServletResponse response) throws IOException {		
+		Trening deleted = treningService.delete(id);
+		response.sendRedirect(bURL+"treninzi");
+	}
+	
+	/** pribavnjanje HTML stanice za prikaz određenog entiteta , get zahtev */
+	@GetMapping(value="/details")
+	@ResponseBody
+	public ModelAndView details(@RequestParam Long id) {	
+		Trening trening = treningService.findOne(id);
+		
+		// podaci sa nazivom template-a
+		ModelAndView rezultat = new ModelAndView("trening"); // naziv template-a
+		rezultat.addObject("trening", trening); // podatak koji se šalje template-u
+
+		return rezultat; // prosleđivanje zahteva zajedno sa podacima template-u
+	}
 	
 	
 }

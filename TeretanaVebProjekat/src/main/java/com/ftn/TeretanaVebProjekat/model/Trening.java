@@ -33,7 +33,7 @@ public class Trening {
 	}
 
 	public Trening(String naziv, String trener, String kratakOpis, String tipTreninga, int cena, String vrstaTreninga,
-			String nivoTreninga, int trajanjeUMinutima, int prosecnaOcena, boolean zakazan) {
+			String nivoTreninga, int trajanjeUMinutima, int prosecnaOcena) {
 		super();
 		this.naziv = naziv;
 		this.trener = trener;
@@ -44,7 +44,7 @@ public class Trening {
 		this.nivoTreninga = nivoTreninga;
 		this.trajanjeUMinutima = trajanjeUMinutima;
 		this.prosecnaOcena = prosecnaOcena;
-		this.zakazan = zakazan;
+		this.zakazan = false;
 	}
 
 	public Trening(Long id, String naziv, String trener, String kratakOpis, String tipTreninga, int cena,
@@ -60,7 +60,18 @@ public class Trening {
 		this.nivoTreninga = nivoTreninga;
 		this.trajanjeUMinutima = trajanjeUMinutima;
 		this.prosecnaOcena = prosecnaOcena;
+		this.zakazan = false;
 	}
+
+	/*
+	 * public Trening(String naziv, String trener, String kratakOpis, String
+	 * tipTreninga, int cena, String vrstaTreninga, String nivoTreninga, int
+	 * trajanjeUMinutima, int prosecnaOcena) { super(); this.naziv = naziv;
+	 * this.trener = trener; this.kratakOpis = kratakOpis; this.tipTreninga =
+	 * tipTreninga; this.cena = cena; this.vrstaTreninga = vrstaTreninga;
+	 * this.nivoTreninga = nivoTreninga; this.trajanjeUMinutima = trajanjeUMinutima;
+	 * this.prosecnaOcena = prosecnaOcena; }
+	 */
 
 	public Long getId() {
 		return id;
