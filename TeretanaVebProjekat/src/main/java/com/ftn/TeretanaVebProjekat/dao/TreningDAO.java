@@ -5,6 +5,8 @@ import java.util.List;
 import com.ftn.TeretanaVebProjekat.model.Trening;
 
 public interface TreningDAO {
+	
+	//bice jos pretrage i sortiranja
 
 	public Trening findOne(Long id);
 
