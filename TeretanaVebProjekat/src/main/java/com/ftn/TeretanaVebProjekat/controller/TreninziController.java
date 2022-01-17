@@ -49,23 +49,55 @@ public class TreninziController implements ServletContextAware {
 	
 	/** pribavnjanje HTML stanice za prikaz svih entiteta, get zahtev */
 	@GetMapping
-	public ModelAndView index() {
-		List<Trening> treninzi = treningService.findAll();		
-		// podaci sa nazivom template-a
-		ModelAndView rezultat = new ModelAndView("treninzi"); // naziv template-a
-		rezultat.addObject("treninzi", treninzi); // podatak koji se šalje template-u
+	public ModelAndView index(@RequestParam(required=false) String naziv,  
+			@RequestParam(required=false) String trener, 
+			@RequestParam(required=false) String kratakOpis,
+			@RequestParam(required=false) String tipTreninga,
+			@RequestParam(required=false) Integer cenaOd, 
+			@RequestParam(required=false) Integer cenaDo, 
+			@RequestParam(required=false) String vrstaTreninga,
+			@RequestParam(required=false) String nivoTreninga,
+			@RequestParam(required=false) Integer trajanjeUMinutimaOd, 
+			@RequestParam(required=false) Integer trajanjeUMinutimaDo, 
+			@RequestParam(required=false) Integer prosecnaOcenaOd, 
+			@RequestParam(required=false) Integer prosecnaOcenaDo, 
+			HttpSession session) throws IOException {
+		
+		if(naziv!=null && naziv.trim().equals(""))
+			naziv=null;
+		
+		if(trener!=null && trener.trim().equals(""))
+			trener=null;
+		
+		if(kratakOpis!=null && kratakOpis.trim().equals(""))
+			kratakOpis=null;
+		
+		if(tipTreninga!=null && tipTreninga.trim().equals(""))
+			tipTreninga=null;
+		
+		if(vrstaTreninga!=null && vrstaTreninga.trim().equals(""))
+			vrstaTreninga=null;
+		
+		if(nivoTreninga!=null && nivoTreninga.trim().equals(""))
+			nivoTreninga=null;
+		
+		
+		List<Trening> treninzi = treningService.find(naziv, trener, kratakOpis, tipTreninga, cenaOd, cenaDo, vrstaTreninga, nivoTreninga, trajanjeUMinutimaOd, trajanjeUMinutimaDo, prosecnaOcenaOd, prosecnaOcenaDo);
+		
+		ModelAndView rezultat = new ModelAndView("treninzi");
+		rezultat.addObject("treninzi", treninzi);
 
-		return rezultat; // prosleđivanje zahteva zajedno sa podacima template-u
+		return rezultat;
 	}
 	
 	/** pribavnjanje HTML stanice za unos novog entiteta, get zahtev */
 	@GetMapping(value="/add")
 	public String create(HttpSession session, HttpServletResponse response){
-		return "dodavanjeTreninga"; // stranica za dodavanje knjige
+		return "dodavanjeTreninga";
 	}
 
 	/** obrada podataka forme za unos novog entiteta, post zahtev */
-	// POST: knjige/add
+	// POST: treninzi/add
 	@SuppressWarnings("unused")
 	@PostMapping(value="/add")
 	public void create(@RequestParam String naziv, @RequestParam String trener,  
@@ -79,7 +111,7 @@ public class TreninziController implements ServletContextAware {
 	}
 	
 	/** obrada podataka forme za izmenu postojećeg entiteta, post zahtev */
-	// POST: knjige/edit
+	// POST: treninzi/edit
 	@SuppressWarnings("unused")
 	@PostMapping(value="/edit")
 	public void Edit(@RequestParam Long id, @RequestParam String naziv, 
@@ -114,7 +146,7 @@ public class TreninziController implements ServletContextAware {
 	}
 	
 	/** obrada podataka forme za za brisanje postojećeg entiteta, post zahtev */
-	//POST: knjige/delete
+	//POST: treninzi/delete
 	@SuppressWarnings("unused")
 	@PostMapping(value="/delete")
 	public void delete(@RequestParam Long id, HttpServletResponse response) throws IOException {		
@@ -128,11 +160,10 @@ public class TreninziController implements ServletContextAware {
 	public ModelAndView details(@RequestParam Long id) {	
 		Trening trening = treningService.findOne(id);
 		
-		// podaci sa nazivom template-a
-		ModelAndView rezultat = new ModelAndView("trening"); // naziv template-a
-		rezultat.addObject("trening", trening); // podatak koji se šalje template-u
+		ModelAndView rezultat = new ModelAndView("trening"); 
+		rezultat.addObject("trening", trening); 
 
-		return rezultat; // prosleđivanje zahteva zajedno sa podacima template-u
+		return rezultat; 
 	}
 	
 	

@@ -23,4 +23,9 @@ public interface TreningDAO {
 	public int update(Trening trening);
 
 	public int delete(Long id);
+	
+	List<Trening> find(String naziv, String trener, String kratakOpis, 
+			String tipTreninga, Integer cenaOd, Integer cenaDo, String vrstaTreninga, 
+			String nivoTreninga, Integer trajanjeUMinutimaOd, Integer trajanjeUMinutimaDo, 
+			Integer prosecnaOcenaOd, Integer prosecnaOcenaDo);
 }

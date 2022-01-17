@@ -233,4 +233,11 @@ public class KorisnikController implements ServletContextAware {
 		response.sendRedirect(bURL+"korisnici");
 	}
 
+	@GetMapping(value="/Logout")
+	public void logout(HttpSession session, HttpServletResponse response) throws IOException {
+		// odjava	
+		session.invalidate();
+		
+		response.sendRedirect(bURL);
+	}
 }

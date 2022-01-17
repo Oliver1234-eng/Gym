@@ -5,14 +5,16 @@
 		<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
 		<title>Treninzi</title>     
 		<link rel="stylesheet"  type="text/css"  href="css/StiloviTabela.css"/>     
-	 	<link rel="stylesheet"  type="text/css" href="css/StiloviHorizontalniMeni.css"/>   
+	 	<link rel="stylesheet"  type="text/css" href="css/StiloviHorizontalniMeni.css"/>
+	 	<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>   
 	 </head>     
 	 <body>   
 	 	<ul>     
 	 		<li><a href="treninzi">Treninzi</a></li>      
 	 		<li><a href="korisnici">Korisnici</a></li>     
-	 	</ul>     
-	 		<table>     
+	 	</ul>
+	 	<form method = "get">     
+	 		<table class = "sortable">     
 	 			<caption>Treninzi</caption>     
 	 			<tr>     
 	 				<th>R. br.</th>     
@@ -28,6 +30,23 @@
 	 				<th>Prosecna ocena</th>     
 	 				<th></th>    
 	 			</tr>
+	 			<tr>
+					<th></th>
+					<th></th>
+					<th><input type="search" name="naziv" th:value="${param.naziv}?: null"/></th>
+					<th><input type="search" name="trener" th:value="${param.trener}?: null"/></th>
+					<th><input type="search" name="kratakOpis" th:value="${param.kratakOpis}?: null"/></th>
+					<th><input type="search" name="tipTreninga" th:value="${param.tipTreninga}?: null"/></th>
+					<th>od:<input type="number" min="0" th:value="${param.cenaOd}?: '0'" name="cenaOd"/><br/>
+					do:<input type="number" min="0" th:value="${param.cenaDo}?: '5000'" name="cenaDo"/></th>
+					<th><input type="search" name="vrstaTreninga" th:value="${param.vrstaTreninga}?: null"/></th>
+					<th><input type="search" name="nivoTreninga" th:value="${param.nivoTreninga}?: null"/></th>
+					<th>od:<input type="number" min="0" th:value="${param.trajanjeUMinutimaOd}?: '0'" name="trajanjeUMinutimaOd"/><br/>
+					do:<input type="number" min="0" th:value="${param.trajanjeUMinutimaDo}?: '180'" name="trajanjeUMinutimaDo"/></th>
+					<th>od:<input type="number" min="0" th:value="${param.prosecnaOcenaOd}?: '0'" name="prosecnaOcenaOd"/><br/>
+					do:<input type="number" min="0" th:value="${param.prosecnaOcenaDo}?: '5'" name="prosecnaOcenaDo"/></th>
+					<th><input type="submit" value="Pretraži"/></th>
+				</tr>
 	 			<tr th:each="itTrening, status: ${treninzi}">     
 	 				<td class="broj" th:text="${(status.index + 1)+'.'}"></td>     
 	 				<td><a th:href="|treninzi/details?id=${itTrening.id}|" th:text="${itTrening.naziv}"></a></td>    
@@ -40,16 +59,19 @@
 	 				<td th:text="${itTrening.nivoTreninga}"></td>
 	 				<td class="broj" th:text="${itTrening.trajanjeUMinutima}"></td> 
 	 				<td class="broj" th:text="${itTrening.prosecnaOcena}"></td>    
-	 				<td>    
+<!-- 	 			<td>    
 	 					<form method="post" action="treninzi/delete" >     
 	 						<input type="hidden"  name="id"  th:value="${itTrening.id}">     
 	 						<input type="submit"  value="Obriši" >    
 	 					</form>    
-	 				</td>   
+	 				</td>
+-->   
 	 			</tr>
 	 		</table>
+	 	</form>
 	 	<ul>     
-	 		<li><a href="treninzi/add">Dodaj trening</a></li>     
+	 		<li><a href="treninzi/add">Dodaj trening</a></li>
+	 		<li><a href="korisnici/Logout">Odjava</a></li> 
 	 	</ul>
 	 </body>   
  </html>	
