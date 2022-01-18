@@ -60,146 +60,34 @@ public class KorisnikController implements ServletContextAware {
 		postLogin(email, sifra, session, response);
 	}
 
-	@PostMapping(value = "/login")
-	@ResponseBody
-	public void postLogin(@RequestParam(required = false) String email, @RequestParam(required = false) String sifra,
+	@PostMapping(value="/login")
+	public ModelAndView postLogin(@RequestParam String email, @RequestParam String sifra, 
 			HttpSession session, HttpServletResponse response) throws IOException {
-		
-		Korisnik korisnik = korisnikService.findOne(email, sifra);
-		String greska = "";
-		if (korisnik == null)
-			greska = "neispravni kredencijali";
+		try {
+			// validacija
+			Korisnik korisnik = korisnikService.findOne(email, sifra);
+			if (korisnik == null) {
+				throw new Exception("Neispravno korisnicko ime ili lozinka!");
+			}			
 
-		if (!greska.equals("")) {
-			PrintWriter out;
-			out = response.getWriter();
-			File htmlFile = new File("C:/greska.html");
-			Document doc = Jsoup.parse(htmlFile, "UTF-8");
-
-			Element body = doc.select("body").first();
-
-			if (!greska.equals("")) {
-				Element divGreska = new Element(Tag.valueOf("div"), "").text(greska);
-				body.appendChild(divGreska);
+			// prijava
+			session.setAttribute(KorisnikController.KORISNIK_KEY, korisnik);
+			
+			response.sendRedirect(bURL + "treninzi");
+			return null;
+		} catch (Exception ex) {
+			// ispis greske
+			String poruka = ex.getMessage();
+			if (poruka == "") {
+				poruka = "Neuspesna prijava!";
 			}
 			
-			Element loginForm = new Element(Tag.valueOf("form"), "").attr("method", "post").attr("action", "korisnici/login");
-			Element table = new Element(Tag.valueOf("table"), "");
-			Element caption = new Element(Tag.valueOf("caption"), "").text("Prijava korisnika na sistem");
-			Element trEmail = new Element(Tag.valueOf("tr"), "");
-			Element thEmail = new Element(Tag.valueOf("th"), "").text("Email:");
-			Element tdEmail = new Element(Tag.valueOf("td"), "").appendChild(new Element(Tag.valueOf("input"), "").attr("type", "text").attr("name", "email"));
-			Element trLozinka = new Element(Tag.valueOf("tr"), "");
-			Element thLozinka = new Element(Tag.valueOf("th"), "").text("Sifra:");
-			Element tdLozinka = new Element(Tag.valueOf("td"), "").appendChild(new Element(Tag.valueOf("input"), "").attr("type", "text").attr("name", "sifra"));
-			Element trSubmit = new Element(Tag.valueOf("tr"), "");
-			Element thSubmit = new Element(Tag.valueOf("th"), "");
-			Element tdSubmit = new Element(Tag.valueOf("td"), "").appendChild(new Element(Tag.valueOf("input"), "").attr("type", "submit").attr("value", "Prijavi se"));
-			
-			trEmail.appendChild(thEmail);
-			trEmail.appendChild(tdEmail);
-			trLozinka.appendChild(thLozinka);
-			trLozinka.appendChild(tdLozinka);
-			trSubmit.appendChild(thSubmit);
-			trSubmit.appendChild(tdSubmit);
+			// prosledjivanje
+			ModelAndView rezultat = new ModelAndView("prijava");
+			rezultat.addObject("poruka", poruka);
 
-			table.appendChild(caption);
-			table.appendChild(trEmail);
-			table.appendChild(trLozinka);
-			table.appendChild(trSubmit);
-			
-			loginForm.appendChild(table);
-
-			body.appendChild(loginForm);
-			
-			out.write(doc.html());
-			return;
+			return rezultat;
 		}
-
-		if (session.getAttribute(KORISNIK_KEY) != null)
-			greska = "korisnik je već prijavljen na sistem morate se prethodno odjaviti<br/>";
-
-		if (!greska.equals("")) {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out;
-			out = response.getWriter();
-
-			StringBuilder retVal = new StringBuilder();
-			retVal.append("<!DOCTYPE html>\r\n" + "<html>\r\n" + "<head>\r\n" + "	<meta charset=\"UTF-8\">\r\n"
-					+ "	<base href=\"/TeretanaVebProjekat/\">	\r\n" + "	<title>Prijava korisnika</title>\r\n"
-					+ "	<link rel=\"stylesheet\" type=\"text/css\" href=\"css/StiloviForma.css\"/>\r\n"
-					+ "	<link rel=\"stylesheet\" type=\"text/css\" href=\"css/StiloviHorizontalniMeni.css\"/>\r\n"
-					+ "</head>\r\n" + "<body>\r\n" + "	<ul>\r\n"
-					+ "		<li><a href=\"registracija.html\">Registruj se</a></li>\r\n" + "	</ul>\r\n");
-			if (!greska.equals(""))
-				retVal.append("	<div>" + greska + "</div>\r\n");
-			retVal.append("	<a href=\"index.html\">Povratak</a>\r\n" + "	<br/>\r\n" + "</body>\r\n" + "</html>");
-
-			out.write(retVal.toString());
-			return;
-		}
-
-		session.setAttribute(KORISNIK_KEY, korisnik);
-
-		response.sendRedirect(bURL + "treninzi");
-	}
-	
-	@GetMapping(value="/logout")
-	@ResponseBody
-	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {	
-
-		Korisnik korisnik = (Korisnik) request.getSession().getAttribute(KORISNIK_KEY);
-		String greska = "";
-		if(korisnik==null)
-			greska="korisnik nije prijavljen<br/>";
-		
-		if(!greska.equals("")) {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out;	
-			out = response.getWriter();
-			
-			StringBuilder retVal = new StringBuilder();
-			retVal.append(
-					"<!DOCTYPE html>\r\n" + 
-					"<html>\r\n" + 
-					"<head>\r\n" +
-					"	<meta charset=\"UTF-8\">\r\n" + 
-					"	<base href=\"/TeretanaVebProjekat/\">	\r\n" + 
-					"	<title>Prijava korisnika</title>\r\n" + 
-					"	<link rel=\"stylesheet\" type=\"text/css\" href=\"css/StiloviForma.css\"/>\r\n" + 
-					"	<link rel=\"stylesheet\" type=\"text/css\" href=\"css/StiloviHorizontalniMeni.css\"/>\r\n" + 
-					"</head>\r\n" + 
-					"<body>\r\n" + 
-					"	<ul>\r\n" + 
-					"		<li><a href=\"registracija.html\">Registruj se</a></li>\r\n" + 
-					"	</ul>\r\n");
-			if(!greska.equals(""))
-				retVal.append(
-					"	<div>"+greska+"</div>\r\n");
-			retVal.append(
-					"	<form method=\"post\" action=\"PrijavaOdjava/Login\">\r\n" + 
-					"		<table>\r\n" + 
-					"			<caption>Prijava korisnika na sistem</caption>\r\n" + 
-					"			<tr><th>Email:</th><td><input type=\"text\" value=\"\" name=\"email\" required/></td></tr>\r\n" + 
-					"			<tr><th>Šifra:</th><td><input type=\"password\" value=\"\" name=\"sifra\" required/></td></tr>\r\n" + 
-					"			<tr><th></th><td><input type=\"submit\" value=\"Prijavi se\" /></td>\r\n" + 
-					"		</table>\r\n" + 
-					"	</form>\r\n" + 
-					"	<br/>\r\n" + 
-					"	<ul>\r\n" + 
-					"		<li><a href=\"korisnici/logout\">Odjavi se</a></li>\r\n" + 
-					"	</ul>" +
-					"</body>\r\n" + 
-					"</html>");
-			
-			out.write(retVal.toString());
-			return;
-		}
-		
-		
-		request.getSession().removeAttribute(KORISNIK_KEY);
-		request.getSession().invalidate();
-		response.sendRedirect(bURL+"korisnici/login");
 	}
 	
 	@PostMapping(value = "/registracija")
@@ -220,11 +108,10 @@ public class KorisnikController implements ServletContextAware {
 	public ModelAndView getKorisnici(HttpSession session, HttpServletResponse response){
 		List<Korisnik> korisnici = korisnikService.findAll();
 		
-		// podaci sa nazivom template-a
-		ModelAndView rezultat = new ModelAndView("korisnici"); // naziv template-a
-		rezultat.addObject("korisnici", korisnici); // podatak koji se šalje template-u
+		ModelAndView rezultat = new ModelAndView("korisnici");
+		rezultat.addObject("korisnici", korisnici);
 
-		return rezultat; // prosleđivanje zahteva zajedno sa podacima template-u
+		return rezultat;
 	}
 	
 	@PostMapping(value="/obrisi")
