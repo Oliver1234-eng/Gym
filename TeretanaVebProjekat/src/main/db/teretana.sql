@@ -32,6 +32,23 @@ CREATE TABLE treninzi (
 	PRIMARY KEY(id)
 );
 
+CREATE TABLE tipTreninga (
+	id BIGINT AUTO_INCREMENT,
+	naziv VARCHAR(50) NOT NULL,
+	opis VARCHAR(50) NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE treningTipTreninga (
+    treningId BIGINT,
+    tipTreningaId BIGINT,
+    PRIMARY KEY(treningId, tipTreningaId),
+    FOREIGN KEY(treningId) REFERENCES treninzi(id)
+		ON DELETE CASCADE,
+    FOREIGN KEY(tipTreningaId) REFERENCES tipTreninga(id)
+		ON DELETE CASCADE
+);
+
 CREATE TABLE clanskeKarte (
 	id BIGINT AUTO_INCREMENT,
 	popustUProcentima INT NOT NULL,
@@ -87,16 +104,16 @@ CREATE TABLE treninziKomentari (
 
 
 INSERT INTO korisnici (korisnickoime, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, Uloga) 
-VALUES ('pera', 'pera123', 'pera@gmail.com', 'Pera', 'Peric', '1990-12-12', 'Ulica 1', '0638892283', '2022-12-15', 'administrator');
+VALUES ('pera@gmail.com', 'pera123', 'pera', 'Pera', 'Peric', '1990-12-12', 'Ulica 1', '0638892283', '2022-12-15', 'administrator');
 
 INSERT INTO korisnici (korisnickoime, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, Uloga) 
-VALUES ('mika', 'mika123', 'mika@gmail.com', 'Mika', 'Mikic', '1985-10-20', 'Ulica 2', '0638854898', '2022-12-16', 'administrator');
+VALUES ('mika@gmail.com', 'mika123', 'mika', 'Mika', 'Mikic', '1985-10-20', 'Ulica 2', '0638854898', '2022-12-16', 'administrator');
 
 INSERT INTO korisnici (korisnickoime, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, Uloga) 
-VALUES ('jova', 'jova123', 'jova@gmail.com', 'Jova', 'Jovic', '1995-02-27', 'Ulica 3', '0637738912', '2022-12-17', 'clanTeretane');
+VALUES ('jova@gmail.com', 'jova123', 'jova', 'Jova', 'Jovic', '1995-02-27', 'Ulica 3', '0637738912', '2022-12-17', 'clanTeretane');
 
 INSERT INTO korisnici (korisnickoime, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, Uloga) 
-VALUES ('zika', 'zika123', 'zika@gmail.com', 'Zika', 'Zikic', '2000-06-11', 'Ulica 4', '0637758392', '2022-12-18', 'clanTeretane');
+VALUES ('zika@gmail.com', 'zika123', 'zika', 'Zika', 'Zikic', '2000-06-11', 'Ulica 4', '0637758392', '2022-12-18', 'clanTeretane');
 
 
 
@@ -178,3 +195,7 @@ INSERT INTO korisniciKomentari(korisnikId, komentarId) VALUES (3, 3);
 INSERT INTO treninziKomentari (treningId, komentarId) VALUES (1, 1);
 INSERT INTO treninziKomentari (treningId, komentarId) VALUES (2, 2);
 INSERT INTO treninziKomentari (treningId, komentarId) VALUES (3, 3);
+
+INSERT INTO tipTreninga (id, naziv, opis) VALUES (1, 'Joga', 'Opis');
+INSERT INTO tipTreninga (id, naziv, opis) VALUES (2, 'Fitness', 'Opis');
+INSERT INTO tipTreninga (id, naziv, opis) VALUES (3, 'Cardio', 'Opis');
