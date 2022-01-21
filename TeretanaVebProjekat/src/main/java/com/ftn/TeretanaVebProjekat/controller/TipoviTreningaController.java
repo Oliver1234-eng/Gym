@@ -22,6 +22,8 @@ import com.ftn.TeretanaVebProjekat.service.TipTreningaService;
 @Controller
 @RequestMapping(value="/TipoviTreninga")
 public class TipoviTreningaController {
+	
+	//za potrebe vezne tabele
 
 	@Autowired
 	private TipTreningaService tipTreningaService;
