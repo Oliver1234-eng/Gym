@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviTabela.css"/>
+	<title>Tipovi treninga</title>
+</head>
+<body>
+		<form method="get">
+			<table class="tabela">
+				<caption>Tipovi treninga</caption>
+				<tr>
+					<th>r. br.</th>
+					<th>naziv</th>
+					<th></th>
+				</tr>
+				<tr>
+					<th></th>
+					<th><input type="search" name="naziv" th:value="${param.naziv?: null}"/></th>
+					<th><input type="submit" value="Pretraži"/></th>
+				</tr>
+				<tr th:each="itTipTreninga, status: ${tipoviTreninga}">
+					<td th:text="${status.index + 1}">1</td>
+					<td><a th:href="|TipoviTreninga/Details?id=${itTipTreninga.id}|" th:text="${itTipTreninga.naziv}">fantazija</a></td>
+					<td><a th:href="|Treninzi?tipTreningaId=${itTipTreninga.id}|">treninzi</a></td>
+				</tr>
+			</table>
+		</form>
+		<ul>
+			<li><a href="TipoviTreninga/Create">dodavanje tipa treninga</a></li>
+		</ul>
+</body>
+</html>

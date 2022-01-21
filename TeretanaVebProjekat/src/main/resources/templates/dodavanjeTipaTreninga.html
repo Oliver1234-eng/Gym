@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<title>Dodavanje tipa treninga</title>
+</head>
+<body>
+		<form method="post" action="TipoviTreninga/Create">
+			<table class="forma">
+				<caption>Dodavanje tipa treninga</caption>
+				<tr><th>naziv:</th><td><input type="text" name="naziv"/></td></tr>
+				<tr><th></th><td><input type="submit" value="Dodaj"/></td></tr>
+			</table>
+		</form>
+		<ul>
+			<li><a href="TipoviTreninga">povratak</a></li>
+		</ul>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<title>Tip treninga</title>
+</head>
+<body>
+		<form method="post" action="TipoviTreninga/Edit">
+			<input type="hidden" name="id" th:value="${tipTreninga.id}">
+			<table class="forma">
+				<caption>Tip treninga:</caption>
+				<tr><th>naziv:</th><td><input type="text" th:value="${tipTreninga.naziv}" name="naziv"/></td></tr>
+				<tr><th></th><td><a th:href="|Treninzi?tipTreningaId=${tipTreninga.id}|">treninzi</a></td></tr>
+				<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+			</table>
+		</form>
+		<form method="post" action="TipoviTreninga/Delete">
+			<input type="hidden" name="id" th:value="${tipTreninga.id}">
+			<table class="forma">
+				<tr><th></th><td><input type="submit" value="Obriši"/></td></tr>
+			</table>
+		</form>
+		<table class="forma">
+			<caption>Tip treninga</caption>
+			<tr><th>naziv:</th><td th:text=${tipTreninga.naziv}>fantazija</td>
+			<tr><th></th><td><a th:href="|Treninzi?tipTreningaId=${tipTreninga.id}|">treninzi</a></td></tr>
+		</table>
+</body>
+</html>

@@ -30,38 +30,37 @@ public class TipTreningaDAOImpl implements TipTreningaDAO {
 			int index = 1;
 			Long id = rs.getLong(index++);
 			String naziv = rs.getString(index++);
-			String opis = rs.getString(index++);
 
-			TipTreninga tipTreninga = new TipTreninga(id, naziv, opis);
+			TipTreninga tipTreninga = new TipTreninga(id, naziv);
 			return tipTreninga;
 		}
 
 	}
 	@Override
 	public TipTreninga findOne(Long id) {
-		String sql = "SELECT id, naziv, opis FROM tipTreninga WHERE id = ?";
+		String sql = "SELECT id, naziv FROM tipTreninga WHERE id = ?";
 		return jdbcTemplate.queryForObject(sql, new ZanrRowMapper(), id);
 	}
 	@Override
 	public List<TipTreninga> findAll() {
-		String sql = "SELECT id, naziv, opis FROM tipTreninga";
+		String sql = "SELECT id, naziv FROM tipTreninga";
 		return jdbcTemplate.query(sql, new ZanrRowMapper());
 	}
 	@Override
 	public List<TipTreninga> find(String naziv) {
 		naziv = "%" + naziv + "%";
-		String sql = "SELECT id, naziv, opis FROM tipTreninga WHERE naziv LIKE ?";
+		String sql = "SELECT id, naziv FROM tipTreninga WHERE naziv LIKE ?";
 		return jdbcTemplate.query(sql, new ZanrRowMapper(), naziv);
 	}
 	@Override
 	public int save(TipTreninga tipTreninga) {
-		String sql = "INSERT INTO tipTreninga (naziv, opis) VALUES (?, ?)";
-		return jdbcTemplate.update(sql, tipTreninga.getNaziv(), tipTreninga.getOpis());
+		String sql = "INSERT INTO tipTreninga (naziv) VALUES (?)";
+		return jdbcTemplate.update(sql, tipTreninga.getNaziv());
 	}
 	
 	@Override
 	public int [] save(ArrayList<TipTreninga> tipoviTreninga) {
-		String sql = "INSERT INTO tipTreninga (naziv, opis) VALUES (?, ?)";
+		String sql = "INSERT INTO tipTreninga (naziv) VALUES (?)";
 		
 		return jdbcTemplate.batchUpdate(sql,
 				new BatchPreparedStatementSetter() {
@@ -69,7 +68,6 @@ public class TipTreningaDAOImpl implements TipTreningaDAO {
 					@Override
 					public void setValues(PreparedStatement ps, int i) throws SQLException {
 						ps.setString(1, tipoviTreninga.get(i).getNaziv());
-						ps.setString(1, tipoviTreninga.get(i).getOpis());
 					}
 					
 					@Override
@@ -81,8 +79,8 @@ public class TipTreningaDAOImpl implements TipTreningaDAO {
 	
 	@Override
 	public int update(TipTreninga tipTreninga) {
-		String sql = "UPDATE tipTreninga SET naziv = ?, opis = ? WHERE id = ?";
-		return jdbcTemplate.update(sql, tipTreninga.getNaziv(), tipTreninga.getOpis(), tipTreninga.getId());
+		String sql = "UPDATE tipTreninga SET naziv = ? WHERE id = ?";
+		return jdbcTemplate.update(sql, tipTreninga.getNaziv(), tipTreninga.getId());
 	}
 	@Override
 	public int delete(Long id) {

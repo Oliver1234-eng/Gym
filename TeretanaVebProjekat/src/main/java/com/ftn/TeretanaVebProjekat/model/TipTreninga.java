@@ -4,26 +4,17 @@ public class TipTreninga {
 	
 	private Long id;
 	private String naziv;
-	private String opis;
 	
 	public TipTreninga() {}
-
-	public TipTreninga(Long id, String naziv, String opis) {
-		super();
-		this.id = id;
-		this.naziv = naziv;
-		this.opis = opis;
-	}
-
-	public TipTreninga(String naziv, String opis) {
-		super();
-		this.naziv = naziv;
-		this.opis = opis;
-	}
 
 	public TipTreninga(Long id, String naziv) {
 		super();
 		this.id = id;
+		this.naziv = naziv;
+	}
+
+	public TipTreninga(String naziv) {
+		super();
 		this.naziv = naziv;
 	}
 
@@ -41,14 +32,6 @@ public class TipTreninga {
 
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
-	}
-
-	public String getOpis() {
-		return opis;
-	}
-
-	public void setOpis(String opis) {
-		this.opis = opis;
 	}
 	
 	@Override
