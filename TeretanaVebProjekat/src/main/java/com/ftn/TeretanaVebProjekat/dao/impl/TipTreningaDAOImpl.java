@@ -87,5 +87,4 @@ public class TipTreningaDAOImpl implements TipTreningaDAO {
 		String sql = "DELETE FROM tipTreninga WHERE id = ?";
 		return jdbcTemplate.update(sql, id);
 	}
-
 }

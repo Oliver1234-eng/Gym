@@ -19,10 +19,10 @@
 	 			<tr>     
 	 				<th>R. br.</th>     
 	 				<th></th>     
-	 				<th>Naziv</th>     
+	 				<th>Naziv</th>
+	 				<th>Tip treninga</th>
 	 				<th>Trener</th>     
-	 				<th>Kratak opis</th>    
-	 				<th>Tip treninga</th>  
+	 				<th>Kratak opis</th>     
 	 				<th>Cena</th>
 	 				<th>Vrsta treninga</th>
 	 				<th>Nivo treninga</th>
@@ -34,9 +34,14 @@
 					<th></th>
 					<th></th>
 					<th><input type="search" name="naziv" th:value="${param.naziv}?: null"/></th>
+					<th>
+						<select name="tipTreningaId">
+							<option value="">odaberi</option>
+							<option th:each="itTipTreninga: ${tipoviTreninga}" th:value="${itTipTreninga.id}" th:text="${itTipTreninga.naziv}" th:selected="${#strings.equals(itTipTreninga.id, param.tipTreningaId)}"></option>
+						</select>
+					</th>
 					<th><input type="search" name="trener" th:value="${param.trener}?: null"/></th>
 					<th><input type="search" name="kratakOpis" th:value="${param.kratakOpis}?: null"/></th>
-					<th><input type="search" name="tipTreninga" th:value="${param.tipTreninga}?: null"/></th>
 					<th>od:<input type="number" min="0" th:value="${param.cenaOd}?: '0'" name="cenaOd"/><br/>
 					do:<input type="number" min="0" th:value="${param.cenaDo}?: '5000'" name="cenaDo"/></th>
 					<th><input type="search" name="vrstaTreninga" th:value="${param.vrstaTreninga}?: null"/></th>
@@ -50,10 +55,14 @@
 	 			<tr th:each="itTrening, status: ${treninzi}">     
 	 				<td class="broj" th:text="${(status.index + 1)+'.'}"></td>     
 	 				<td><a th:href="|treninzi/details?id=${itTrening.id}|" th:text="${itTrening.naziv}"></a></td>    
-	 				<td th:text="${itTrening.naziv}"></td>    
+	 				<td th:text="${itTrening.naziv}"></td>
+	 				<td>
+						<ul>
+							<li th:each="itTipTreninga: ${itTrening.tipoviTreninga}"><a th:href="|TipoviTreninga/Details?id=${itTipTreninga.id}|" th:text="${itTipTreninga.naziv}"></a></li>
+						</ul>
+					</td>    
 	 				<td th:text="${itTrening.trener}"></td>    
 	 				<td th:text="${itTrening.kratakOpis}"></td>
-	 				<td th:text="${itTrening.tipTreninga}"></td>
 	 				<td class="broj" th:text="${itTrening.cena}"></td> 
 	 				<td th:text="${itTrening.vrstaTreninga}"></td>
 	 				<td th:text="${itTrening.nivoTreninga}"></td>
@@ -74,4 +83,4 @@
 	 		<li><a href="korisnici/Logout">Odjava</a></li> 
 	 	</ul>
 	 </body>   
- </html>	
+ </html>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ftn.TeretanaVebProjekat.dao.TreningDAO;
+import com.ftn.TeretanaVebProjekat.model.TipTreninga;
 import com.ftn.TeretanaVebProjekat.model.Trening;
 import com.ftn.TeretanaVebProjekat.service.TreningService;
 
@@ -31,16 +32,28 @@ public class DatabaseTreningServiceImpl implements TreningService {
 		treningDAO.save(trening);
 		return trening;
 	}
+	
+	@Override
+	public List<Trening> save(List<Trening> treninzi) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public Trening update(Trening trening) {
 		treningDAO.update(trening);
 		return trening;
 	}
+	
+	@Override
+	public List<Trening> update(List<Trening> treninzi) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public Trening delete(Long id) {
-		Trening trening = treningDAO.findOne(id);
+		Trening trening = findOne(id);
 		if(trening != null) {
 			treningDAO.delete(id);
 		}
@@ -48,8 +61,19 @@ public class DatabaseTreningServiceImpl implements TreningService {
 	}
 	
 	@Override
-	public List<Trening> find(String naziv, String trener, String kratakOpis, 
-			String tipTreninga, Integer cenaOd, Integer cenaDo, String vrstaTreninga, 
+	public List<Trening> deleteAll(TipTreninga tipTreninga) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(List<Long> ids) {
+		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public List<Trening> find(String naziv, Long tipTreningaId,String trener, String kratakOpis, 
+			Integer cenaOd, Integer cenaDo, String vrstaTreninga, 
 			String nivoTreninga, Integer trajanjeUMinutimaOd, Integer trajanjeUMinutimaDo, 
 			Integer prosecnaOcenaOd, Integer prosecnaOcenaDo) {
 			
@@ -61,16 +85,16 @@ public class DatabaseTreningServiceImpl implements TreningService {
 			naziv = "";
 		}
 		
+		if (tipTreningaId == null) {
+			tipTreningaId = 0L;
+		}
+		
 		if (trener == null) {
 			trener = "";
 		}
 		
 		if (kratakOpis == null) {
 			kratakOpis = "";
-		}
-		
-		if (tipTreninga == null) {
-			tipTreninga = "";
 		}
 		
 		if (cenaOd == null) {
@@ -112,6 +136,19 @@ public class DatabaseTreningServiceImpl implements TreningService {
 				continue;
 			}
 			
+			if (tipTreningaId > 0) { // ako je zanr odabran
+				boolean pronadjen = false;
+				for (TipTreninga itTipTreninga: itTrening.getTipoviTreninga()) {
+					if (itTipTreninga.getId() == tipTreningaId) {
+						pronadjen = true;
+						break;
+					}
+				}
+				if (!pronadjen) {
+					continue;
+				}
+			}
+			
 			if (!itTrening.getTrener().toLowerCase().contains(trener.toLowerCase())) {
 				continue;
 			}
@@ -120,9 +157,6 @@ public class DatabaseTreningServiceImpl implements TreningService {
 				continue;
 			}
 			
-			if (!itTrening.getTipTreninga().toLowerCase().contains(tipTreninga.toLowerCase())) {
-				continue;
-			}
 			
 			if (!(itTrening.getCena() >= cenaOd && itTrening.getCena() <= cenaDo)) {
 				continue;
@@ -149,6 +183,12 @@ public class DatabaseTreningServiceImpl implements TreningService {
 
 		return rezultat;
 		
+	}
+
+	@Override
+	public List<Trening> findById(Long tipTreningaId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

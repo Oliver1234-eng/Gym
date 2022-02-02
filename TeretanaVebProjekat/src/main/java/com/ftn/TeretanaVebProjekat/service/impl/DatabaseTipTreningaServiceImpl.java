@@ -14,6 +14,7 @@ import com.ftn.TeretanaVebProjekat.service.TipTreningaService;
 public class DatabaseTipTreningaServiceImpl implements TipTreningaService {
 
 	@Autowired
+//	@Qualifier("zanrDAOOldCode")
 	private TipTreningaDAO tipTreningaDAO;
 
 	@Override

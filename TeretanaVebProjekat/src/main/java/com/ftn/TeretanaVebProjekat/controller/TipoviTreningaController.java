@@ -96,14 +96,6 @@ public class TipoviTreningaController {
 
 		// validacija
 		TipTreninga tipTreninga = tipTreningaService.findOne(id);
-		if (tipTreninga == null) {
-			response.sendRedirect(baseURL + "TipoviTreninga");
-			return;
-		}	
-		if (naziv == null || naziv.equals("")) {
-			response.sendRedirect(baseURL + "TipoviTreninga/Details?id=" + id);
-			return;
-		}
 
 		// izmena
 		tipTreninga.setNaziv(naziv);

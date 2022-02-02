@@ -1,12 +1,14 @@
 package com.ftn.TeretanaVebProjekat.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Trening {
 	
 	private Long id;
 	private String naziv;
 	private String trener;
 	private String kratakOpis;
-	private String tipTreninga;
 	private int cena;
 	private String vrstaTreninga;
 	private String nivoTreninga;
@@ -14,16 +16,17 @@ public class Trening {
 	private int prosecnaOcena;
 	private boolean zakazan;
 	
+	private List<TipTreninga> tipoviTreninga = new ArrayList<>();
+	
 	public Trening() {}
 
-	public Trening(Long id, String naziv, String trener, String kratakOpis, String tipTreninga, int cena,
+	public Trening(Long id, String naziv, String trener, String kratakOpis, int cena,
 			String vrstaTreninga, String nivoTreninga, int trajanjeUMinutima, int prosecnaOcena, boolean zakazan) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
 		this.trener = trener;
 		this.kratakOpis = kratakOpis;
-		this.tipTreninga = tipTreninga;
 		this.cena = cena;
 		this.vrstaTreninga = vrstaTreninga;
 		this.nivoTreninga = nivoTreninga;
@@ -32,13 +35,12 @@ public class Trening {
 		this.zakazan = zakazan;
 	}
 
-	public Trening(String naziv, String trener, String kratakOpis, String tipTreninga, int cena, String vrstaTreninga,
+	public Trening(String naziv, String trener, String kratakOpis, int cena, String vrstaTreninga,
 			String nivoTreninga, int trajanjeUMinutima, int prosecnaOcena) {
 		super();
 		this.naziv = naziv;
 		this.trener = trener;
 		this.kratakOpis = kratakOpis;
-		this.tipTreninga = tipTreninga;
 		this.cena = cena;
 		this.vrstaTreninga = vrstaTreninga;
 		this.nivoTreninga = nivoTreninga;
@@ -47,14 +49,13 @@ public class Trening {
 		this.zakazan = false;
 	}
 
-	public Trening(Long id, String naziv, String trener, String kratakOpis, String tipTreninga, int cena,
+	public Trening(Long id, String naziv, String trener, String kratakOpis, int cena,
 			String vrstaTreninga, String nivoTreninga, int trajanjeUMinutima, int prosecnaOcena) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
 		this.trener = trener;
 		this.kratakOpis = kratakOpis;
-		this.tipTreninga = tipTreninga;
 		this.cena = cena;
 		this.vrstaTreninga = vrstaTreninga;
 		this.nivoTreninga = nivoTreninga;
@@ -63,16 +64,6 @@ public class Trening {
 		this.zakazan = false;
 	}
 
-	/*
-	 * public Trening(String naziv, String trener, String kratakOpis, String
-	 * tipTreninga, int cena, String vrstaTreninga, String nivoTreninga, int
-	 * trajanjeUMinutima, int prosecnaOcena) { super(); this.naziv = naziv;
-	 * this.trener = trener; this.kratakOpis = kratakOpis; this.tipTreninga =
-	 * tipTreninga; this.cena = cena; this.vrstaTreninga = vrstaTreninga;
-	 * this.nivoTreninga = nivoTreninga; this.trajanjeUMinutima = trajanjeUMinutima;
-	 * this.prosecnaOcena = prosecnaOcena; }
-	 */
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -97,7 +88,6 @@ public class Trening {
 			return false;
 		return true;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -129,14 +119,6 @@ public class Trening {
 
 	public void setKratakOpis(String kratakOpis) {
 		this.kratakOpis = kratakOpis;
-	}
-
-	public String getTipTreninga() {
-		return tipTreninga;
-	}
-
-	public void setTipTreninga(String tipTreninga) {
-		this.tipTreninga = tipTreninga;
 	}
 
 	public int getCena() {
@@ -187,13 +169,18 @@ public class Trening {
 		this.zakazan = zakazan;
 	}
 	
+	public List<TipTreninga> getTipoviTreninga() {
+		return tipoviTreninga;
+	}
+
+	public void setTipoviTreninga(List<TipTreninga> tipoviTreninga) {
+		this.tipoviTreninga.clear();
+		this.tipoviTreninga.addAll(tipoviTreninga);
+	}
+	
 	@Override
 	public String toString() {
-		return this.getId() + ";" + this.getNaziv() + ";" + this.getTrener()
-		 + ";" + this.getKratakOpis() + ";" + this.getTipTreninga() + ";" + this.getCena()
-		 + ";" + this.getVrstaTreninga() + ";" + this.getNivoTreninga() + ";" + this.getTrajanjeUMinutima()
-		 + ";" + this.getProsecnaOcena() + ";" + this.isZakazan();	
-		
+		return "Trening [id=" + id + ", naziv=" + naziv + ", trajanje=" + trener + "]";
 	}
 	
 	
