@@ -9,11 +9,11 @@ CREATE TABLE korisnici (
 	email VARCHAR(50) NOT NULL,
 	ime VARCHAR(50) NOT NULL,
 	prezime VARCHAR(50) NOT NULL,
-	datumRodjenja DATE,
+	datumRodjenja DATETIME,
 	adresa VARCHAR(50) NOT NULL,
 	brojTelefona VARCHAR(50) NOT NULL,
-	datumRegistracije DATE,
-	uloga VARCHAR(15) NOT NULL,
+	datumRegistracije DATETIME,
+	administrator BOOL DEFAULT false,
 	PRIMARY KEY(id)
 );
 
@@ -22,6 +22,21 @@ CREATE TABLE treninzi (
 	naziv VARCHAR(50) NOT NULL,
 	trener VARCHAR(50) NOT NULL,
 	kratakOpis VARCHAR(50) NOT NULL,
+	cena INT NOT NULL,
+	vrstaTreninga ENUM('pojedinacni', 'grupni') DEFAULT 'pojedinacni',
+	nivoTreninga ENUM('amaterski', 'srednji', 'napredni') DEFAULT 'amaterski',
+	trajanjeUMinutima INT NOT NULL,
+	prosecnaOcena INT NOT NULL,
+	zakazan BOOLEAN NOT NULL,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE treninziKorpa (
+	id BIGINT AUTO_INCREMENT,
+	naziv VARCHAR(50) NOT NULL,
+	trener VARCHAR(50) NOT NULL,
+	kratakOpis VARCHAR(50) NOT NULL,
+	tipTreninga VARCHAR(50) NOT NULL,
 	cena INT NOT NULL,
 	vrstaTreninga VARCHAR(15) NOT NULL,
 	nivoTreninga VARCHAR(15) NOT NULL,
@@ -34,7 +49,6 @@ CREATE TABLE treninzi (
 CREATE TABLE tipTreninga (
 	id BIGINT AUTO_INCREMENT,
 	naziv VARCHAR(50) NOT NULL,
-	opis VARCHAR(50) NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -48,34 +62,83 @@ CREATE TABLE treningTipTreninga (
 		ON DELETE CASCADE
 );
 
+CREATE TABLE clanskeKarte (
+	id BIGINT AUTO_INCREMENT,
+	popust INT NOT NULL,
+	brojPoena INT NOT NULL,
+	korisnikId BIGINT NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY(korisnikId) REFERENCES korisnici(id)
+		ON DELETE CASCADE
+);
 
-INSERT INTO korisnici (korisnickoime, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, Uloga) 
-VALUES ('pera@gmail.com', 'pera123', 'pera', 'Pera', 'Peric', '1990-12-12', 'Ulica 1', '0638892283', '2022-12-15', 'administrator');
+CREATE TABLE treninziClanskeKarte (
+	treningId BIGINT,
+	clanskaKartaId BIGINT,
+	PRIMARY KEY(treningId, clanskaKartaId),
+	FOREIGN KEY(treningId) REFERENCES treninzi(id)
+		ON DELETE CASCADE,
+	FOREIGN KEY(clanskaKartaId) REFERENCES clanskeKarte(id)
+		ON DELETE CASCADE
+		
+);
 
-INSERT INTO korisnici (korisnickoime, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, Uloga) 
-VALUES ('mika@gmail.com', 'mika123', 'mika', 'Mika', 'Mikic', '1985-10-20', 'Ulica 2', '0638854898', '2022-12-16', 'administrator');
+CREATE TABLE sale (
+	id BIGINT AUTO_INCREMENT,
+	kapacitet INT NOT NULL,
+	PRIMARY KEY (id)
+);
 
-INSERT INTO korisnici (korisnickoime, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, Uloga) 
-VALUES ('jova@gmail.com', 'jova123', 'jova', 'Jova', 'Jovic', '1995-02-27', 'Ulica 3', '0637738912', '2022-12-17', 'clanTeretane');
+CREATE TABLE termini (
+	id BIGINT AUTO_INCREMENT,
+	salaId BIGINT NOT NULL,
+	treningId BIGINT NOT NULL,
+	datumIVreme DATETIME,
+	PRIMARY KEY(id),
+	FOREIGN KEY(salaId) REFERENCES sale(id)
+		ON DELETE CASCADE,
+	FOREIGN KEY(treningId) REFERENCES treninzi(id)
+		ON DELETE CASCADE
+);
 
-INSERT INTO korisnici (korisnickoime, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, Uloga) 
-VALUES ('zika@gmail.com', 'zika123', 'zika', 'Zika', 'Zikic', '2000-06-11', 'Ulica 4', '0637758392', '2022-12-18', 'clanTeretane');
+CREATE TABLE komentari (
+	id BIGINT AUTO_INCREMENT,
+	tekst VARCHAR(50) NOT NULL,
+	ocena INT NOT NULL,
+	datum DATE,
+	korisnikId BIGINT NOT NULL,
+	treningId BIGINT NOT NULL,
+	status ENUM('naCekanju', 'odobren', 'nijeOdobren') DEFAULT 'odobren',
+	PRIMARY KEY(id),
+	FOREIGN KEY(korisnikId) REFERENCES korisnici(id)
+		ON DELETE CASCADE,
+	FOREIGN KEY(treningId) REFERENCES treninzi(id)
+		ON DELETE CASCADE
+);
 
 
+INSERT INTO korisnici (korisnickoime, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, administrator) 
+VALUES ('pera', 'pera123', 'pera@gmail.com', 'Pera', 'Peric', '1990-12-12 8:00', 'Ulica 1', '0638892283', '2022-12-15 11:00', true);
+
+INSERT INTO korisnici (korisnickoime, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, administrator) 
+VALUES ('mika@gmail.com', 'mika123', 'mika', 'Mika', 'Mikic', '1985-10-20 9:00', 'Ulica 2', '0638854898', '2022-12-16 12:00', false);
+
+INSERT INTO korisnici (korisnickoime, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, administrator) 
+VALUES ('jova@gmail.com', 'jova123', 'jova', 'Jova', 'Jovic', '1995-02-27 10:00', 'Ulica 3', '0637738912', '2022-12-17 13:00', false);
 
 
 INSERT INTO treninzi (id, naziv, trener, kratakOpis, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
 VALUES (1, 'trening1', 'trener1', 'Opis', 500, 'pojedinacni', 'amaterski', 60, 4, false);
 
 INSERT INTO treninzi (id, naziv, trener, kratakOpis, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
-VALUES (2, 'trening2', 'trener1', 'Opis', 800, 'pojedinacni', 'srednji', 70, 3, false);
+VALUES (2, 'trening2', 'trener1', 'Opis', 800, 'pojedinacni', 'srednji', 60, 3, false);
 
 INSERT INTO treninzi (id, naziv, trener, kratakOpis, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
-VALUES (3, 'trening3', 'trener1', 'Opis', 1000, 'pojedinacni', 'napredni', 90, 5, false);
+VALUES (3, 'trening3', 'trener1', 'Opis', 1000, 'pojedinacni', 'napredni', 60, 5, false);
 
-INSERT INTO tipTreninga (id, naziv, opis) VALUES (1, 'Joga', 'Opis');
-INSERT INTO tipTreninga (id, naziv, opis) VALUES (2, 'Fitness', 'Opis');
-INSERT INTO tipTreninga (id, naziv, opis) VALUES (3, 'Cardio', 'Opis');
+INSERT INTO tipTreninga (id, naziv) VALUES (1, 'Joga');
+INSERT INTO tipTreninga (id, naziv) VALUES (2, 'Fitness');
+INSERT INTO tipTreninga (id, naziv) VALUES (3, 'Cardio');
 
 INSERT INTO treningTipTreninga (treningId, tipTreningaId) VALUES (1, 1);
 INSERT INTO treningTipTreninga (treningId, tipTreningaId) VALUES (1, 2);
@@ -85,3 +148,50 @@ INSERT INTO treningTipTreninga (treningId, tipTreningaId) VALUES (2, 1);
 INSERT INTO treningTipTreninga (treningId, tipTreningaId) VALUES (2, 2);
 
 INSERT INTO treningTipTreninga (treningId, tipTreningaId) VALUES (3, 1);
+
+INSERT INTO treninziKorpa (id, naziv, trener, kratakOpis, tipTreninga, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
+VALUES (1, 'trening1', 'trener1', 'Opis', 'Joga', 500, 'pojedinacni', 'amaterski', 60, 4, false);
+
+INSERT INTO treninziKorpa (id, naziv, trener, kratakOpis, tipTreninga, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
+VALUES (2, 'trening2', 'trener1', 'Opis', 'Fitness', 800, 'pojedinacni', 'srednji', 60, 3, false);
+
+INSERT INTO treninziKorpa (id, naziv, trener, kratakOpis, tipTreninga, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
+VALUES (3, 'trening3', 'trener1', 'Opis', 'Cardio', 1000, 'pojedinacni', 'napredni', 60, 5, false);
+
+INSERT INTO clanskeKarte (id, popust, brojPoena, korisnikId)
+VALUES (1, 10, 5, 1);
+INSERT INTO clanskeKarte (id, popust, brojPoena, korisnikId)
+VALUES (2, 10, 5, 1);
+INSERT INTO clanskeKarte (id, popust, brojPoena, korisnikId)
+VALUES (3, 10, 5, 2);
+
+INSERT INTO treninziClanskeKarte (treningId, clanskaKartaId)
+VALUES (1, 1);
+INSERT INTO treninziClanskeKarte (treningId, clanskaKartaId)
+VALUES (1, 2);
+INSERT INTO treninziClanskeKarte (treningId, clanskaKartaId)
+VALUES (1, 3);
+
+INSERT INTO sale (id, kapacitet)
+VALUES (1, 30);
+INSERT INTO sale (id, kapacitet)
+VALUES (2, 30);
+INSERT INTO sale (id, kapacitet)
+VALUES (3, 30);
+
+INSERT INTO termini (id, salaId, treningId, datumIVreme)
+VALUES (1, 1, 1, '2022-06-20 15:00');
+INSERT INTO termini (id, salaId, treningId, datumIVreme)
+VALUES (2, 2, 1, '2022-06-21 17:00');
+INSERT INTO termini (id, salaId, treningId, datumIVreme)
+VALUES (3, 3, 1, '2022-06-22 19:00');
+
+INSERT INTO komentari (id, tekst, ocena, datum, korisnikId, treningId, status)
+VALUES (1, 'tekst', 5, '2022-01-01', 1, 1, 'odobren');
+INSERT INTO komentari (id, tekst, ocena, datum, korisnikId, treningId, status)
+VALUES (2, 'tekst', 4, '2022-01-02', 1, 1, 'odobren');
+INSERT INTO komentari (id, tekst, ocena, datum, korisnikId, treningId, status)
+VALUES (3, 'tekst', 5, '2022-01-03', 1, 1, 'odobren');
+
+
+

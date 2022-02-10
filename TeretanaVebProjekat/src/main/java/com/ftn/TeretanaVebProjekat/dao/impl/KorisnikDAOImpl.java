@@ -7,15 +7,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,140 +32,187 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
-	private class KorisnikRowCallBackHandler implements RowCallbackHandler {
 
-		private Map<Long, Korisnik> korisnici = new LinkedHashMap<>();
-		
+	private class KorisnikRowMapper implements RowMapper<Korisnik> {
+
 		@Override
-		public void processRow(ResultSet resultSet) throws SQLException {
+		public Korisnik mapRow(ResultSet rs, int rowNum) throws SQLException {
 			int index = 1;
-			Long id = resultSet.getLong(index++);
-			String korisnickoIme = resultSet.getString(index++);
-			String lozinka = resultSet.getString(index++);
-			String email = resultSet.getString(index++);
-			String ime = resultSet.getString(index++);
-			String prezime = resultSet.getString(index++);
-			LocalDate datumRodjenja = resultSet.getTimestamp(index++).toLocalDateTime().toLocalDate();
-			String adresa = resultSet.getString(index++);
-			String brojTelefona = resultSet.getString(index++);
-			LocalDate datumRegistracije = resultSet.getTimestamp(index++).toLocalDateTime().toLocalDate();
-			String uloga = resultSet.getString(index++);
+			String korisnickoIme = rs.getString(index++);
+			String email = rs.getString(index++);
+			String ime = rs.getString(index++);
+			String prezime = rs.getString(index++);
+			LocalDateTime datumRodjenja = rs.getTimestamp(index++).toLocalDateTime();
+			String adresa = rs.getString(index++);
+			String brojTelefona = rs.getString(index++);
+			LocalDateTime datumRegistracije = rs.getTimestamp(index++).toLocalDateTime();
+			Boolean administrator = rs.getBoolean(index++);
 
-			Korisnik korisnik = korisnici.get(id);
-			if (korisnik == null) {
-				korisnik = new Korisnik(id, korisnickoIme, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, uloga);
-				korisnici.put(korisnik.getId(), korisnik); // dodavanje u kolekciju
-			}
-		}
-
-		public List<Korisnik> getKorisnici() {
-			return new ArrayList<>(korisnici.values());
+			Korisnik korisnik = new Korisnik(korisnickoIme, null, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, administrator);
+			return korisnik;
 		}
 
 	}
-	
 	@Override
-	public Korisnik findOne(Long id) {
-		String sql = 
-				"SELECT kor.id, kor.korisnickoIme, kor.lozinka, kor.email, kor.ime, kor.prezime, kor.datumRodjenja, kor.adresa, kor.brojTelefona, kor.datumRegistracije, kor.uloga FROM korisnici kor " + 
-				"WHERE kor.id = ? " + 
-				"ORDER BY kor.id";
-
-		KorisnikRowCallBackHandler rowCallbackHandler = new KorisnikRowCallBackHandler();
-		jdbcTemplate.query(sql, rowCallbackHandler, id);
-
-		return rowCallbackHandler.getKorisnici().get(0);
-	}
-	
-	@Override
-	public Korisnik findOne(String email) {
-		String sql = 
-				"SELECT kor.id, kor.korisnickoIme, kor.lozinka, kor.email, kor.ime, kor.prezime, kor.datumRodjenja, kor.adresa, kor.brojTelefona, kor.datumRegistracije, kor.uloga FROM korisnici kor " + 
-				"WHERE kor.email = ? " + 
-				"ORDER BY kor.id";
-
-		KorisnikRowCallBackHandler rowCallbackHandler = new KorisnikRowCallBackHandler();
-		jdbcTemplate.query(sql, rowCallbackHandler, email);
-
-		return rowCallbackHandler.getKorisnici().get(0);
-	}
-
-	@Override
-	public Korisnik findOne(String email, String sifra) {
-		String sql = 
-				"SELECT kor.id, kor.korisnickoIme, kor.lozinka, kor.email, kor.ime, kor.prezime, kor.datumRodjenja, kor.adresa, kor.brojTelefona, kor.datumRegistracije, kor.uloga FROM korisnici kor " + 
-				"WHERE kor.email = ? AND " +
-				"kor.lozinka = ? " + 
-				"ORDER BY kor.id";
-
-		KorisnikRowCallBackHandler rowCallbackHandler = new KorisnikRowCallBackHandler();
-		jdbcTemplate.query(sql, rowCallbackHandler, email, sifra);
-
-		if(rowCallbackHandler.getKorisnici().size() == 0) {
+	public Korisnik findOne(String korisnickoIme) {
+		try {
+			String sql = "SELECT korisnickoIme, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, administrator FROM korisnici WHERE korisnickoIme = ?";
+			return jdbcTemplate.queryForObject(sql, new KorisnikRowMapper(), korisnickoIme);
+		} catch (EmptyResultDataAccessException ex) {
+			// ako korisnik nije pronađen
 			return null;
 		}
-		
-		return rowCallbackHandler.getKorisnici().get(0);
 	}
-
+	@Override
+	public Korisnik findOne(String korisnickoIme, String lozinka) {
+		try {
+			String sql = "SELECT korisnickoIme, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, administrator FROM korisnici WHERE korisnickoIme = ? AND lozinka = ?";
+			return jdbcTemplate.queryForObject(sql, new KorisnikRowMapper(), korisnickoIme, lozinka);
+		} catch (EmptyResultDataAccessException ex) {
+			// ako korisnik nije pronađen
+			return null;
+		}
+	}
 	@Override
 	public List<Korisnik> findAll() {
-		String sql = 
-				"SELECT kor.id, kor.korisnickoIme, kor.lozinka, kor.email, kor.ime, kor.prezime, kor.datumRodjenja, kor.adresa, kor.brojTelefona, kor.datumRegistracije, kor.uloga FROM korisnici kor " + 
-				"ORDER BY kor.id";
-
-		KorisnikRowCallBackHandler rowCallbackHandler = new KorisnikRowCallBackHandler();
-		jdbcTemplate.query(sql, rowCallbackHandler);
-
-		return rowCallbackHandler.getKorisnici();
+		String sql = "SELECT SELECT korisnickoIme, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, administrator FROM korisnici";
+		return jdbcTemplate.query(sql, new KorisnikRowMapper());
 	}
-	
-	@Transactional
 	@Override
-	public int save(Korisnik korisnik) {
-		PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
-			
-			@Override
-			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				String sql = "INSERT INTO korisnici (korisnickoIme, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, uloga) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-				PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				int index = 1;
-				preparedStatement.setString(index++, korisnik.getKorisnickoIme());
-				preparedStatement.setString(index++, korisnik.getLozinka());
-				preparedStatement.setString(index++, korisnik.getEmail());
-				preparedStatement.setString(index++, korisnik.getIme());
-				preparedStatement.setString(index++, korisnik.getPrezime());
-				preparedStatement.setTimestamp(index++, Timestamp.valueOf(korisnik.getDatumRodjenja().atStartOfDay()));
-				preparedStatement.setString(index++, korisnik.getAdresa());
-				preparedStatement.setString(index++, korisnik.getBrojTelefona());
-				preparedStatement.setTimestamp(index++, Timestamp.valueOf(korisnik.getDatumRegistracije().atStartOfDay()));
-				preparedStatement.setString(index++, korisnik.getUloga());
-
-				return preparedStatement;
-			}
-
-		};
-		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-		boolean uspeh = jdbcTemplate.update(preparedStatementCreator, keyHolder) == 1;
-		return uspeh?1:0;
-	}
-	
-	@Transactional
-	@Override
-	public int update(Korisnik korisnik) {
-		String sql = "UPDATE korisnici SET korisnickoIme = ?, lozinka = ?, email = ?, ime = ?, prezime = ?, datumRodjenja = ?, adresa = ?, brojTelefona = ?, datumRegistracije = ?, uloga = ? WHERE id = ?";	
-		boolean uspeh = jdbcTemplate.update(sql, korisnik.getIme() , korisnik.getPrezime(), korisnik.getEmail(), korisnik.getLozinka(), korisnik.getId()) == 1;
+	public List<Korisnik> find(String korisnickoIme, String email, String ime, String prezime, LocalDateTime datumRodjenjaOd, LocalDateTime datumRodjenjaDo, String adresa, String brojTelefona, LocalDateTime datumRegistracijeOd, LocalDateTime datumRegistracijeDo, Boolean administrator) {
 		
-		return uspeh?1:0;
+		ArrayList<Object> listaArgumenata = new ArrayList<Object>();
+		
+		String sql = "SELECT korisnickoIme, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, administrator FROM korisnici ";
+		
+		StringBuffer whereSql = new StringBuffer(" WHERE ");
+		boolean imaArgumenata = false;
+		
+		if(korisnickoIme!=null) {
+			korisnickoIme = "%" + korisnickoIme + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("korisnickoIme LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(korisnickoIme);
+		}
+		
+		if(email!=null) {
+			email = "%" + email + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("email LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(email);
+		}
+		
+		if(ime!=null) {
+			ime = "%" + ime + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("ime LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(ime);
+		}
+		
+		if(prezime!=null) {
+			prezime = "%" + prezime + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("prezime LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(prezime);
+		}
+		
+		if(datumRodjenjaOd!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("datumRodjenja >= ?");
+			imaArgumenata = true;
+			listaArgumenata.add(datumRodjenjaOd);
+		}
+		
+		if(datumRodjenjaDo!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("datumRodjenja <= ?");
+			imaArgumenata = true;
+			listaArgumenata.add(datumRodjenjaDo);
+		}
+		
+		if(adresa!=null) {
+			adresa = "%" + adresa + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("adresa LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(adresa);
+		}
+		
+		if(brojTelefona!=null) {
+			brojTelefona = "%" + brojTelefona + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("brojTelefona LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(brojTelefona);
+		}
+		
+		if(datumRegistracijeOd!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("datumRegistracije >= ?");
+			imaArgumenata = true;
+			listaArgumenata.add(datumRegistracijeOd);
+		}
+		
+		if(datumRegistracijeDo!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("datumRegistracije <= ?");
+			imaArgumenata = true;
+			listaArgumenata.add(datumRegistracijeDo);
+		}
+		
+		if(administrator!=null) {	
+			//vraća samo administratore ili sve korisnike sistema
+			String administratorSql = (administrator)? "administrator = 1": "administrator >= 0";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append(administratorSql);
+			imaArgumenata = true;
+		}
+		
+		
+		if(imaArgumenata)
+			sql=sql + whereSql.toString()+" ORDER BY korisnickoIme";
+		else
+			sql=sql + " ORDER BY korisnickoIme";
+		System.out.println(sql);
+		
+		return jdbcTemplate.query(sql, listaArgumenata.toArray(), new KorisnikRowMapper());
 	}
 	
-	@Transactional
 	@Override
-	public int delete(Long id) {
-		String sql = "DELETE FROM korisnici WHERE id = ?";
-		return jdbcTemplate.update(sql, id);
+	public void save(Korisnik korisnik) {
+		String sql = "INSERT INTO korisnici (korisnickoime, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, administrator) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		jdbcTemplate.update(sql, korisnik.getKorisnickoIme(), korisnik.getLozinka(), korisnik.getEmail(), korisnik.getIme(), korisnik.getPrezime(), korisnik.getDatumRodjenja(), korisnik.getAdresa(), korisnik.getBrojTelefona(), korisnik.getDatumRegistracije(), korisnik.isAdministrator());
+	}
+	
+	@Override
+	public void update(Korisnik korisnik) {
+		if (korisnik.getLozinka() == null) {
+			String sql = "UPDATE korisnici SET email = ?, ime = ?, prezime = ?, datumRodjenja = ?, adresa = ?, brojTelefona = ?, datumRegistracije = ?, administrator = ? WHERE korisnickoIme = ?";
+			jdbcTemplate.update(sql, korisnik.getEmail(), korisnik.getIme(), korisnik.getPrezime(), korisnik.getDatumRodjenja(), korisnik.getAdresa(), korisnik.getBrojTelefona(), korisnik.getDatumRegistracije(), korisnik.isAdministrator(), korisnik.getKorisnickoIme());
+		} else {
+			String sql = "UPDATE korisnici SET lozinka = ?, email = ?, ime = ?, prezime = ?, datumRodjenja = ?, adresa = ?, brojTelefona = ?, datumRegistracije = ?, administrator = ? WHERE korisnickoIme = ?";
+			jdbcTemplate.update(sql, korisnik.getLozinka(), korisnik.getEmail(), korisnik.getIme(), korisnik.getPrezime(), korisnik.getDatumRodjenja(), korisnik.getAdresa(), korisnik.getBrojTelefona(), korisnik.getDatumRegistracije(), korisnik.isAdministrator(), korisnik.getKorisnickoIme());
+		}
+	}
+	@Override
+	public void delete(String korisnickoIme) {
+		String sql = "DELETE FROM korisnici WHERE korisnickoIme = ?";
+		jdbcTemplate.update(sql, korisnickoIme);
 	}
 
 }

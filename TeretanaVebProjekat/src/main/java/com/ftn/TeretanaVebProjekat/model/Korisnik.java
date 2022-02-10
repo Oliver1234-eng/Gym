@@ -1,6 +1,7 @@
 package com.ftn.TeretanaVebProjekat.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Korisnik {
 
@@ -10,16 +11,17 @@ public class Korisnik {
 	private String email;
 	private String ime;
 	private String prezime;
-	private LocalDate datumRodjenja;
+	private LocalDateTime datumRodjenja;
 	private String adresa;
 	private String brojTelefona;
-	private LocalDate datumRegistracije;
-	private String uloga;
+	private LocalDateTime datumRegistracije;
+	private boolean administrator = false;
 	
 	public Korisnik() {}
 
 	public Korisnik(Long id, String korisnickoIme, String lozinka, String email, String ime, String prezime,
-			LocalDate datumRodjenja, String adresa, String brojTelefona, LocalDate datumRegistracije, String uloga) {
+			LocalDateTime datumRodjenja, String adresa, String brojTelefona, LocalDateTime datumRegistracije,
+			boolean administrator) {
 		super();
 		this.id = id;
 		this.korisnickoIme = korisnickoIme;
@@ -31,11 +33,27 @@ public class Korisnik {
 		this.adresa = adresa;
 		this.brojTelefona = brojTelefona;
 		this.datumRegistracije = datumRegistracije;
-		this.uloga = uloga;
+		this.administrator = administrator;
+	}
+
+	public Korisnik(Long id, String korisnickoIme, String lozinka, String email, String ime, String prezime,
+			LocalDateTime datumRodjenja, String adresa, String brojTelefona, LocalDateTime datumRegistracije) {
+		super();
+		this.id = id;
+		this.korisnickoIme = korisnickoIme;
+		this.lozinka = lozinka;
+		this.email = email;
+		this.ime = ime;
+		this.prezime = prezime;
+		this.datumRodjenja = datumRodjenja;
+		this.adresa = adresa;
+		this.brojTelefona = brojTelefona;
+		this.datumRegistracije = datumRegistracije;
 	}
 
 	public Korisnik(String korisnickoIme, String lozinka, String email, String ime, String prezime,
-			LocalDate datumRodjenja, String adresa, String brojTelefona, LocalDate datumRegistracije, String uloga) {
+			LocalDateTime datumRodjenja, String adresa, String brojTelefona, LocalDateTime datumRegistracije,
+			boolean administrator) {
 		super();
 		this.korisnickoIme = korisnickoIme;
 		this.lozinka = lozinka;
@@ -46,7 +64,46 @@ public class Korisnik {
 		this.adresa = adresa;
 		this.brojTelefona = brojTelefona;
 		this.datumRegistracije = datumRegistracije;
-		this.uloga = uloga;
+		this.administrator = administrator;
+	}
+
+	public Korisnik(String korisnickoIme, String lozinka, String email, String ime, String prezime,
+			LocalDateTime datumRodjenja, String adresa, String brojTelefona, LocalDateTime datumRegistracije) {
+		super();
+		this.korisnickoIme = korisnickoIme;
+		this.lozinka = lozinka;
+		this.email = email;
+		this.ime = ime;
+		this.prezime = prezime;
+		this.datumRodjenja = datumRodjenja;
+		this.adresa = adresa;
+		this.brojTelefona = brojTelefona;
+		this.datumRegistracije = datumRegistracije;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime*result + ((korisnickoIme == null) ? 0 : korisnickoIme.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Korisnik other = (Korisnik) obj;
+		if (korisnickoIme == null) {
+			if (other.korisnickoIme != null)
+				return false;
+		} else if (!korisnickoIme.equals(other.korisnickoIme))
+			return false;
+		return true;
 	}
 
 	public Long getId() {
@@ -97,11 +154,11 @@ public class Korisnik {
 		this.prezime = prezime;
 	}
 
-	public LocalDate getDatumRodjenja() {
+	public LocalDateTime getDatumRodjenja() {
 		return datumRodjenja;
 	}
 
-	public void setDatumRodjenja(LocalDate datumRodjenja) {
+	public void setDatumRodjenja(LocalDateTime datumRodjenja) {
 		this.datumRodjenja = datumRodjenja;
 	}
 
@@ -121,31 +178,26 @@ public class Korisnik {
 		this.brojTelefona = brojTelefona;
 	}
 
-	public LocalDate getDatumRegistracije() {
+	public LocalDateTime getDatumRegistracije() {
 		return datumRegistracije;
 	}
 
-	public void setDatumRegistracije(LocalDate datumRegistracije) {
+	public void setDatumRegistracije(LocalDateTime datumRegistracije) {
 		this.datumRegistracije = datumRegistracije;
 	}
 
-	public String getUloga() {
-		return uloga;
+	public boolean isAdministrator() {
+		return administrator;
 	}
 
-	public void setUloga(String uloga) {
-		this.uloga = uloga;
+	public void setAdministrator(boolean administrator) {
+		this.administrator = administrator;
 	}
 
 	@Override
 	public String toString() {
-		return this.ime + " " + this.prezime + " (" + this.email + ")";
+		return "Korisnik [id=" + id + ", korisnickoIme=" + korisnickoIme + ", administrator=" + administrator + "]";
 	}
+
 	
-	public String toFileString() {
-		return this.getId() + ";" + this.getKorisnickoIme() + ";" + this.getLozinka() + ";" + 
-				this.getIme() + ";" + this.getPrezime() + ";" + this.getDatumRodjenja() + ";" +
-				this.getAdresa() + ";" + this.getBrojTelefona() + ";" + this.getDatumRegistracije() + ";"
-				+ this.getUloga();
-	}
 }

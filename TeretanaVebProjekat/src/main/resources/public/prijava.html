@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<base href="">
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
+	<title>Prijava</title>
+</head>
+<body>
+	<h2>Teretana</h2>
+	<ul>
+		<li><a href="">pocetna</a></li>
+	</ul>
+	<table class="korisnik">
+		<tr><th>Niste prijavljeni</th></tr>
+		<tr>
+			<td>
+				<ul>
+					<li><a href="registracija.html">registracija</a></li>
+					<li><a href="prijava.html">prijava</a></li>
+				</ul>
+			</td>
+		</tr>
+	</table>
+	<ul>
+		<li><a href="Treninzi">treninzi</a></li>
+		<li><a href="TipoviTreninga">tipoviTreninga</a></li>
+		<li><a href="Termini">termini</a></li>
+	</ul>
+	<form method="post" action="Korisnici/Login">
+		<table class="forma">
+			<caption>Prijava</caption>
+			<tr><th>korisničko ime:</th><td><input type="text" name="korisnickoIme"/></td></tr>
+			<tr><th>lozinka:</th><td><input type="password" name="lozinka"/></td></tr>
+			<tr><th></th><td><input type="submit" value="Prijava"/></td></tr>
+		</table>
+	</form>
+	<p class="greska"></p>
+</body>
+</html>

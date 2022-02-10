@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSessionListener;
 
 import org.springframework.stereotype.Component;
 
+import com.ftn.TeretanaVebProjekat.model.Trening;
+
 //import com.ftn.TeretanaVebProjekat.controller.ClanskeKarteController;
 //import com.ftn.TeretanaVebProjekat.controller.KnjigeController;
 //import com.ftn.TeretanaVebProjekat.model.Knjiga;
@@ -17,18 +19,15 @@ import org.springframework.stereotype.Component;
 public class InitHttpSessionListener implements HttpSessionListener {
 
 	/** kod koji se izvrsava po kreiranju sesije */
-	public void sessionCreated(HttpSessionEvent arg0) {
+	public void sessionCreated(HttpSessionEvent event) {
 		System.out.println("Inicijalizacija sesisje HttpSessionListener...");
-//		
-//		//pri kreiranju sesije inicijalizujemo je ili radimo neke dodatne aktivnosti
-//		List<Knjiga> zaIznajmljivanje = new ArrayList<Knjiga>();
-//		String registarskiBrojCK = "";
-		HttpSession session  = arg0.getSession();
-		System.out.println("session id korisnika je "+session.getId());
-//		session.setAttribute(KnjigeController.KNJIGE_ZA_IZNAJMLJIVANJE, zaIznajmljivanje);
-		
-//		session.setAttribute(ClanskeKarteController.CLANSKA_KARTA, registarskiBrojCK);
-//		
+
+		// pri kreiranju sesije inicijalizujemo je ili radimo neke dodatne aktivnosti	
+		HttpSession session  = event.getSession();
+		System.out.println("Session id korisnika je "+ session.getId());
+
+		//session.setAttribute(TreninziController.POSECENI_TRENINZI_ZA_KORISNIKA_KEY, new ArrayList<Trening>());
+
 		System.out.println("Uspeh HttpSessionListener!");
 	}
 	
@@ -38,5 +37,6 @@ public class InitHttpSessionListener implements HttpSessionListener {
 		
 		System.out.println("Uspeh HttpSessionListener!");
 	}
-
 }
+
+

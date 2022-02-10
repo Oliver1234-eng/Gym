@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8" />
+	<meta charset="UTF-8">
+	<title>Prijava</title>
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
-	<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
-	<base href="/TeretanaVebProjekat/">
-	<title>Osnovna stranica projekta</title>
 </head>
 <body>
-	<ul>
-		<li><a href="registracija.html">Registruj se</a></li>
-	</ul>
-	<br/>
-	<form method="post" action="korisnici/login">
-		<table>
-			<caption>Prijava korisnika na sistem</caption>
-			<tr><th>Korisnicko ime:</th><td><input type="text" value="" name="email" required/></td></tr>
-			<tr><th>Sifra:</th><td><input type="password" value="" name="sifra" required/></td></tr>
-			<tr><th></th><td><input type="submit" value="Prijavi se" /></td>
-		</table>
-	</form>
+	<div th:fragment="centralniDiv">
+		<form method="post" action="Korisnici/Login">
+			<table class="forma">
+				<caption>Prijava</caption>
+				<tr><th>korisnicko ime:</th><td><input type="text" name="korisnickoIme"/></td></tr>
+				<tr><th>lozinka:</th><td><input type="password" name="lozinka"/></td></tr>
+				<tr><th></th><td><input type="submit" value="Prijava"/></td></tr>
+			</table>
+		</form>
+		<p class="greska" th:text="${poruka}"></p>
+	</div>
 </body>
 </html>

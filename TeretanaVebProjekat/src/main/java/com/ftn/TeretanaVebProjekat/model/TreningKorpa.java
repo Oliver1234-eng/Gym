@@ -1,32 +1,29 @@
 package com.ftn.TeretanaVebProjekat.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Trening {
+public class TreningKorpa {
 	
 	private Long id;
 	private String naziv;
 	private String trener;
 	private String kratakOpis;
+	private String tipTreninga;
 	private int cena;
 	private String vrstaTreninga = "pojedinacni";
 	private String nivoTreninga = "amaterski";
 	private int trajanjeUMinutima;
 	private int prosecnaOcena;
 	private boolean zakazan;
-	
-	private List<TipTreninga> tipoviTreninga = new ArrayList<>();
-	
-	public Trening() {}
 
-	public Trening(Long id, String naziv, String trener, String kratakOpis, int cena, String vrstaTreninga,
-			String nivoTreninga, int trajanjeUMinutima, int prosecnaOcena, boolean zakazan) {
+	public TreningKorpa() {}
+
+	public TreningKorpa(Long id, String naziv, String trener, String kratakOpis, String tipTreninga, int cena,
+			String vrstaTreninga, String nivoTreninga, int trajanjeUMinutima, int prosecnaOcena, boolean zakazan) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
 		this.trener = trener;
 		this.kratakOpis = kratakOpis;
+		this.tipTreninga = tipTreninga;
 		this.cena = cena;
 		this.vrstaTreninga = vrstaTreninga;
 		this.nivoTreninga = nivoTreninga;
@@ -35,12 +32,13 @@ public class Trening {
 		this.zakazan = zakazan;
 	}
 
-	public Trening(String naziv, String trener, String kratakOpis, int cena, String vrstaTreninga, String nivoTreninga,
-			int trajanjeUMinutima, int prosecnaOcena, boolean zakazan) {
+	public TreningKorpa(String naziv, String trener, String kratakOpis, String tipTreninga, int cena,
+			String vrstaTreninga, String nivoTreninga, int trajanjeUMinutima, int prosecnaOcena, boolean zakazan) {
 		super();
 		this.naziv = naziv;
 		this.trener = trener;
 		this.kratakOpis = kratakOpis;
+		this.tipTreninga = tipTreninga;
 		this.cena = cena;
 		this.vrstaTreninga = vrstaTreninga;
 		this.nivoTreninga = nivoTreninga;
@@ -49,13 +47,14 @@ public class Trening {
 		this.zakazan = zakazan;
 	}
 
-	public Trening(Long id, String naziv, String trener, String kratakOpis, int cena, String vrstaTreninga,
-			String nivoTreninga, int trajanjeUMinutima, int prosecnaOcena) {
+	public TreningKorpa(Long id, String naziv, String trener, String kratakOpis, String tipTreninga, int cena,
+			String vrstaTreninga, String nivoTreninga, int trajanjeUMinutima, int prosecnaOcena) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
 		this.trener = trener;
 		this.kratakOpis = kratakOpis;
+		this.tipTreninga = tipTreninga;
 		this.cena = cena;
 		this.vrstaTreninga = vrstaTreninga;
 		this.nivoTreninga = nivoTreninga;
@@ -63,12 +62,13 @@ public class Trening {
 		this.prosecnaOcena = prosecnaOcena;
 	}
 
-	public Trening(String naziv, String trener, String kratakOpis, int cena, String vrstaTreninga, String nivoTreninga,
-			int trajanjeUMinutima, int prosecnaOcena) {
+	public TreningKorpa(String naziv, String trener, String kratakOpis, String tipTreninga, int cena,
+			String vrstaTreninga, String nivoTreninga, int trajanjeUMinutima, int prosecnaOcena) {
 		super();
 		this.naziv = naziv;
 		this.trener = trener;
 		this.kratakOpis = kratakOpis;
+		this.tipTreninga = tipTreninga;
 		this.cena = cena;
 		this.vrstaTreninga = vrstaTreninga;
 		this.nivoTreninga = nivoTreninga;
@@ -76,31 +76,6 @@ public class Trening {
 		this.prosecnaOcena = prosecnaOcena;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime*result + ((id == null) ? 0 : id.hashCode());
-		return 31 + id.hashCode();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Trening other = (Trening) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-	
 	public Long getId() {
 		return id;
 	}
@@ -131,6 +106,14 @@ public class Trening {
 
 	public void setKratakOpis(String kratakOpis) {
 		this.kratakOpis = kratakOpis;
+	}
+
+	public String getTipTreninga() {
+		return tipTreninga;
+	}
+
+	public void setTipTreninga(String tipTreninga) {
+		this.tipTreninga = tipTreninga;
 	}
 
 	public int getCena() {
@@ -180,19 +163,10 @@ public class Trening {
 	public void setZakazan(boolean zakazan) {
 		this.zakazan = zakazan;
 	}
-	
-	public List<TipTreninga> getTipoviTreninga() {
-		return tipoviTreninga;
-	}
 
-	public void setTipoviTreninga(List<TipTreninga> tipoviTreninga) {
-		this.tipoviTreninga.clear();
-		this.tipoviTreninga.addAll(tipoviTreninga);
-	}
-	
 	@Override
 	public String toString() {
-		return "Trening [id=" + id + ", naziv=" + naziv + "]";
+		return "TreningKorpa [id=" + id + ", naziv=" + naziv + "]";
 	}
 	
 	

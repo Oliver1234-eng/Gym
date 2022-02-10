@@ -11,9 +11,9 @@ import com.ftn.TeretanaVebProjekat.model.Sala;
 import com.ftn.TeretanaVebProjekat.service.SalaService;
 
 @Service
-public class DatabaseSalaServiceImpl implements SalaService {
+public class DatabaseSalaServiceImpl {}//implements SalaService {
 	
-	@Autowired
+	/*@Autowired
 //	@Qualifier("zanrDAOOldCode")
 	private SalaDAO salaDAO;
 
@@ -112,5 +112,4 @@ public class DatabaseSalaServiceImpl implements SalaService {
 
 		return rezultat;
 		
-	}
-}
+	}*/

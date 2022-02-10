@@ -1,29 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8" />
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
-	<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>
-	<base href="/TeretanaVebProjekat/">
 	<title>Registracija</title>
 </head>
 <body>
-	<br/>
-	<form method="post" action="korisnici/registracija">
-		<table>
-			<caption>Registracija</caption>
-			<tr><th>Email:</th><td><input type="text" value="" name="korisnickoIme" required/></td></tr>
-			<tr><th>Sifra:</th><td><input type="password" value="" name="sifra" required/></td></tr>
-			<tr><th>Korisnicko ime:</th><td><input type="text" value="" name="email" required/></td></tr>
-			<tr><th>Ime:</th><td><input type="text" value="" name="ime" required/></td></tr>
-			<tr><th>Prezime:</th><td><input type="text" value="" name="prezime" required/></td></tr>
-			<tr><th>Datum rodjenja:</th><td><input type="date" name="datumRodjenja" required/></td></tr>
-			<tr><th>Adresa:</th><td><input type="text" value="" name="adresa" required/></td></tr>
-			<tr><th>Broj telefona:</th><td><input type="text" value="" name="brojTelefona" required/></td></tr>
-			<tr><th>Datum registracije:</th><td><input type="date" name="datumRegistracije" required/></td></tr>
-			<tr><th>Uloga:</th><td><input type="text" value="" name="uloga" required/></td></tr>
-			<tr><th></th><td><input type="submit" value="Registruj se" /></td>
-		</table>
-	</form>
+	<div th:fragment="centralniDiv">
+		<form method="post" action="Korisnici/Register">
+			<table class="forma">
+				<caption>Registracija</caption>
+				<tr><th>korisnicko ime:</th><td><input type="text" name="korisnickoIme"/></td></tr>
+				<tr><th>lozinka:</th><td><input type="password" name="lozinka"/></td></tr>
+				<tr><th>ponovljena lozinka:</th><td><input type="password" name="ponovljenaLozinka"/></td></tr>
+				<tr><th>e-mail:</th><td><input type="text" name="email"/></td></tr>
+				<tr><th>ime:</th><td><input type="text" name="ime"/></td></tr>
+				<tr><th>prezime:</th><td><input type="text" name="prezime"/></td></tr>
+				<tr>
+				<th>datum rodjenja:</th>
+					<td>
+						<input type="date" th:value="2000-01-01" name="datumRodjenja"/>&nbsp;
+						<input type="time" value="12:00" name="vremeRodjenja"/>
+					</td>
+				<tr>
+				<tr><th>adresa:</th><td><input type="text" name="adresa"/></td></tr>
+				<tr><th>broj telefona:</th><td><input type="text" name="brojTelefona"/></td></tr>
+				<tr>
+				<th>datum registracije:</th>
+					<td>
+						<input type="date" th:value="2000-01-01" name="datumRegistracije"/>&nbsp;
+						<input type="time" value="12:00" name="vremeRegistracije"/>
+					</td>
+				<tr>
+				<tr><th></th><td><input type="submit" value="Registracija"/></td></tr>
+			</table>
+		</form>
+		<p class="greska" th:text="${poruka}"></p>
+	</div>
 </body>
 </html>

@@ -3,30 +3,27 @@ package com.ftn.TeretanaVebProjekat.model;
 public class Sala {
 
 	private Long id;
-	private String oznakaSale;
 	private int kapacitet;
 	
 	public Sala() {}
 
-	public Sala(Long id, String oznakaSale, int kapacitet) {
+	public Sala(Long id, int kapacitet) {
 		super();
 		this.id = id;
-		this.oznakaSale = oznakaSale;
 		this.kapacitet = kapacitet;
 	}
 
-	public Sala(String oznakaSale, int kapacitet) {
+	public Sala(int kapacitet) {
 		super();
-		this.oznakaSale = oznakaSale;
 		this.kapacitet = kapacitet;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime*result + ((id == null) ? 0 : id.hashCode());
-		return result;
+		return 31 + id.hashCode();
 	}
 
 	@Override
@@ -45,21 +42,13 @@ public class Sala {
 			return false;
 		return true;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getOznakaSale() {
-		return oznakaSale;
-	}
-
-	public void setOznakaSale(String oznakaSale) {
-		this.oznakaSale = oznakaSale;
 	}
 
 	public int getKapacitet() {
@@ -72,6 +61,8 @@ public class Sala {
 
 	@Override
 	public String toString() {
-		return "Sala [oznakaSale=" + oznakaSale + ", kapacitet=" + kapacitet + "]";
+		return "Sala [id=" + id + ", kapacitet=" + kapacitet + "]";
 	}
+
+	
 }

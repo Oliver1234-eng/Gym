@@ -5,20 +5,20 @@ import java.time.LocalDate;
 public class Komentar {
 
 	private Long id;
-	private String tekstKomentara;
+	private String tekst;
 	private int ocena;
 	private LocalDate datum;
 	private Korisnik korisnik;
 	private Trening trening;
-	private String status;
+	private String status = "odobren";
 	
 	public Komentar() {}
 
-	public Komentar(Long id, String tekstKomentara, int ocena, LocalDate datum, Korisnik korisnik, Trening trening,
+	public Komentar(Long id, String tekst, int ocena, LocalDate datum, Korisnik korisnik, Trening trening,
 			String status) {
 		super();
 		this.id = id;
-		this.tekstKomentara = tekstKomentara;
+		this.tekst = tekst;
 		this.ocena = ocena;
 		this.datum = datum;
 		this.korisnik = korisnik;
@@ -26,15 +26,39 @@ public class Komentar {
 		this.status = status;
 	}
 
-	public Komentar(String tekstKomentara, int ocena, LocalDate datum, Korisnik korisnik, Trening trening,
-			String status) {
+	public Komentar(String tekst, int ocena, LocalDate datum, Korisnik korisnik, Trening trening, String status) {
 		super();
-		this.tekstKomentara = tekstKomentara;
+		this.tekst = tekst;
 		this.ocena = ocena;
 		this.datum = datum;
 		this.korisnik = korisnik;
 		this.trening = trening;
 		this.status = status;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime*result + ((id == null) ? 0 : id.hashCode());
+		return 31 + id.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Komentar other = (Komentar) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 	public Long getId() {
@@ -45,12 +69,12 @@ public class Komentar {
 		this.id = id;
 	}
 
-	public String getTekstKomentara() {
-		return tekstKomentara;
+	public String getTekst() {
+		return tekst;
 	}
 
-	public void setTekstKomentara(String tekstKomentara) {
-		this.tekstKomentara = tekstKomentara;
+	public void setTekst(String tekst) {
+		this.tekst = tekst;
 	}
 
 	public int getOcena() {
@@ -92,13 +116,12 @@ public class Komentar {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 	@Override
 	public String toString() {
-		return this.getId() + ";" + this.getTekstKomentara() + ";" + this.getOcena()
-		 + ";" + this.getDatum() + ";" + this.getKorisnik() + ";" + this.getTrening()
-		 + ";" + this.getStatus();	
-		
+		return "Komentar [id=" + id + ", korisnik=" + korisnik + ", trening=" + trening + "]";
 	}
+	
+	
 	
 }

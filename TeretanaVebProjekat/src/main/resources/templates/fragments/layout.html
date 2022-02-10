@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html th:fragment="zajednickiStranica(title, centralniDiv)">
+<head>
+	<meta charset="UTF-8">
+	<base th:href="@{/}"><!-- popuni href atribut vrednošću context path-a -->
+	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="js/lokacijaJS.js"></script>
+	<title th:replace="${title}">neki naslov koji se menja</title>
+</head>
+<body>
+	<div style="float:right">
+		<span th:text="${#locale}"></span>
+		<span th:text="#{lang.change}"></span>:
+		<select id="locales" name="locales" th:with="jezik=${#locale.language}">
+		    <option value=""></option>
+		    <option value="en" th:text="#{lang.eng}" th:selected="${#strings.equals(jezik,'en')}"></option>
+		    <option value="sr" th:text="#{lang.sr}" th:selected="${#strings.equals(jezik,'sr')}"></option>
+		</select>
+	</div>
+	
+	<div th:replace="${centralniDiv}">centralni deo koji se menja</div>
+
+	<footer>
+		<ul>
+			<li><a href="Treninzi" th:text="#{general.workouts}"></a></li>
+			<li><a href="TipoviTreninga" th:text="#{general.typesOfWorkouts}"></a></li>
+			<li><a href="Termini" th:text="#{general.appointments}"></a></li>
+			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Korisnici">korisnici</a></li>
+		</ul>
+	</footer>
+</body>
+</html>
