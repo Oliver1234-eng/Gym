@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<title>Termin</title>
+</head>
+<body>
+	<div th:fragment="centralniDiv">
+		<form method="post" action="Termini/Edit" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
+			<input type="hidden" name="id" th:value="${termin.id}">
+			<table class="forma">
+				<caption>Termin</caption>
+				<tr>
+					<th>datum i vreme:</th>
+					<td>
+						<input type="date" th:value="${#temporals.format(termin.datumIVreme, 'yyyy-MM-dd')}" name="datum"/>&nbsp;
+						<input type="time" th:value="${#temporals.format(termin.datumIVreme, 'HH:mm')}" name="vreme"/>
+					</td>
+				<tr>
+					<th>trening:</th>
+					<td>
+						<select name="treningId">
+							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}" th:selected="${itTrening == termin.trening}"></option>
+						</select>
+					</td>
+				</tr>
+				<tr><th>sala:</th><td><input type="number" th:value="${termin.sala}" min="1" name="sala"/></td></tr>
+				<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+			</table>
+		</form>
+		<form method="post" action="Termini/Delete" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
+			<input type="hidden" name="id" th:value="${termin.id}">
+			<table class="forma">
+				<tr><th></th><td><input type="submit" value="Obrisi"/></td></tr>
+			</table>
+		</form>
+		<table class="forma" th:if="${session.prijavljeniKorisnik == null or not session.prijavljeniKorisnik.administrator}">
+			<caption>Termin</caption>
+			<tr><th>datum i vreme:</th><td th:text="${#temporals.format(termin.datumIVreme, 'dd.MM.yyy . HH:mm')}"></td></tr>
+			<tr>
+				<th>trening:</th><td><a th:href="|Treninzi/Details?id=${termin.trening.id}|" th:text="${termin.trening.naziv}"></a></td>
+			</tr>
+			<tr><th>sala:</th><td th:text="${termin.sala}"></td></tr>
+		</table>
+	</div>	
+</body>
+</html>
