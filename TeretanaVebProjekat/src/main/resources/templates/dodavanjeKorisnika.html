@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<title>Registracija</title>
+</head>
+<body>
+	<div th:fragment="centralniDiv">
+		<form method="post" action="Korisnici/Create">
+			<table class="forma">
+				<caption>Dodavanje korisnika</caption>
+				<tr><th>korisnicko ime:</th><td><input type="text" name="korisnickoIme"/></td></tr>
+				<tr><th>lozinka:</th><td><input type="password" name="lozinka"/></td></tr>
+				<tr><th>e-mail:</th><td><input type="text" name="email"/></td></tr>
+				<tr><th>ime:</th><td><input type="text" name="ime"/></td></tr>
+				<tr><th>prezime:</th><td><input type="text" name="prezime"/></td></tr>
+				<tr>
+					<th>datum i vreme rodjenja:</th>
+					<td>
+						<input type="date" th:value="2000-01-01" name="datumRodjenja"/>&nbsp;
+						<input type="time" value="12:00" name="vremeRodjenja"/>
+					</td>
+				<tr>
+				<tr><th>adresa:</th><td><input type="text" name="adresa"/></td></tr>
+				<tr><th>broj telefona:</th><td><input type="text" name="brojTelefona"/></td></tr>
+				<tr>
+					<th>datum i vreme registracije:</th>
+					<td>
+						<input type="date" th:value="2020-01-01" name="datumRegistracije"/>&nbsp;
+						<input type="time" value="12:00" name="vremeRegistracije"/>
+					</td>
+				<tr>
+				<tr><th>administrator:</th><td><input type="checkbox" name="administrator"/></td></tr>
+				<tr><th></th><td><input type="submit" value="Dodaj"/></td></tr>
+			</table>
+		</form>
+		<ul>
+			<li><a href="Korisnici">povratak</a></li>
+		</ul>
+	</div>
+</body>
+</html>
