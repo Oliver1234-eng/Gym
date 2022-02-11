@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="css/StiloviTabela.css"/>
 	<title>Tipovi treninga</title>
 </head>
 <body>
+	<div th:fragment="centralniDiv">
 		<form method="get">
 			<table class="tabela">
 				<caption>Tipovi treninga</caption>
@@ -17,7 +18,7 @@
 				<tr>
 					<th></th>
 					<th><input type="search" name="naziv" th:value="${param.naziv?: null}"/></th>
-					<th><input type="submit" value="Pretraži"/></th>
+					<th><input type="submit" value="Pretrazi"/></th>
 				</tr>
 				<tr th:each="itTipTreninga, status: ${tipoviTreninga}">
 					<td th:text="${status.index + 1}">1</td>
@@ -27,7 +28,8 @@
 			</table>
 		</form>
 		<ul>
-			<li><a href="TipoviTreninga/Create">dodavanje tipa treninga</a></li>
+			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="TipoviTreninga/Create">dodavanje tipa treninga</a></li>
 		</ul>
+	</div>
 </body>
 </html>

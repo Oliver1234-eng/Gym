@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<title>Dodavanje tipa treninga</title>
 </head>
 <body>
+	<div th:fragment="centralniDiv">
 		<form method="post" action="TipoviTreninga/Create">
 			<table class="forma">
 				<caption>Dodavanje tipa treninga</caption>
@@ -16,5 +17,6 @@
 		<ul>
 			<li><a href="TipoviTreninga">povratak</a></li>
 		</ul>
+	</div>
 </body>
 </html>

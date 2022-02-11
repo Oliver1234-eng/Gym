@@ -1,38 +1,54 @@
-<!DOCTYPE html>    
- <html xmlns:th="http://www.thymeleaf.org">    
- <head>    
- 	<meta charset="UTF-8">    
- 	<base href="bURL">    
- 	<title>Dodaj trening</title>
- 	<link rel="stylesheet"  type="text/css"  href="css/StiloviTabela.css"/>    
- 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>    
- 	<link rel="stylesheet" type="text/css" href="css/StiloviHorizontalniMeni.css"/>  
- </head>    
- <body>    
- 	<ul>    
- 		<li><a href="treninzi">Treninzi</a></li>        
- 		<li><a href="korisnici">Korisnici</a></li>    
- 	</ul>    
- 	<form method="post" action="add">    
- 		<table class = "forma">    
- 			<caption>Trening</caption>    
- 			<tr><th>Naziv:</th><td><input type="text" value="" name="naziv"/></td></tr>
- 			<tr>
-					<th>Tip treninga:</th>
-					<th:block th:each="itTipTreninga: ${tipoviTreninga}">
+<!DOCTYPE html>
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<title>Dodavanje filma</title>
+</head>
+<body>
+	<div th:fragment="centralniDiv">
+		<form method="post" action="Treninzi/Create">
+			<table class="forma">
+				<caption>Dodavanje treninga</caption>
+				<tr><th>naziv:</th><td><input type="text" name="naziv"/></td></tr>
+				<tr>
+					<th>tip treninga:</th>
+					<td>
+						<th:block th:each="itTipTreninga: ${tipoviTreninga}">
 							<input type="checkbox" name="tipTreningaId" th:value="${itTipTreninga.id}"/><span th:text="${itTipTreninga.naziv}"></span><br>
-					</th:block>
-				</tr>    
- 			<tr><th>Trener:</th><td><input type="text" value="" name="trener"/></td></tr>   
- 			<tr><th>Kratak opis:</th><td><input type="text" value="" name="kratakOpis" /></td></tr>   
- 			<tr><th>Cena:</th><td><input type="number" min="1" name="cena"/></td></tr>
- 			<tr><th>Vrsta treninga:</th><td><input type="text" value="" name="vrstaTreninga" /></td></tr>
- 			<tr><th>Nivo treninga:</th><td><input type="text" value="" name="nivoTreninga" /></td></tr>
- 			<tr><th>Trajanje u minutima:</th><td><input type="number" min="1" name="trajanjeUMinutima"/></td></tr>
- 			<tr><th>Prosecna ocena:</th><td><input type="number" min="1" name="prosecnaOcena"/></td></tr>
- 			<tr><th></th><td><input type="submit" value="Dodaj"/></td>    
- 		</table>    
- 	</form>   
- 	<br/>  
- </body>  
- </html> 
+						</th:block>
+					</td>
+				</tr>
+				<tr><th>trener:</th><td><input type="text" name="trener"/></td></tr>
+				<tr><th>kratak opis:</th><td><input type="text" name="kratakOpis"/></td></tr>
+				<tr><th>cena:</th><td><input type="number"  min="100" value="500" name="cena"/></td></tr>
+				<tr>
+					<th>vrsta treninga:</th>
+					<td>
+						<select name="vrstaTreninga">
+							<option value="pojedinacni">pojedinacni</option>
+							<option value="grupni">grupni</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>nivo treninga:</th>
+					<td>
+						<select name="nivoTreninga">
+							<option value="amaterski">amaterski</option>
+							<option value="srednji">srednji</option>
+							<option value="napredni">napredni</option>
+						</select>
+					</td>
+				</tr>
+				<tr><th>trajanje u minutima:</th><td><input type="number"  min="1" value="60" name="trajanjeUMinutima"/></td></tr>
+				<tr><th>prosecna ocena:</th><td><input type="number"  min="1" value="5" name="prosecnaOcena"/></td></tr>
+				<tr><th></th><td><input type="submit" value="Dodaj"/></td></tr>
+			</table>
+		</form>
+		<ul>
+			<li><a href="Treninzi">povratak</a></li>
+		</ul>
+	</div>
+</body>
+</html>

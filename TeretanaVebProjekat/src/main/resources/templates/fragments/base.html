@@ -26,7 +26,7 @@
 		</select>
 	</header>
 	
-	<h2>Bioskop</h2>
+	<h2>Teretana</h2>
 	<ul>
 		<li><a href="">početna</a></li>
 	</ul>
@@ -59,6 +59,31 @@
 	</ul>
 	
 	<div th:replace="${content}"></div>
+	
+	<table class="horizontalni-meni" th:unless="${#servletContext.getAttribute('statistikaTreninga').empty}">
+		<caption>Popularni treninzi</caption>
+		<tr>
+			<td>
+				<ul>
+					<li th:each="itBrojac: ${#servletContext.getAttribute('statistikaTreninga').treninzi}">
+						<a th:href="|Treninzi/Details?id=${itBrojac.trening.id}|" th:text="${itBrojac.trening.naziv}"></a>
+						<progress th:value="${itBrojac.brojac}" th:max="${#servletContext.getAttribute('statistikaTreninga').max}"></progress>
+						<span th:text="${itBrojac.brojac}"></span>
+					</li>
+				</ul>
+			</td>
+		</tr>
+	</table>
+	<table class="horizontalni-meni" th:unless="${session.poseceniTreninziZaKorisnika.empty}">
+		<caption>Poseceni treninzi</caption>
+		<tr>
+			<td>
+				<ul>
+					<li th:each="itTrening: ${session.poseceniTreninziZaKorisnika}"><a th:href="|Treninzi/Details?id=${itTrening.id}|" th:text="${itTrening.naziv}"></a></li>
+				</ul>
+			</td>
+		</tr>
+	</table>
 
 </body>
 </html>

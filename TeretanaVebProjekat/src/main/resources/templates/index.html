@@ -7,9 +7,9 @@
 	<title>Prijava</title>
 </head>
 <body>
-	<h2>Bioskop</h2>
+	<h2>Teretana</h2>
 	<ul>
-		<li><a href="">početna</a></li>
+		<li><a href="">pocetna</a></li>
 	</ul>
 	<table class="korisnik" th:unless="${session.prijavljeniKorisnik == null}">
 		<tr><th>Prijavljeni ste kao</th><td><a th:href="|Korisnici/Details?korisnickoIme=${session.prijavljeniKorisnik.korisnickoIme}|" th:text="${session.prijavljeniKorisnik.korisnickoIme}"></a>.</td></tr>

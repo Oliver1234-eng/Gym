@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSessionListener;
 
 import org.springframework.stereotype.Component;
 
+import com.ftn.TeretanaVebProjekat.controller.TreninziController;
 import com.ftn.TeretanaVebProjekat.model.Trening;
 
 //import com.ftn.TeretanaVebProjekat.controller.ClanskeKarteController;
@@ -26,7 +27,7 @@ public class InitHttpSessionListener implements HttpSessionListener {
 		HttpSession session  = event.getSession();
 		System.out.println("Session id korisnika je "+ session.getId());
 
-		//session.setAttribute(TreninziController.POSECENI_TRENINZI_ZA_KORISNIKA_KEY, new ArrayList<Trening>());
+		session.setAttribute(TreninziController.POSECENI_TRENINZI_ZA_KORISNIKA_KEY, new ArrayList<Trening>());
 
 		System.out.println("Uspeh HttpSessionListener!");
 	}

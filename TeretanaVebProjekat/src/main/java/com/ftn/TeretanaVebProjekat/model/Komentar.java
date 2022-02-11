@@ -1,37 +1,35 @@
 package com.ftn.TeretanaVebProjekat.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Komentar {
 
 	private Long id;
 	private String tekst;
 	private int ocena;
-	private LocalDate datum;
-	private Korisnik korisnik;
+	private LocalDateTime datumIVreme;
 	private Trening trening;
 	private String status = "odobren";
 	
 	public Komentar() {}
 
-	public Komentar(Long id, String tekst, int ocena, LocalDate datum, Korisnik korisnik, Trening trening,
+	public Komentar(Long id, String tekst, int ocena, LocalDateTime datumIVreme, Trening trening,
 			String status) {
 		super();
 		this.id = id;
 		this.tekst = tekst;
 		this.ocena = ocena;
-		this.datum = datum;
-		this.korisnik = korisnik;
+		this.datumIVreme = datumIVreme;
 		this.trening = trening;
 		this.status = status;
 	}
 
-	public Komentar(String tekst, int ocena, LocalDate datum, Korisnik korisnik, Trening trening, String status) {
+	public Komentar(String tekst, int ocena, LocalDateTime datumIVreme, Trening trening, String status) {
 		super();
 		this.tekst = tekst;
 		this.ocena = ocena;
-		this.datum = datum;
-		this.korisnik = korisnik;
+		this.datumIVreme = datumIVreme;
 		this.trening = trening;
 		this.status = status;
 	}
@@ -85,20 +83,12 @@ public class Komentar {
 		this.ocena = ocena;
 	}
 
-	public LocalDate getDatum() {
-		return datum;
+	public LocalDateTime getDatumIVreme() {
+		return datumIVreme;
 	}
 
-	public void setDatum(LocalDate datum) {
-		this.datum = datum;
-	}
-
-	public Korisnik getKorisnik() {
-		return korisnik;
-	}
-
-	public void setKorisnik(Korisnik korisnik) {
-		this.korisnik = korisnik;
+	public void setDatumIVreme(LocalDateTime datumIVreme) {
+		this.datumIVreme = datumIVreme;
 	}
 
 	public Trening getTrening() {
@@ -119,8 +109,10 @@ public class Komentar {
 
 	@Override
 	public String toString() {
-		return "Komentar [id=" + id + ", korisnik=" + korisnik + ", trening=" + trening + "]";
+		return "Komentar [id=" + id + ", trening=" + trening + "]";
 	}
+
+	
 	
 	
 	

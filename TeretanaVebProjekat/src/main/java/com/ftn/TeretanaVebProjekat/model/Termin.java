@@ -6,27 +6,27 @@ import java.time.LocalDateTime;
 public class Termin {
 
 	private Long id;
-	private Sala sala;
+	private LocalDateTime datumIVreme;
 	private Trening trening;
-	private LocalDateTime datum;
+	private int sala;
 	
 	public Termin() {}
 
-	public Termin(Long id, Sala sala, Trening trening, LocalDateTime datum) {
+	public Termin(Long id, LocalDateTime datumIVreme, Trening trening, int sala) {
 		super();
 		this.id = id;
-		this.sala = sala;
+		this.datumIVreme = datumIVreme;
 		this.trening = trening;
-		this.datum = datum;
+		this.sala = sala;
 	}
 
-	public Termin(Sala sala, Trening trening, LocalDateTime datum) {
+	public Termin(LocalDateTime datumIVreme, Trening trening, int sala) {
 		super();
-		this.sala = sala;
+		this.datumIVreme = datumIVreme;
 		this.trening = trening;
-		this.datum = datum;
+		this.sala = sala;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -60,12 +60,12 @@ public class Termin {
 		this.id = id;
 	}
 
-	public Sala getSala() {
-		return sala;
+	public LocalDateTime getDatumIVreme() {
+		return datumIVreme;
 	}
 
-	public void setSala(Sala sala) {
-		this.sala = sala;
+	public void setDatumIVreme(LocalDateTime datumIVreme) {
+		this.datumIVreme = datumIVreme;
 	}
 
 	public Trening getTrening() {
@@ -76,19 +76,19 @@ public class Termin {
 		this.trening = trening;
 	}
 
-	public LocalDateTime getDatum() {
-		return datum;
+	public int getSala() {
+		return sala;
 	}
 
-	public void setDatum(LocalDateTime datum) {
-		this.datum = datum;
+	public void setSala(int sala) {
+		this.sala = sala;
 	}
 
 	@Override
 	public String toString() {
-		return "Termin [id=" + id + ", sala=" + sala + ", trening=" + trening + ", datum=" + datum + "]";
+		return "Termin [id=" + id + ", datumIVreme=" + datumIVreme + ", trening=" + trening + ", sala=" + sala + "]";
 	}
-	
+
 	
 	
 }

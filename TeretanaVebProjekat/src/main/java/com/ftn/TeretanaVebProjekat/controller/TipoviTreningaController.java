@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ftn.TeretanaVebProjekat.model.Korisnik;
 import com.ftn.TeretanaVebProjekat.model.TipTreninga;
 import com.ftn.TeretanaVebProjekat.service.TipTreningaService;
 
 @Controller
 @RequestMapping(value="/TipoviTreninga")
 public class TipoviTreningaController {
-	
-	//za potrebe vezne tabele
 
 	@Autowired
 	private TipTreningaService tipTreningaService;
@@ -68,6 +67,12 @@ public class TipoviTreningaController {
 
 	@GetMapping(value="/Create")
 	public String create(HttpSession session, HttpServletResponse response) throws IOException {
+		// autentikacija, autorizacija
+		Korisnik korisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);
+		if (korisnik == null || !korisnik.isAdministrator()) {
+			response.sendRedirect(baseURL + "TipoviTreninga");
+			return "tipoviTreninga";
+		}
 
 		return "dodavanjeTipaTreninga";
 	}
@@ -75,6 +80,12 @@ public class TipoviTreningaController {
 	@PostMapping(value="/Create")
 	public void create(@RequestParam String naziv, 
 			HttpSession session, HttpServletResponse response) throws IOException {
+		// autentikacija, autorizacija
+		Korisnik korisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);
+		if (korisnik == null || !korisnik.isAdministrator()) {
+			response.sendRedirect(baseURL + "TipoviTreninga");
+			return;
+		}
 
 		// validacija
 		if (naziv.equals("")) {
@@ -93,9 +104,23 @@ public class TipoviTreningaController {
 	public void edit(@RequestParam Long id, 
 			@RequestParam String naziv, 
 			HttpSession session, HttpServletResponse response) throws IOException {
+		// autentikacija, autorizacija
+		Korisnik korisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);
+		if (korisnik == null || !korisnik.isAdministrator()) {
+			response.sendRedirect(baseURL + "TipoviTreninga");
+			return;
+		}
 
 		// validacija
 		TipTreninga tipTreninga = tipTreningaService.findOne(id);
+		if (tipTreninga == null) {
+			response.sendRedirect(baseURL + "TipoviTreninga");
+			return;
+		}	
+		if (naziv == null || naziv.equals("")) {
+			response.sendRedirect(baseURL + "TipoviTreninga/Details?id=" + id);
+			return;
+		}
 
 		// izmena
 		tipTreninga.setNaziv(naziv);
@@ -107,11 +132,17 @@ public class TipoviTreningaController {
 	@PostMapping(value="/Delete")
 	public void delete(@RequestParam Long id, 
 			HttpSession session, HttpServletResponse response) throws IOException {
+		// autentikacija, autorizacija
+		Korisnik korisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);
+		if (korisnik == null || !korisnik.isAdministrator()) {
+			response.sendRedirect(baseURL + "TipoviTreninga");
+			return;
+		}
 
 		// brisanje
 		tipTreningaService.delete(id);
 
 		response.sendRedirect(baseURL + "TipoviTreninga");
 	}
-}
 
+}

@@ -76,6 +76,13 @@ public class Trening {
 		this.prosecnaOcena = prosecnaOcena;
 	}
 
+	public Trening(Long id, String naziv, int trajanjeUMinutima) {
+		super();
+		this.id = id;
+		this.naziv = naziv;
+		this.trajanjeUMinutima = trajanjeUMinutima;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

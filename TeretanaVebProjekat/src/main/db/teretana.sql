@@ -91,12 +91,10 @@ CREATE TABLE sale (
 
 CREATE TABLE termini (
 	id BIGINT AUTO_INCREMENT,
-	salaId BIGINT NOT NULL,
-	treningId BIGINT NOT NULL,
 	datumIVreme DATETIME,
+	treningId BIGINT NOT NULL,
+	sala INT NOT NULL,
 	PRIMARY KEY(id),
-	FOREIGN KEY(salaId) REFERENCES sale(id)
-		ON DELETE CASCADE,
 	FOREIGN KEY(treningId) REFERENCES treninzi(id)
 		ON DELETE CASCADE
 );
@@ -105,13 +103,10 @@ CREATE TABLE komentari (
 	id BIGINT AUTO_INCREMENT,
 	tekst VARCHAR(50) NOT NULL,
 	ocena INT NOT NULL,
-	datum DATE,
-	korisnikId BIGINT NOT NULL,
+	datumIVreme DATETIME,
 	treningId BIGINT NOT NULL,
 	status ENUM('naCekanju', 'odobren', 'nijeOdobren') DEFAULT 'odobren',
 	PRIMARY KEY(id),
-	FOREIGN KEY(korisnikId) REFERENCES korisnici(id)
-		ON DELETE CASCADE,
 	FOREIGN KEY(treningId) REFERENCES treninzi(id)
 		ON DELETE CASCADE
 );
@@ -179,19 +174,19 @@ VALUES (2, 30);
 INSERT INTO sale (id, kapacitet)
 VALUES (3, 30);
 
-INSERT INTO termini (id, salaId, treningId, datumIVreme)
-VALUES (1, 1, 1, '2022-06-20 15:00');
-INSERT INTO termini (id, salaId, treningId, datumIVreme)
-VALUES (2, 2, 1, '2022-06-21 17:00');
-INSERT INTO termini (id, salaId, treningId, datumIVreme)
-VALUES (3, 3, 1, '2022-06-22 19:00');
+INSERT INTO termini (id, datumIVreme, treningId, sala)
+VALUES (1, '2022-06-20 15:00', 1, 1);
+INSERT INTO termini (id, datumIVreme, treningId, sala)
+VALUES (2, '2022-06-21 17:00', 2, 1);
+INSERT INTO termini (id, datumIVreme, treningId, sala)
+VALUES (3, '2022-06-22 19:00', 3, 1);
 
-INSERT INTO komentari (id, tekst, ocena, datum, korisnikId, treningId, status)
-VALUES (1, 'tekst', 5, '2022-01-01', 1, 1, 'odobren');
-INSERT INTO komentari (id, tekst, ocena, datum, korisnikId, treningId, status)
-VALUES (2, 'tekst', 4, '2022-01-02', 1, 1, 'odobren');
-INSERT INTO komentari (id, tekst, ocena, datum, korisnikId, treningId, status)
-VALUES (3, 'tekst', 5, '2022-01-03', 1, 1, 'odobren');
+INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status)
+VALUES (1, 'tekst', 5, '2022-01-01 11:00', 1, 'odobren');
+INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status)
+VALUES (2, 'tekst', 4, '2022-01-02 12:00', 1, 'odobren');
+INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status)
+VALUES (3, 'tekst', 5, '2022-01-03 13:00', 1, 'odobren');
 
 
 

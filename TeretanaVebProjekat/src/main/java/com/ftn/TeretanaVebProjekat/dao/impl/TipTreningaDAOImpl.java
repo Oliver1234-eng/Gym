@@ -23,7 +23,7 @@ public class TipTreningaDAOImpl implements TipTreningaDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private class ZanrRowMapper implements RowMapper<TipTreninga> {
+	private class TipTreningaRowMapper implements RowMapper<TipTreninga> {
 
 		@Override
 		public TipTreninga mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -39,18 +39,18 @@ public class TipTreningaDAOImpl implements TipTreningaDAO {
 	@Override
 	public TipTreninga findOne(Long id) {
 		String sql = "SELECT id, naziv FROM tipTreninga WHERE id = ?";
-		return jdbcTemplate.queryForObject(sql, new ZanrRowMapper(), id);
+		return jdbcTemplate.queryForObject(sql, new TipTreningaRowMapper(), id);
 	}
 	@Override
 	public List<TipTreninga> findAll() {
 		String sql = "SELECT id, naziv FROM tipTreninga";
-		return jdbcTemplate.query(sql, new ZanrRowMapper());
+		return jdbcTemplate.query(sql, new TipTreningaRowMapper());
 	}
 	@Override
 	public List<TipTreninga> find(String naziv) {
 		naziv = "%" + naziv + "%";
 		String sql = "SELECT id, naziv FROM tipTreninga WHERE naziv LIKE ?";
-		return jdbcTemplate.query(sql, new ZanrRowMapper(), naziv);
+		return jdbcTemplate.query(sql, new TipTreningaRowMapper(), naziv);
 	}
 	@Override
 	public int save(TipTreninga tipTreninga) {
