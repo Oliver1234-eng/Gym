@@ -10,6 +10,8 @@ public interface SalaDAO {
 	public Sala findOne(Long id);
 
 	public List<Sala> findAll();
+
+	public List<Sala> find(Integer kapacitetOd, Integer kapacitetDo);
 	
 	public int save(Sala sala);
 
@@ -18,7 +20,5 @@ public interface SalaDAO {
 	public int update(Sala sala);
 
 	public int delete(Long id);
-	
-	List<Sala> find(String oznakaSale, Integer kapacitetOd, Integer kapacitetDo);
 
 }

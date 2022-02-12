@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<title>Dodavanje sale</title>
+</head>
+<body>
+	<div th:fragment="centralniDiv">
+		<form method="post" action="Sale/Create">
+			<table class="forma">
+				<caption>Dodavanje sale</caption>
+				<tr><th>kapacitet:</th><td><input type="number"  min="1" value="1" name="kapacitet"/></td></tr>
+				<tr><th></th><td><input type="submit" value="Dodaj"/></td></tr>
+			</table>
+		</form>
+		<ul>
+			<li><a href="Sale">povratak</a></li>
+		</ul>
+	</div>
+</body>
+</html>

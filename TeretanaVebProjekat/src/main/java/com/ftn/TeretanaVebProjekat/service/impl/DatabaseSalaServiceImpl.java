@@ -11,10 +11,9 @@ import com.ftn.TeretanaVebProjekat.model.Sala;
 import com.ftn.TeretanaVebProjekat.service.SalaService;
 
 @Service
-public class DatabaseSalaServiceImpl {}//implements SalaService {
-	
-	/*@Autowired
-//	@Qualifier("zanrDAOOldCode")
+public class DatabaseSalaServiceImpl implements SalaService {
+
+	@Autowired
 	private SalaDAO salaDAO;
 
 	@Override
@@ -78,38 +77,14 @@ public class DatabaseSalaServiceImpl {}//implements SalaService {
 	}
 
 	@Override
-	public List<Sala> find(String oznakaSale, Integer kapacitetOd, Integer kapacitetDo) {
-		 
-		List<Sala> sale = salaDAO.findAll();
+	public List<Sala> find(Integer kapacitetOd, Integer kapacitetDo) {
+		// minimalne inkluzivne vrednosti parametara ako su izostavljeni
+		//1. način bi bilo pozivanje ogovarajuće DAO metode u odnosu na broj parametara 
+		//		gde bi trebalo implementirati više dao metoda tako da pokriju različite situacije
+		//2. način reši sve u DAO sloju
+		
+		//odabran 1.
+		return salaDAO.find(kapacitetOd, kapacitetDo);
+	}
 
-		// maksimalno inkluzivne vrednosti parametara ako su izostavljeni
-		// filtiranje radi u Servisnom sloju - izbegavati
-		if (oznakaSale == null) {
-			oznakaSale = "";
-		}
-		
-		if (kapacitetOd == null) {
-			kapacitetOd = 0;
-		}
-		
-		if (kapacitetDo == null) {
-			kapacitetDo = Integer.MAX_VALUE;
-		}
-		
-		List<Sala> rezultat = new ArrayList<>();
-		for (Sala itSala: sale) {
-			// kriterijum pretrage
-			if (!itSala.getOznakaSale().toLowerCase().contains(oznakaSale.toLowerCase())) {
-				continue;
-			}
-				
-			if (!(itSala.getKapacitet() >= kapacitetOd && itSala.getKapacitet() <= kapacitetDo)) {
-				continue;
-			}
-
-			rezultat.add(itSala);
-		}
-
-		return rezultat;
-		
-	}*/
+}

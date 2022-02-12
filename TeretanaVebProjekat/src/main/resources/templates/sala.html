@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<title>Sala</title>
+</head>
+<body>
+	<div th:fragment="centralniDiv">
+		<form method="post" action="Sale/Edit" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
+			<input type="hidden" name="id" th:value="${sala.id}"/>
+			<table class="forma">
+				<caption>Sala</caption>
+				<tr><th>kapacitet:</th><td><input type="number" min="1" th:value="${sala.kapacitet}" name="kapacitet"/></td></tr>
+				<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+			</table>
+		</form>
+		<form method="post" action="Sale/Delete" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
+			<input type="hidden" name="id" th:value="${sala.id}"/>
+			<table class="forma">
+				<tr><th></th><td><input type="submit" value="Obrisi"/></td></tr>
+			</table>
+		</form>
+		<table class="forma" th:if="${session.prijavljeniKorisnik == null or not session.prijavljeniKorisnik.administrator}">
+			<caption>Sala</caption>
+				<tr><th>kapacitet:</th><td><input type="number" min="1" th:value="${sala.kapacitet}" name="kapacitet"/></td></tr>
+		</table>
+	</div>
+</body>
+</html>

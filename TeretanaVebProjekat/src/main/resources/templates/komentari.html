@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviTabela.css"/>
+	<title>Komentari</title>
+</head>
+<body>
+	<div th:fragment="centralniDiv">
+		<form method="get">
+			<table class="tabela">
+				<caption>Komentari</caption>
+				<tr>
+					<th>r. br.</th>
+					<th>tekst</th>
+					<th>ocena</th>
+					<th>datum i vreme</th>
+					<th>film</th>
+					<th>status</th>
+					<th></th>
+				</tr>
+				<tr>
+					<th></th>
+					<th><input type="search" name="tekst" th:value="${param.tekst}?: null"/></th>
+					<th>
+						od:<input type="number" min="0" th:value="${param.ocenaOd}?: '0'" name="ocenaOd"/><br/>
+						do:<input type="number" min="0" th:value="${param.ocenaDo}?: '5'" name="ocenaDo"/>
+					</th>
+					<th>
+						od:<input type="date" th:value="${param.datumOd?: '2020-01-01'}" name="datumOd"/><input type="time" th:value="${param.vremeOd?: '08:00'}" name="vremeOd"/><br/>
+						do:<input type="date" th:value="${param.datumDo?: '3000-01-01'}" name="datumDo"/><input type="time" th:value="${param.vremeDo?: '23:00'}"  name="vremeDo"/>
+					</th>
+					<th>
+						<select name="treningId">
+							<option value="">odaberi</option>
+							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}" th:selected="${#strings.equals(itTrening.id, param.treningId)}"></option>
+						</select>
+					</th>
+					<th>
+						<select name="status">
+							<option value="">odaberi</option>
+							<option value="naCekanju" th:selected="${#strings.equals(param.status, 'naCekanju')}">na cekanju</option>
+							<option value="odobren" th:selected="${#strings.equals(param.status, 'odobren')}">odobren</option>
+							<option value="nijeOdobren" th:selected="${#strings.equals(param.status, 'nijeOdobren')}">nije odobren</option>
+						</select>
+					</th>
+					<th><input type="submit" value="Pretrazi"/></th>
+				</tr>
+				<tr th:each="itKomentar, status: ${komentari}">
+					<td class="broj" th:value="${status.index}"></td>
+					<td><a th:href="|Komentari/Details?id=${itKomentar.id}|" th:text="${itKomentar.tekst}"></a></td>
+					<td class="broj" th:text="${itKomentar.ocena}"></td>
+					<td th:text="${#temporals.format(itKomentar.datumIVreme, 'dd.MM.yyy . HH:mm')}"></td>
+					<td><a th:href="|Treninzi/Details?id=${itKomentar.trening.id}|" th:text="${itKomentar.trening.naziv}"></a></td>
+					<td th:text="${itKomentar.status}"></td>
+					<td></td>
+				</tr>
+			</table>
+		</form>
+		<ul>
+			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Komentari/Create">dodavanje komentara</a></li>
+		</ul>
+	</div>
+</body>
+</html>
