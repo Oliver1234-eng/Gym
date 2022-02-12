@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<title>Termin</title>
+</head>
+<body>
+	<div th:fragment="centralniDiv">
+		<form method="post" action="Komentari/Edit" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
+			<input type="hidden" name="id" th:value="${komentar.id}">
+			<table class="forma">
+				<caption>Termin</caption>
+				<tr><th>naziv:</th><td><input type="text" th:value="${komentar.tekst}" name="tekst"/></td></tr>
+				<tr><th>ocena:</th><td><input type="number" min="1" th:value="${komentar.ocena}" name="ocena"/></td></tr>
+				<tr>
+					<th>datum i vreme:</th>
+					<td>
+						<input type="date" th:value="${#temporals.format(komentar.datumIVreme, 'yyyy-MM-dd')}" name="datum"/>&nbsp;
+						<input type="time" th:value="${#temporals.format(komentar.datumIVreme, 'HH:mm')}" name="vreme"/>
+					</td>
+				<tr>
+					<th>trening:</th>
+					<td>
+						<select name="treningId">
+							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}" th:selected="${itTrening == komentar.trening}"></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>status komentara</th>
+					<td>
+						<select name="status">
+							<option value="naCekanju" th:selected="${#strings.equals(komentar.status, 'naCekanju')}">na cekanju</option>
+							<option value="odobren" th:selected="${#strings.equals(komentar.status, 'odobren')}">odobren</option>
+							<option value="nijeOdobren" th:selected="${#strings.equals(komentar.status, 'nijeOdobren')}">nije odobren</option>
+						</select>
+					</td>
+				</tr>
+				<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+			</table>
+		</form>
+		<form method="post" action="Komentari/Delete" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
+			<input type="hidden" name="id" th:value="${komentar.id}">
+			<table class="forma">
+				<tr><th></th><td><input type="submit" value="Obrisi"/></td></tr>
+			</table>
+		</form>
+		<table class="forma" th:if="${session.prijavljeniKorisnik == null or not session.prijavljeniKorisnik.administrator}">
+			<caption>Termin</caption>
+				<tr><th>naziv:</th><td><input type="text" th:value="${komentar.tekst}" name="tekst"/></td></tr>
+				<tr><th>ocena:</th><td><input type="number" min="1" th:value="${komentar.ocena}" name="ocena"/></td></tr>
+				<tr>
+					<th>datum i vreme:</th>
+					<td>
+						<input type="date" th:value="${#temporals.format(komentar.datumIVreme, 'yyyy-MM-dd')}" name="datum"/>&nbsp;
+						<input type="time" th:value="${#temporals.format(komentar.datumIVreme, 'HH:mm')}" name="vreme"/>
+					</td>
+				<tr>
+					<th>trening:</th>
+					<td>
+						<select name="treningId">
+							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}" th:selected="${itTrening == komentar.trening}"></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>status komentara</th>
+					<td>
+						<select name="status">
+							<option value="naCekanju" th:selected="${#strings.equals(komentar.status, 'naCekanju')}">na cekanju</option>
+							<option value="odobren" th:selected="${#strings.equals(komentar.status, 'odobren')}">odobren</option>
+							<option value="nijeOdobren" th:selected="${#strings.equals(komentar.status, 'nijeOdobren')}">nije odobren</option>
+						</select>
+					</td>
+				</tr>
+		</table>
+	</div>	
+</body>
+</html>

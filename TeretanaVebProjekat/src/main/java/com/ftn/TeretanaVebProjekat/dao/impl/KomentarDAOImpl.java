@@ -46,7 +46,7 @@ public class KomentarDAOImpl implements KomentarDAO{
 	@Override
 	public Komentar findOne(Long id) {
 		String sql = 
-				"SELECT p.id, p.tekst, p.ocena, p.datumIVreme, f.id, f.naziv, f.trajanjeUMinutima, p.status FROM komentari p " + 
+				"SELECT p.id, p.tekst, p.ocena, p.datumIVreme, p.status, f.id, f.naziv, f.trajanjeUMinutima FROM komentari p " + 
 				"LEFT JOIN treninzi f ON p.treningId = f.id " + 
 				"WHERE p.id = ? " + 
 				"ORDER BY p.id";
@@ -55,7 +55,7 @@ public class KomentarDAOImpl implements KomentarDAO{
 	@Override
 	public List<Komentar> findAll() {
 		String sql = 
-				"SELECT p.id, p.tekst, p.ocena, p.datumIVreme, f.id, f.naziv, f.trajanjeUMinutima, p.status FROM komentari p " + 
+				"SELECT p.id, p.tekst, p.ocena, p.datumIVreme, p.status, f.id, f.naziv, f.trajanjeUMinutima FROM komentari p " + 
 				"LEFT JOIN treninzi f ON p.treningId = f.id " + 
 				"ORDER BY p.id";
 		return jdbcTemplate.query(sql, new KomentarRowMapper());
@@ -67,7 +67,7 @@ public class KomentarDAOImpl implements KomentarDAO{
 		
 		ArrayList<Object> listaArgumenata = new ArrayList<Object>();
 		
-		String sql = "SELECT p.id, p.tekst, p.ocena, p.datumIVreme, f.id, f.naziv, f.trajanjeUMinutima, p.status FROM komentari p " + 
+		String sql = "SELECT p.id, p.tekst, p.ocena, p.datumIVreme, p.status, f.id, f.naziv, f.trajanjeUMinutima FROM komentari p " + 
 				"LEFT JOIN treninzi f ON p.treningId = f.id ";
 		
 		StringBuffer whereSql = new StringBuffer(" WHERE ");
@@ -145,7 +145,7 @@ public class KomentarDAOImpl implements KomentarDAO{
 		
 		ArrayList<Object> listaArgumenata = new ArrayList<Object>();
 		
-		String sql = "SELECT p.id, p.tekst, p.ocena, p.datumIVreme, f.id, f.naziv, f.trajanjeUMinutima, p.status FROM komentari p " + 
+		String sql = "SELECT p.id, p.tekst, p.ocena, p.datumIVreme, p.status, f.id, f.naziv, f.trajanjeUMinutima FROM komentari p " + 
 				"LEFT JOIN treninzi f ON p.treningId = f.id ";
 		
 		StringBuffer whereSql = new StringBuffer(" WHERE ");

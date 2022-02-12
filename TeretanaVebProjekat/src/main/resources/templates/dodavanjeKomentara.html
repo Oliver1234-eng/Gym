@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<title>Komentar</title>
+</head>
+<body>
+	<div th:fragment="centralniDiv">
+		<form method="post" action="Komentari/Create">
+			<input type="hidden" name="id" value="1">
+			<table class="forma">
+				<caption>dodavanje komentara</caption>
+				<tr><th>tekst:</th><td><input type="text" name="tekst"/></td></tr>
+				<tr><th>ocena:</th><td><input type="number"  min="1" value="5" name="ocena"/></td></tr>
+				<tr>
+					<th>datum i vreme:</th>
+					<td>
+						<input type="date" th:value="2020-04-01" name="datum"/>&nbsp;
+						<input type="time" value="18:00" name="vreme"/>
+					</td>
+				<tr>
+					<th>trening:</th>
+					<td>
+						<select name="treningId">
+							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}"></option>
+						</select>	
+					</td>
+				</tr>
+				<tr>
+					<th>status komentara:</th>
+					<td>
+						<select name="status">
+							<option value="naCekanju">na cekanju</option>
+							<option value="odobren">odobren</option>
+							<option value="nijeOdobren">nije odobren</option>
+						</select>
+					</td>
+				</tr>
+				<tr><th></th><td><input type="submit" value="Dodaj"/></td></tr>
+			</table>
+		</form>
+		<ul>
+			<li><a href="Termini">povratak</a></li>
+		</ul>
+	</div>
+</body>
+</html>

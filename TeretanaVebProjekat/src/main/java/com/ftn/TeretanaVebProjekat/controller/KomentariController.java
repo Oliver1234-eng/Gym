@@ -117,10 +117,10 @@ public class KomentariController {
 			HttpSession session, HttpServletResponse response) throws IOException {
 		// autentikacija, autorizacija
 		Korisnik prijavljeniKorisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);
-		if (prijavljeniKorisnik == null || prijavljeniKorisnik.isAdministrator() == false) {
-			response.sendRedirect(baseURL + "prijava.html");
-			return null;
-		}
+		//if (prijavljeniKorisnik == null || prijavljeniKorisnik.isAdministrator() == false) {
+			//response.sendRedirect(baseURL + "prijava.html");
+			//return null;
+		//}
 
 		// čitanje
 		List<Trening> treninzi = treningService.findAll();
@@ -141,10 +141,10 @@ public class KomentariController {
 			HttpSession session, HttpServletResponse response) throws IOException {
 		// autentikacija, autorizacija
 		Korisnik prijavljeniKorisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);
-		if (prijavljeniKorisnik == null || !prijavljeniKorisnik.isAdministrator()) {
-			response.sendRedirect(baseURL + "Komentari");
-			return;
-		}
+		//if (prijavljeniKorisnik == null || !prijavljeniKorisnik.isAdministrator()) {
+			//response.sendRedirect(baseURL + "Komentari");
+			//return;
+		//}
 
 		// validacija
 		LocalDateTime datumIVreme = LocalDateTime.of(datum, vreme);
