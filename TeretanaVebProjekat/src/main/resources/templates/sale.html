@@ -12,11 +12,13 @@
 				<caption>Sale</caption>
 				<tr>
 					<th>r. br.</th>
+					<th>oznaka</th>
 					<th>kapacitet</th>
 					<th></th>
 				</tr>
 				<tr>
 					<th></th>
+					<th><input type="number" th:value="${param.oznaka?: ''}" min="1" name="oznaka"/></th>
 					<th>
 						od:<input type="number" min="0" th:value="${param.kapacitetOd}?: '0'" name="kapacitetOd"/><br/>
 						do:<input type="number" min="0" th:value="${param.kapacitetDo}?: '100'" name="kapacitetDo"/>
@@ -24,7 +26,8 @@
 					<th><input type="submit" value="Pretrazi"/></th>
 				</tr>
 				<tr th:each="itSala, status: ${sale}">
-					<td class="broj" th:value="${status.index}"></td>
+					<td th:text="${status.index + 1}">1</td>
+					<td class="broj" th:text="${itSala.oznaka}"></td>
 					<td><a th:href="|Sale/Details?id=${itSala.id}|" th:text="${itSala.kapacitet}"></a></td>
 					<td></td>
 				</tr>

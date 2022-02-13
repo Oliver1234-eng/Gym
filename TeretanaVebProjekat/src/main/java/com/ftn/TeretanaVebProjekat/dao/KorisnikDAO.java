@@ -8,6 +8,8 @@ import com.ftn.TeretanaVebProjekat.model.Korisnik;
 
 public interface KorisnikDAO {
 	
+	public Korisnik findOne(Long id);
+	
 	public Korisnik findOne(String korisnickoIme);
 
 	public Korisnik findOne(String korisnickoIme, String lozinka);

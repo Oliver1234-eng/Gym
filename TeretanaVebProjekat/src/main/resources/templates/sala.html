@@ -11,6 +11,7 @@
 			<input type="hidden" name="id" th:value="${sala.id}"/>
 			<table class="forma">
 				<caption>Sala</caption>
+				<tr><th>oznaka:</th><td><input type="number" th:value="${sala.oznaka}" min="1" name="oznaka"/></td></tr>
 				<tr><th>kapacitet:</th><td><input type="number" min="1" th:value="${sala.kapacitet}" name="kapacitet"/></td></tr>
 				<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
 			</table>
@@ -24,6 +25,7 @@
 		<table class="forma" th:if="${session.prijavljeniKorisnik == null or not session.prijavljeniKorisnik.administrator}">
 			<caption>Sala</caption>
 				<tr><th>kapacitet:</th><td><input type="number" min="1" th:value="${sala.kapacitet}" name="kapacitet"/></td></tr>
+				<tr><th>oznaka:</th><td><input type="number" th:value="${sala.oznaka}" min="1" name="oznaka"/></td></tr>
 		</table>
 	</div>
 </body>

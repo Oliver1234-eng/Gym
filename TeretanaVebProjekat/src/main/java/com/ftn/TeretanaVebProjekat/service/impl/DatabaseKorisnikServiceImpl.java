@@ -17,6 +17,11 @@ public class DatabaseKorisnikServiceImpl implements KorisnikService{
 	private KorisnikDAO korisnikDAO;
 	
 	@Override
+	public Korisnik findOne(Long id) {
+		return korisnikDAO.findOne(id);
+	}
+	
+	@Override
 	public Korisnik findOne(String korisnickoIme) {
 		return korisnikDAO.findOne(korisnickoIme);
 	}

@@ -11,7 +11,7 @@ public interface SalaDAO {
 
 	public List<Sala> findAll();
 
-	public List<Sala> find(Integer kapacitetOd, Integer kapacitetDo);
+	public List<Sala> find(Integer oznaka, Integer kapacitetOd, Integer kapacitetDo);
 	
 	public int save(Sala sala);
 

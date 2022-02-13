@@ -3,19 +3,22 @@ package com.ftn.TeretanaVebProjekat.model;
 public class Sala {
 
 	private Long id;
+	private int oznaka;
 	private int kapacitet;
 	
 	public Sala() {}
 
-	public Sala(Long id, int kapacitet) {
+	public Sala(Long id, int oznaka, int kapacitet) {
 		super();
 		this.id = id;
+		this.oznaka = oznaka;
 		this.kapacitet = kapacitet;
 	}
 
-	public Sala(int kapacitet) {
+	public Sala(int oznaka, int kapacitet) {
 		super();
 		this.kapacitet = kapacitet;
+		this.oznaka = oznaka;
 	}
 	
 	@Override
@@ -59,10 +62,20 @@ public class Sala {
 		this.kapacitet = kapacitet;
 	}
 
+	public int getOznaka() {
+		return oznaka;
+	}
+
+	public void setOznaka(int oznaka) {
+		this.oznaka = oznaka;
+	}
+
 	@Override
 	public String toString() {
-		return "Sala [id=" + id + ", kapacitet=" + kapacitet + "]";
+		return "Sala [id=" + id + ", oznaka=" + oznaka + ", kapacitet=" + kapacitet + "]";
 	}
+
+	
 
 	
 }

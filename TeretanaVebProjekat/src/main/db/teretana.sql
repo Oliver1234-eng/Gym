@@ -85,6 +85,7 @@ CREATE TABLE treninziClanskeKarte (
 
 CREATE TABLE sale (
 	id BIGINT AUTO_INCREMENT,
+	oznaka INT NOT NULL,
 	kapacitet INT NOT NULL,
 	PRIMARY KEY (id)
 );
@@ -167,12 +168,12 @@ VALUES (1, 2);
 INSERT INTO treninziClanskeKarte (treningId, clanskaKartaId)
 VALUES (1, 3);
 
-INSERT INTO sale (id, kapacitet)
-VALUES (1, 30);
-INSERT INTO sale (id, kapacitet)
-VALUES (2, 30);
-INSERT INTO sale (id, kapacitet)
-VALUES (3, 30);
+INSERT INTO sale (id, oznaka, kapacitet)
+VALUES (1, 1, 30);
+INSERT INTO sale (id, oznaka,kapacitet)
+VALUES (2, 2, 30);
+INSERT INTO sale (id, oznaka,kapacitet)
+VALUES (3, 3, 30);
 
 INSERT INTO termini (id, datumIVreme, treningId, sala)
 VALUES (1, '2022-06-20 15:00', 1, 1);

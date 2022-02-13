@@ -29,32 +29,41 @@ public class SalaDAOImpl implements SalaDAO{
 		public Sala mapRow(ResultSet rs, int rowNum) throws SQLException {
 			int index = 1;
 			Long id = rs.getLong(index++);
+			Integer oznaka = rs.getInt(index++);
 			Integer kapacitet = rs.getInt(index++);
 
-			Sala sala = new Sala(id, kapacitet);
+			Sala sala = new Sala(id, oznaka, kapacitet);
 			return sala;
 		}
 
 	}
 	@Override
 	public Sala findOne(Long id) {
-		String sql = "SELECT id, kapacitet FROM sale WHERE id = ?";
+		String sql = "SELECT id, oznaka, kapacitet FROM sale WHERE id = ?";
 		return jdbcTemplate.queryForObject(sql, new SalaRowMapper(), id);
 	}
 	@Override
 	public List<Sala> findAll() {
-		String sql = "SELECT id, kapacitet FROM sale";
+		String sql = "SELECT id, oznaka, kapacitet FROM sale";
 		return jdbcTemplate.query(sql, new SalaRowMapper());
 	}
 	@Override
-	public List<Sala> find(Integer kapacitetOd, Integer kapacitetDo) {
+	public List<Sala> find(Integer oznaka, Integer kapacitetOd, Integer kapacitetDo) {
 		
 		ArrayList<Object> listaArgumenata = new ArrayList<Object>();
 		
-		String sql = "SELECT id, kapacitet FROM sale ";
+		String sql = "SELECT id, oznaka, kapacitet FROM sale ";
 		
 		StringBuffer whereSql = new StringBuffer(" WHERE ");
 		boolean imaArgumenata = false;
+		
+		if(oznaka!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("oznaka = ?");
+			imaArgumenata = true;
+			listaArgumenata.add(oznaka);
+		}
 		
 		if(kapacitetOd!=null) {
 			if(imaArgumenata)
@@ -82,20 +91,21 @@ public class SalaDAOImpl implements SalaDAO{
 	}
 	@Override
 	public int save(Sala sala) {
-		String sql = "INSERT INTO sale (kapacitet) VALUES (?)";
-		return jdbcTemplate.update(sql, sala.getKapacitet());
+		String sql = "INSERT INTO sale (oznaka, kapacitet) VALUES (?, ?)";
+		return jdbcTemplate.update(sql, sala.getOznaka(), sala.getKapacitet());
 	}
 	
 	@Override
 	public int [] save(ArrayList<Sala> sale) {
-		String sql = "INSERT INTO sale (kapacitet) VALUES (?)";
+		String sql = "INSERT INTO sale (oznaka, kapacitet) VALUES (?, ?)";
 		
 		return jdbcTemplate.batchUpdate(sql,
 				new BatchPreparedStatementSetter() {
 					
 					@Override
 					public void setValues(PreparedStatement ps, int i) throws SQLException {
-						ps.setInt(1, sale.get(i).getKapacitet());
+						ps.setInt(1, sale.get(i).getOznaka());
+						ps.setInt(2, sale.get(i).getKapacitet());
 					}
 					
 					@Override
@@ -107,8 +117,8 @@ public class SalaDAOImpl implements SalaDAO{
 	
 	@Override
 	public int update(Sala sala) {
-		String sql = "UPDATE sale SET kapacitet = ? WHERE id = ?";
-		return jdbcTemplate.update(sql, sala.getKapacitet(), sala.getId());
+		String sql = "UPDATE sale SET oznaka = ?, kapacitet = ? WHERE id = ?";
+		return jdbcTemplate.update(sql, sala.getOznaka(), sala.getKapacitet(), sala.getId());
 	}
 	@Override
 	public int delete(Long id) {

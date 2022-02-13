@@ -53,6 +53,16 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 		}
 
 	}
+	
+	@Override
+	public Korisnik findOne(Long id) {
+		String sql = 
+				"SELECT id, korisnickoIme, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, administrator FROM korisnici WHERE korisnickoIme = ? ORDER BY id"; 
+		
+		return jdbcTemplate.queryForObject(sql, new KorisnikRowMapper(), id);
+
+	}
+	
 	@Override
 	public Korisnik findOne(String korisnickoIme) {
 		try {

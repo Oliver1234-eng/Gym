@@ -77,14 +77,14 @@ public class DatabaseSalaServiceImpl implements SalaService {
 	}
 
 	@Override
-	public List<Sala> find(Integer kapacitetOd, Integer kapacitetDo) {
+	public List<Sala> find(Integer oznaka, Integer kapacitetOd, Integer kapacitetDo) {
 		// minimalne inkluzivne vrednosti parametara ako su izostavljeni
 		//1. način bi bilo pozivanje ogovarajuće DAO metode u odnosu na broj parametara 
 		//		gde bi trebalo implementirati više dao metoda tako da pokriju različite situacije
 		//2. način reši sve u DAO sloju
 		
 		//odabran 1.
-		return salaDAO.find(kapacitetOd, kapacitetDo);
+		return salaDAO.find(oznaka, kapacitetOd, kapacitetDo);
 	}
 
 }

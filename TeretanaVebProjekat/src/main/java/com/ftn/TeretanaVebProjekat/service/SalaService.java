@@ -15,6 +15,6 @@ public interface SalaService {
 	List<Sala> update(List<Sala> sale);
 	Sala delete(Long id);
 	void delete(List<Long> ids);
-	List<Sala> find(Integer kapacitetOd, Integer kapacitetDo);
+	List<Sala> find(Integer oznaka, Integer kapacitetOd, Integer kapacitetDo);
 
 }

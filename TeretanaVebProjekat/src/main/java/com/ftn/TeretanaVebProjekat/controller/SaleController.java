@@ -37,12 +37,13 @@ public class SaleController {
 	}
 
 	@GetMapping
-	public ModelAndView Index(  
+	public ModelAndView Index(
+			@RequestParam(required=false) Integer oznaka,
 			@RequestParam(required=false) Integer kapacitetOd, 
 			@RequestParam(required=false) Integer kapacitetDo, 
 			HttpSession session) throws IOException {
 		
-		List<Sala> sale = salaService.find(kapacitetOd, kapacitetDo);
+		List<Sala> sale = salaService.find(oznaka, kapacitetOd, kapacitetDo);
 
 		// prosleđivanje
 		ModelAndView rezultat = new ModelAndView("sale");
@@ -85,7 +86,7 @@ public class SaleController {
 	}
 
 	@PostMapping(value="/Create")
-	public void Create(@RequestParam int kapacitet,
+	public void Create(@RequestParam int oznaka, @RequestParam int kapacitet,
 			HttpSession session, HttpServletResponse response) throws IOException {
 		// autentikacija, autorizacija
 		Korisnik prijavljeniKorisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);
@@ -95,7 +96,7 @@ public class SaleController {
 		}
 
 		// kreiranje
-		Sala sala = new Sala(kapacitet);
+		Sala sala = new Sala(oznaka, kapacitet);
 		salaService.save(sala);
 		
 		response.sendRedirect(baseURL + "Sale");
@@ -103,7 +104,7 @@ public class SaleController {
 
 	@PostMapping(value="/Edit")
 	public void Edit(
-			@RequestParam Long id, @RequestParam int kapacitet, 
+			@RequestParam Long id, @RequestParam int oznaka, @RequestParam int kapacitet, 
 			HttpSession session, HttpServletResponse response) throws IOException {
 		// autentikacija, autorizacija
 		Korisnik prijavljeniKorisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);

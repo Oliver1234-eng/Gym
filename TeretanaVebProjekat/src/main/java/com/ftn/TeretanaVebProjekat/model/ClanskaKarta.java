@@ -8,6 +8,7 @@ public class ClanskaKarta {
 	private Long id;
 	private int popust;
 	private int brojPoena;
+	private String registarskiBroj;
 	private Korisnik korisnik;
 	private List<TreningKorpa> zakazaniTreninzi;
 	
@@ -15,36 +16,41 @@ public class ClanskaKarta {
 		this.zakazaniTreninzi = new ArrayList<TreningKorpa>();
 	}
 
-	public ClanskaKarta(Long id, int popust, int brojPoena, Korisnik korisnik, List<TreningKorpa> zakazaniTreninzi) {
+	public ClanskaKarta(Long id, int popust, int brojPoena, String registarskiBroj,
+			List<TreningKorpa> zakazaniTreninzi) {
 		super();
 		this.id = id;
 		this.popust = popust;
 		this.brojPoena = brojPoena;
-		this.korisnik = korisnik;
+		this.registarskiBroj = registarskiBroj;
 		this.zakazaniTreninzi = zakazaniTreninzi;
 	}
 
-	public ClanskaKarta(Long id, int popust, int brojPoena, Korisnik korisnik) {
+	public ClanskaKarta(Long id, int popust, int brojPoena, String registarskiBroj, Korisnik korisnik) {
 		super();
 		this.id = id;
 		this.popust = popust;
 		this.brojPoena = brojPoena;
+		this.registarskiBroj = registarskiBroj;
 		this.korisnik = korisnik;
+		this.zakazaniTreninzi = new ArrayList<TreningKorpa>();
 	}
 
-	public ClanskaKarta(int popust, int brojPoena, Korisnik korisnik, List<TreningKorpa> zakazaniTreninzi) {
+	public ClanskaKarta(int popust, int brojPoena, String registarskiBroj, Korisnik korisnik) {
 		super();
 		this.popust = popust;
 		this.brojPoena = brojPoena;
+		this.registarskiBroj = registarskiBroj;
 		this.korisnik = korisnik;
+		this.zakazaniTreninzi = new ArrayList<TreningKorpa>();
+	}
+
+	public ClanskaKarta(int popust, int brojPoena, String registarskiBroj, List<TreningKorpa> zakazaniTreninzi) {
+		super();
+		this.popust = popust;
+		this.brojPoena = brojPoena;
+		this.registarskiBroj = registarskiBroj;
 		this.zakazaniTreninzi = zakazaniTreninzi;
-	}
-
-	public ClanskaKarta(int popust, int brojPoena, Korisnik korisnik) {
-		super();
-		this.popust = popust;
-		this.brojPoena = brojPoena;
-		this.korisnik = korisnik;
 	}
 
 	@Override
@@ -94,6 +100,14 @@ public class ClanskaKarta {
 
 	public void setBrojPoena(int brojPoena) {
 		this.brojPoena = brojPoena;
+	}
+
+	public String getRegistarskiBroj() {
+		return registarskiBroj;
+	}
+
+	public void setRegistarskiBroj(String registarskiBroj) {
+		this.registarskiBroj = registarskiBroj;
 	}
 
 	public Korisnik getKorisnik() {
