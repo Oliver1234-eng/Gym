@@ -66,6 +66,7 @@ CREATE TABLE clanskeKarte (
 	id BIGINT AUTO_INCREMENT,
 	popust INT NOT NULL,
 	brojPoena INT NOT NULL,
+	registarskiBroj VARCHAR(50) NOT NULL,
 	korisnikId BIGINT NOT NULL,
 	PRIMARY KEY(id),
 	FOREIGN KEY(korisnikId) REFERENCES korisnici(id)
@@ -154,12 +155,12 @@ VALUES (2, 'trening2', 'trener1', 'Opis', 'Fitness', 800, 'pojedinacni', 'srednj
 INSERT INTO treninziKorpa (id, naziv, trener, kratakOpis, tipTreninga, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
 VALUES (3, 'trening3', 'trener1', 'Opis', 'Cardio', 1000, 'pojedinacni', 'napredni', 60, 5, false);
 
-INSERT INTO clanskeKarte (id, popust, brojPoena, korisnikId)
-VALUES (1, 10, 5, 1);
-INSERT INTO clanskeKarte (id, popust, brojPoena, korisnikId)
-VALUES (2, 10, 5, 1);
-INSERT INTO clanskeKarte (id, popust, brojPoena, korisnikId)
-VALUES (3, 10, 5, 2);
+INSERT INTO clanskeKarte (id, popust, brojPoena, registarskiBroj, korisnikId)
+VALUES (1, 10, 5, '11', 1);
+INSERT INTO clanskeKarte (id, popust, brojPoena, registarskiBroj, korisnikId)
+VALUES (2, 10, 5, '22', 1);
+INSERT INTO clanskeKarte (id, popust, brojPoena, registarskiBroj, korisnikId)
+VALUES (3, 10, 5, '33', 2);
 
 INSERT INTO treninziClanskeKarte (treningId, clanskaKartaId)
 VALUES (1, 1);

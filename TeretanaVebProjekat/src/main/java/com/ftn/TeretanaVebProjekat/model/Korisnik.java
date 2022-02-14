@@ -81,6 +81,19 @@ public class Korisnik {
 		this.datumRegistracije = datumRegistracije;
 	}
 	
+	public Korisnik(Long id, String korisnickoIme, String ime) {
+		super();
+		this.id = id;
+		this.korisnickoIme = korisnickoIme;
+		this.ime = ime;
+	}
+
+	public Korisnik(String korisnickoIme, String ime) {
+		super();
+		this.korisnickoIme = korisnickoIme;
+		this.ime = ime;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

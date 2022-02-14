@@ -56,11 +56,13 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 	
 	@Override
 	public Korisnik findOne(Long id) {
-		String sql = 
-				"SELECT id, korisnickoIme, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, administrator FROM korisnici WHERE korisnickoIme = ? ORDER BY id"; 
-		
-		return jdbcTemplate.queryForObject(sql, new KorisnikRowMapper(), id);
-
+		try {
+			String sql = "SELECT id, korisnickoIme, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, administrator FROM korisnici WHERE id = ?";
+			return jdbcTemplate.queryForObject(sql, new KorisnikRowMapper(), id);
+		} catch (EmptyResultDataAccessException ex) {
+			// ako korisnik nije pronađen
+			return null;
+		}
 	}
 	
 	@Override
@@ -73,6 +75,7 @@ public class KorisnikDAOImpl implements KorisnikDAO {
 			return null;
 		}
 	}
+	
 	@Override
 	public Korisnik findOne(String korisnickoIme, String lozinka) {
 		try {

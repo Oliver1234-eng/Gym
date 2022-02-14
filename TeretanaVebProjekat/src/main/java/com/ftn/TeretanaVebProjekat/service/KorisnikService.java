@@ -7,7 +7,7 @@ import com.ftn.TeretanaVebProjekat.model.Korisnik;
 
 public interface KorisnikService {
 
-	Korisnik findOneById(Long id);
+	Korisnik findOne(Long id);
 	
 	Korisnik findOne(String korisnickoIme);
 	

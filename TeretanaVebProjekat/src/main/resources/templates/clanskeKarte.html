@@ -1,0 +1,53 @@
+<!DOCTYPE html> 
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">    
+	<head>     
+		<meta charset="UTF-8">     
+		<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
+		<title>Clanske karte</title>     
+		<link rel="stylesheet"  type="text/css"  href="css/StiloviTabela.css"/>        
+	 </head>     
+	 <body>   
+	 	<div th:fragment="centralniDiv">    
+	 		<table>     
+	 			<caption>Clanske karte</caption>     
+	 			<tr>     
+	 				<th>R. br.</th>
+	 				 <th>Popust</th> 
+	 				 <th>Broj poena</th> 
+	 				<th>Registarski broj</th>     
+	 				<th>Vlasnik</th>  
+	 				<th></th>    
+	 			</tr>
+	 			<tr>
+					<th></th>
+					<th><input type="number" th:value="${param.popust?: ''}" min="1" name="popust"/></th>
+					<th>
+						od:<input type="number" min="0" th:value="${param.brojPoenaOd}?: '0'" name="brojPoenaOd"/><br/>
+						do:<input type="number" min="0" th:value="${param.brojPoenaDo}?: '25'" name="brojPoenaDo"/>
+					</th>
+					<th><input type="search" name="reegistarskiBroj" th:value="${param.registarskiBroj}?: null"/></th>
+					<th>
+						<select name="korisnikId">
+							<option value="">odaberi</option>
+							<option th:each="itKorinsik: ${korisnici}" th:value="${itKorisnik.id}" th:text="${itKorisnik.korisnickoIme}" th:selected="${#strings.equals(itKorisnik.id, param.korisnikId)}"></option>
+						</select>
+					</th>
+					<th><input type="submit" value="Pretrazi"/></th>
+				</tr>
+	 			<tr th:each="itClanskaKarta, status: ${clanskeKarte}">     
+	 				<td class="broj" th:text="${(status.index + 1)+'.'}"></td>
+	 				<td class="broj" th:text="${itClanskaKarta.popust}"></td>
+	 				<td class="broj" th:text="${itClanskaKarta.brojPoena}"></td>
+	 				<td th:text="${itClanskaKarta.registarskiBroj}"></td>    
+	 				<td th:text="${itClanskaKarta.korisnik}"></td>  
+	 				<td>
+	 					<a th:href="|ClanskeKarte/details?registarskiBroj=${itClanskaKarta.registarskiBroj}|">Vidi detalje</a> 
+	 				</td>   
+	 			</tr>
+	 		</table>
+	 	<ul>
+			<li><a href="ClanskeKarte/add">Dodaj novu clansku kartu</a></li>
+		</ul>
+		</div>
+	 </body>   
+ </html>

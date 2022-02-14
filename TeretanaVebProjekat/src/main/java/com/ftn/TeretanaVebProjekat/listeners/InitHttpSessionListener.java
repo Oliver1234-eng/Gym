@@ -35,7 +35,7 @@ public class InitHttpSessionListener implements HttpSessionListener {
 		
 		session.setAttribute(TreninziKorpaController.TRENINZI_ZA_ZAKAZIVANJE, zaZakazivanje);
 		
-		session.setAttribute(ClanskeKarteController.CLANSKA_KARTA, registarskiBrojCK);
+		//session.setAttribute(ClanskeKarteController.CLANSKA_KARTA, registarskiBrojCK);
 
 		session.setAttribute(TreninziController.POSECENI_TRENINZI_ZA_KORISNIKA_KEY, new ArrayList<Trening>());
 
