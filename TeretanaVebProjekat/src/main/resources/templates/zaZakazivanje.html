@@ -1,0 +1,54 @@
+<!DOCTYPE html> 
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<base th:href="@{/}">
+		<title>Treninzi</title>
+		<link rel="stylesheet" type="text/css" href="css/StiloviTabela.css"/>
+	</head>
+	<body>
+		<div th:fragment="centralniDiv">
+			<table class = "tabela">
+			<caption>Zeljeni treninzi</caption> 
+			<tr>
+					<th>naziv</th>
+					<th>trener</th>
+					<th>kratak opis</th>
+					<th>tip treninga</th>
+					<th>cena</th>
+					<th>vrstaTreninga</th>
+					<th>nivoTreninga</th>
+					<th>trajanje u minutima</th>
+					<th>prosecna ocena</th>
+					<th></th>
+			</tr>
+			
+			<tr th:each="itTreningKorpa, status: ${treninziKorpa}">  
+				<td><a th:href="|TreninziKorpa/details?id=${itTreningKorpa.id}|" th:text="${itTreningKorpa.naziv}"></a></td>
+				<td th:text="${itTreningKorpa.trener}"></td>
+				<td th:text="${itTreningKorpa.kratakOpis}"></td>
+				<td th:text="${itTreningKorpa.tipTreninga}"></td>
+				<td class="broj" th:text="${itTreningKorpa.cena}"></td>
+				<td th:text="${itTreningKorpa.vrstaTreninga}"></td>
+				<td th:text="${itTreningKorpa.nivoTreninga}"></td>
+				<td class="broj" th:text="${itTreningKorpa.trajanjeUMinutima}"></td>
+				<td class="broj" th:text="${itTreningKorpa.prosecnaOcena}"></td>   
+ 				<td>
+					<form method="post" action="TreninziKorpa/zeljene/ukloni">
+						<input type="hidden" name="idTreninga" th:value="${itTreningKorpa.id}">
+						<input type="submit" value="Ukloni iz zeljenih">
+					</form>
+				</td>  
+ 			</tr>
+		</table>
+		<br/>
+		<form method="post" action="ClanskeKarte/zakaziTreninge">
+			<table>
+			<caption>Zakazi treninge</caption>
+				<tr><th>Registarski broj clanske karte</th><td><input type="text" name="registarskiBroj"></td>
+				<tr><th></th><td><input type="submit" value="Izdaj"></td>
+			</table>
+		</form>
+	</div>
+	</body>
+</html>

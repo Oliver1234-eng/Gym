@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviTabela.css"/>
+	<title>Treninzi</title>
+</head>
+<body>
+	<div th:fragment="centralniDiv">
+		<form method="get">
+			<table class="tabela">
+				<caption>Treninzi</caption>
+				<tr>
+					<th>r. br.</th>
+					<th>naziv</th>
+					<th>trener</th>
+					<th>kratak opis</th>
+					<th>tip treninga</th>
+					<th>cena</th>
+					<th>vrstaTreninga</th>
+					<th>nivoTreninga</th>
+					<th>trajanje u minutima</th>
+					<th>prosecna ocena</th>
+					<th></th>
+				</tr>
+				<tr>
+					<th></th>
+					<th><input type="search" name="naziv" th:value="${param.naziv}?: null"/></th>
+					<th><input type="search" name="trener" th:value="${param.trener}?: null"/></th>
+					<th><input type="search" name="kratakOpis" th:value="${param.kratakOpis}?: null"/></th>
+					<th><input type="search" name="tipTreninga" th:value="${param.tipTreninga}?: null"/></th>
+					<th>
+						od:<input type="number" min="0" th:value="${param.cenaOd}?: '0'" name="cenaOd"/><br/>
+						do:<input type="number" min="0" th:value="${param.cenaDo}?: '2000'" name="cenaDo"/>
+					</th>
+					<th><input type="search" name="vrstaTreninga" th:value="${param.vrstaTreninga}?: null"/></th>
+					<th><input type="search" name="nivoTreninga" th:value="${param.nivoTreninga}?: null"/></th>
+					<th>
+						od:<input type="number" min="0" th:value="${param.trajanjeUMinutimaOd}?: '0'" name="trajanjeUMinutimaOd"/><br/>
+						do:<input type="number" min="0" th:value="${param.trajanjeUMinutimaDo}?: '240'" name="trajanjeUMinutimaDo"/>
+					</th>
+					<th>
+						od:<input type="number" min="0" th:value="${param.prosecnaOcenaOd}?: '0'" name="prosecnaOd"/><br/>
+						do:<input type="number" min="0" th:value="${param.prosecnaOcenaDo}?: '5'" name="prosecnaOcenaDo"/>
+					</th>
+					<th><input type="submit" value="Pretrazi"/></th>
+				</tr>
+				<tr th:each="itTreningKorpa, status: ${treninziKorpa}">
+					<td class="broj" th:text="${status.index + 1}"></td>
+					<td><a th:href="|TreninziKorpa/details?id=${itTreningKorpa.id}|" th:text="${itTreningKorpa.naziv}"></a></td>
+					<td th:text="${itTreningKorpa.trener}"></td>
+					<td th:text="${itTreningKorpa.kratakOpis}"></td>
+					<td th:text="${itTreningKorpa.tipTreninga}"></td>
+					<td class="broj" th:text="${itTreningKorpa.cena}"></td>
+					<td th:text="${itTreningKorpa.vrstaTreninga}"></td>
+					<td th:text="${itTreningKorpa.nivoTreninga}"></td>
+					<td class="broj" th:text="${itTreningKorpa.trajanjeUMinutima}"></td>
+					<td class="broj" th:text="${itTreningKorpa.prosecnaOcena}"></td>
+				</tr>
+			</table>
+		</form>
+		<ul>
+			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="TreninziKorpa/add">dodavanje treninga</a></li>
+		</ul>
+	</div>
+</body>
+</html>

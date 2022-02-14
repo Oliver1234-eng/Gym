@@ -9,8 +9,11 @@ import javax.servlet.http.HttpSessionListener;
 
 import org.springframework.stereotype.Component;
 
+import com.ftn.TeretanaVebProjekat.controller.ClanskeKarteController;
 import com.ftn.TeretanaVebProjekat.controller.TreninziController;
+import com.ftn.TeretanaVebProjekat.controller.TreninziKorpaController;
 import com.ftn.TeretanaVebProjekat.model.Trening;
+import com.ftn.TeretanaVebProjekat.model.TreningKorpa;
 
 //import com.ftn.TeretanaVebProjekat.controller.ClanskeKarteController;
 //import com.ftn.TeretanaVebProjekat.controller.KnjigeController;
@@ -24,8 +27,15 @@ public class InitHttpSessionListener implements HttpSessionListener {
 		System.out.println("Inicijalizacija sesisje HttpSessionListener...");
 
 		// pri kreiranju sesije inicijalizujemo je ili radimo neke dodatne aktivnosti	
+		List<TreningKorpa> zaZakazivanje = new ArrayList<TreningKorpa>();
+		String registarskiBrojCK = "";
+		
 		HttpSession session  = event.getSession();
 		System.out.println("Session id korisnika je "+ session.getId());
+		
+		session.setAttribute(TreninziKorpaController.TRENINZI_ZA_ZAKAZIVANJE, zaZakazivanje);
+		
+		session.setAttribute(ClanskeKarteController.CLANSKA_KARTA, registarskiBrojCK);
 
 		session.setAttribute(TreninziController.POSECENI_TRENINZI_ZA_KORISNIKA_KEY, new ArrayList<Trening>());
 
