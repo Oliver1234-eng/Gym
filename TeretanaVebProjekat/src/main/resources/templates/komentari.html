@@ -8,15 +8,16 @@
 <body>
 	<div th:fragment="centralniDiv">
 		<form method="get">
-			<table class="tabela">
+			<table class="sortable">
 				<caption>Komentari</caption>
 				<tr>
 					<th>r. br.</th>
 					<th>tekst</th>
 					<th>ocena</th>
 					<th>datum i vreme</th>
-					<th>film</th>
+					<th>trening</th>
 					<th>status</th>
+					<th>korisnik</th>
 					<th></th>
 				</tr>
 				<tr>
@@ -44,6 +45,14 @@
 							<option value="nijeOdobren" th:selected="${#strings.equals(param.status, 'nijeOdobren')}">nije odobren</option>
 						</select>
 					</th>
+					<th>
+						<select name="korisnik">
+							<option value="">odaberi</option>
+							<option value="pera" th:selected="${#strings.equals(param.korisnik, 'pera')}">pera</option>
+							<option value="mika" th:selected="${#strings.equals(param.korisnik, 'mika')}">mika</option>
+							<option value="jova" th:selected="${#strings.equals(param.korisnik, 'jova')}">jova</option>
+						</select>
+					</th>
 					<th><input type="submit" value="Pretrazi"/></th>
 				</tr>
 				<tr th:each="itKomentar, status: ${komentari}">
@@ -53,6 +62,7 @@
 					<td th:text="${#temporals.format(itKomentar.datumIVreme, 'dd.MM.yyy . HH:mm')}"></td>
 					<td><a th:href="|Treninzi/Details?id=${itKomentar.trening.id}|" th:text="${itKomentar.trening.naziv}"></a></td>
 					<td th:text="${itKomentar.status}"></td>
+					<td th:text="${itKomentar.korisnik}"></td>
 					<td></td>
 				</tr>
 			</table>

@@ -11,11 +11,12 @@ public class Komentar {
 	private LocalDateTime datumIVreme;
 	private Trening trening;
 	private String status = "odobren";
+	private String korisnik = "mika";
 	
 	public Komentar() {}
 
 	public Komentar(Long id, String tekst, int ocena, LocalDateTime datumIVreme, Trening trening,
-			String status) {
+			String status, String korisnik) {
 		super();
 		this.id = id;
 		this.tekst = tekst;
@@ -23,15 +24,18 @@ public class Komentar {
 		this.datumIVreme = datumIVreme;
 		this.trening = trening;
 		this.status = status;
+		this.korisnik = korisnik;
 	}
 
-	public Komentar(String tekst, int ocena, LocalDateTime datumIVreme, Trening trening, String status) {
+	public Komentar(String tekst, int ocena, LocalDateTime datumIVreme, Trening trening, String status,
+			String korisnik) {
 		super();
 		this.tekst = tekst;
 		this.ocena = ocena;
 		this.datumIVreme = datumIVreme;
 		this.trening = trening;
 		this.status = status;
+		this.korisnik = korisnik;
 	}
 	
 	@Override
@@ -107,6 +111,14 @@ public class Komentar {
 		this.status = status;
 	}
 
+	public String getKorisnik() {
+		return korisnik;
+	}
+	
+	public void setKorisnik(String korisnik) {
+		this.korisnik = korisnik;
+	}
+	
 	@Override
 	public String toString() {
 		return "Komentar [id=" + id + ", trening=" + trening + "]";

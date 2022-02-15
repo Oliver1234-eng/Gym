@@ -1,0 +1,46 @@
+<!DOCTYPE html>    
+ <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">    
+ <head>    
+ 	<meta charset="UTF-8">    
+ 	<base href="bURL">    
+ 	<title>Dodaj clansku kartu</title>    
+ 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>     
+ </head>    
+ <body>    
+ 	<div th:fragment="centralniDiv">    
+ 	<form method="post" action="ClanskeKarte/add">    
+ 		<table>    
+ 			<caption>Clanska karta</caption> 
+ 			<tr><th>popust:</th><td><input type="number"  min="5" value="5" name="popust"/></td></tr>   
+ 			<tr><th>broj poena:</th><td><input type="number"  min="5" value="5" name="brojPoena"/></td></tr>
+ 			<tr><th>Registarski broj:</th><td><input type="text" value="" name="registarskiBroj"/></td></tr>   
+ 			<tr>
+				<th>korisnik:</th>
+				<td>
+					<select name="korisnik">
+						<option value="pera">pera</option>
+						<option value="jova">jova</option>
+						<option value="mika">mika</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>status clanske karte:</th>
+				<td>
+					<select name="status">
+						<option value="prihvacen">prihvacen</option>
+						<option value="uObradi">u obradi</option>
+						<option value="odbijen">odbijen</option>
+					</select>
+				</td>
+			</tr>     
+ 			<tr><th></th><td><input type="submit" value="Dodaj"/></td>    
+ 		</table>    
+ 	</form>
+ 	<ul>
+			<li><a href="ClanskeKarte">povratak</a></li>
+		</ul>
+ 	</div>
+ 	<br/>  
+ </body>  
+ </html>  

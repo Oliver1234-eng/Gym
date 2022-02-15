@@ -8,7 +8,7 @@
 	 </head>     
 	 <body>   
 	 	<div th:fragment="centralniDiv">    
-	 		<table>     
+	 		<table class = "sortable">     
 	 			<caption>Clanske karte</caption>     
 	 			<tr>     
 	 				<th>R. br.</th>
@@ -16,30 +16,16 @@
 	 				 <th>Broj poena</th> 
 	 				<th>Registarski broj</th>     
 	 				<th>Vlasnik</th>  
+	 				<th>Status</th> 
 	 				<th></th>    
 	 			</tr>
-	 			<tr>
-					<th></th>
-					<th><input type="number" th:value="${param.popust?: ''}" min="1" name="popust"/></th>
-					<th>
-						od:<input type="number" min="0" th:value="${param.brojPoenaOd}?: '0'" name="brojPoenaOd"/><br/>
-						do:<input type="number" min="0" th:value="${param.brojPoenaDo}?: '25'" name="brojPoenaDo"/>
-					</th>
-					<th><input type="search" name="reegistarskiBroj" th:value="${param.registarskiBroj}?: null"/></th>
-					<th>
-						<select name="korisnikId">
-							<option value="">odaberi</option>
-							<option th:each="itKorinsik: ${korisnici}" th:value="${itKorisnik.id}" th:text="${itKorisnik.korisnickoIme}" th:selected="${#strings.equals(itKorisnik.id, param.korisnikId)}"></option>
-						</select>
-					</th>
-					<th><input type="submit" value="Pretrazi"/></th>
-				</tr>
 	 			<tr th:each="itClanskaKarta, status: ${clanskeKarte}">     
 	 				<td class="broj" th:text="${(status.index + 1)+'.'}"></td>
 	 				<td class="broj" th:text="${itClanskaKarta.popust}"></td>
 	 				<td class="broj" th:text="${itClanskaKarta.brojPoena}"></td>
 	 				<td th:text="${itClanskaKarta.registarskiBroj}"></td>    
-	 				<td th:text="${itClanskaKarta.korisnik}"></td>  
+	 				<td th:text="${itClanskaKarta.korisnik}"></td> 
+	 				<td th:text="${itClanskaKarta.status}"></td> 
 	 				<td>
 	 					<a th:href="|ClanskeKarte/details?registarskiBroj=${itClanskaKarta.registarskiBroj}|">Vidi detalje</a> 
 	 				</td>   

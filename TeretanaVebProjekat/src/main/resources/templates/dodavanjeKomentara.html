@@ -12,7 +12,7 @@
 			<table class="forma">
 				<caption>dodavanje komentara</caption>
 				<tr><th>tekst:</th><td><input type="text" name="tekst"/></td></tr>
-				<tr><th>ocena:</th><td><input type="number"  min="1" value="5" name="ocena"/></td></tr>
+				<tr><th>ocena:</th><td><input type="number"  min="1" value="5" max = "5" name="ocena"/></td></tr>
 				<tr>
 					<th>datum i vreme:</th>
 					<td>
@@ -34,6 +34,16 @@
 							<option value="naCekanju">na cekanju</option>
 							<option value="odobren">odobren</option>
 							<option value="nijeOdobren">nije odobren</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>autor komentara:</th>
+					<td>
+						<select name="korisnik">
+							<option value="pera">pera</option>
+							<option value="mika">mika</option>
+							<option value="jova">jova</option>
 						</select>
 					</td>
 				</tr>

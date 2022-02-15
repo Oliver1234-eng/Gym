@@ -12,7 +12,7 @@ public interface KomentarDAO {
 
 	public List<Komentar> findAll();
 	
-	public List<Komentar> find(String tekst, Integer ocenaOd, Integer ocenaDo, LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String status);
+	public List<Komentar> find(String tekst, Integer ocenaOd, Integer ocenaDo, LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String status, String korisnik);
 	
 	public List<Komentar> find(HashMap<String, Object> mapaArgumenata);
 	

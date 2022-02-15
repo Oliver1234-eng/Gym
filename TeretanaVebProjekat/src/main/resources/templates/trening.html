@@ -45,6 +45,8 @@
 				<tr><th>trajanje u minutima:</th><td><input type="number" min="60" th:value="${trening.trajanjeUMinutima}" name="trajanjeUMinutima"/></td></tr>
 				<tr><th>prosecna ocena:</th><td><input type="number" min="1" th:value="${trening.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
 				<tr><th></th><td><a th:href="|Termini?treningId=${trening.id}|">termini</a></td></tr>
+				<tr><th></th><td><a th:href="Sale">sala</a></td></tr>
+				<tr><th></th><td><a th:href="Komentari">komentari</a></td></tr>
 				<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
 			</table>
 		</form>
@@ -90,6 +92,8 @@
 				<tr><th>trajanje u minutima:</th><td><input type="number" min="60" th:value="${trening.trajanjeUMinutima}" name="trajanjeUMinutima"/></td></tr>
 				<tr><th>prosecna ocena:</th><td><input type="number" min="1" th:value="${trening.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
 				<tr><th></th><td><a th:href="|Termini?treningId=${trening.id}|">termini</a></td></tr>
+				<tr><th></th><td><a th:href="Sale">sala</a></td></tr>
+				<tr><th></th><td><a th:href="Komentari">komentari</a></td></tr>
 		</table>
 	</div>
 </body>

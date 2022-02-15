@@ -28,12 +28,22 @@
 					</td>
 				</tr>
 				<tr>
-					<th>status komentara</th>
+					<th>status komentara:</th>
 					<td>
 						<select name="status">
 							<option value="naCekanju" th:selected="${#strings.equals(komentar.status, 'naCekanju')}">na cekanju</option>
 							<option value="odobren" th:selected="${#strings.equals(komentar.status, 'odobren')}">odobren</option>
 							<option value="nijeOdobren" th:selected="${#strings.equals(komentar.status, 'nijeOdobren')}">nije odobren</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>autor komentara:</th>
+					<td>
+						<select name="korisnik">
+							<option value="pera" th:selected="${#strings.equals(komentar.korisnik, 'pera')}">pera</option>
+							<option value="mika" th:selected="${#strings.equals(komentar.korisnik, 'mika')}">mika</option>
+							<option value="jova" th:selected="${#strings.equals(komentar.korisnik, 'jova')}">jova</option>
 						</select>
 					</td>
 				</tr>
@@ -71,6 +81,16 @@
 							<option value="naCekanju" th:selected="${#strings.equals(komentar.status, 'naCekanju')}">na cekanju</option>
 							<option value="odobren" th:selected="${#strings.equals(komentar.status, 'odobren')}">odobren</option>
 							<option value="nijeOdobren" th:selected="${#strings.equals(komentar.status, 'nijeOdobren')}">nije odobren</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>autor komentara:</th>
+					<td>
+						<select name="korisnik">
+							<option value="pera" th:selected="${#strings.equals(komentar.korisnik, 'pera')}">pera</option>
+							<option value="mika" th:selected="${#strings.equals(komentar.korisnik, 'mika')}">mika</option>
+							<option value="jova" th:selected="${#strings.equals(komentar.korisnik, 'jova')}">jova</option>
 						</select>
 					</td>
 				</tr>

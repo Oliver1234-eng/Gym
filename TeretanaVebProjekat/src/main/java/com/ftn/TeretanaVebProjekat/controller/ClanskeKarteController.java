@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -131,6 +132,47 @@ public class ClanskeKarteController implements ServletContextAware {
 		rezultat.addObject("clanskaKarta", ck); // podatak koji se šalje template-u
 
 		return rezultat; // prosleđivanje zahteva zajedno sa podacima template-u
+	}
+	
+	/** obrada podataka forme za izmenu postojećeg entiteta, post zahtev */
+	// POST: knjige/edit
+	@SuppressWarnings("unused")
+	@PostMapping(value="/edit")
+	public void Edit(@ModelAttribute ClanskaKarta clanskaKartaEdited , HttpServletResponse response) throws IOException {	
+		ClanskaKarta clanskaKarta = clanskaKartaService.findOne(clanskaKartaEdited.getId());
+		if(clanskaKarta != null) {
+			
+			if(clanskaKartaEdited.getPopust() > 0)
+				clanskaKarta.setPopust(clanskaKartaEdited.getPopust());
+			
+			if(clanskaKartaEdited.getBrojPoena() > 0)
+				clanskaKarta.setBrojPoena(clanskaKartaEdited.getBrojPoena());
+			
+			if(clanskaKartaEdited.getRegistarskiBroj() != null && !clanskaKartaEdited.getRegistarskiBroj().trim().equals(""))
+				clanskaKarta.setRegistarskiBroj(clanskaKartaEdited.getRegistarskiBroj());
+			
+			if(clanskaKartaEdited.getRegistarskiBroj() != null && !clanskaKartaEdited.getRegistarskiBroj().trim().equals(""))
+				clanskaKarta.setRegistarskiBroj(clanskaKartaEdited.getRegistarskiBroj());
+			
+			if(clanskaKartaEdited.getKorisnik() != null && !clanskaKartaEdited.getKorisnik().trim().equals(""))
+				clanskaKarta.setKorisnik(clanskaKartaEdited.getKorisnik());
+			
+			if(clanskaKartaEdited.getStatus() != null && !clanskaKartaEdited.getStatus().trim().equals(""))
+				clanskaKarta.setStatus(clanskaKartaEdited.getStatus());
+
+			
+		}
+		
+		ClanskaKarta saved = clanskaKartaService.update(clanskaKarta);
+		response.sendRedirect(bURL+"ClanskeKarte");
+	}
+	
+	// POST: knjige/delete
+	@SuppressWarnings("unused")
+	@PostMapping(value="/delete")
+	public void delete(@RequestParam Long id, HttpServletResponse response) throws IOException {		
+		ClanskaKarta deleted = clanskaKartaService.delete(id);
+		response.sendRedirect(bURL+"ClanskeKarte");
 	}
 	
 	// POST: clanskeKarte/vratiKnjigu

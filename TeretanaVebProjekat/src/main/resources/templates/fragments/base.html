@@ -6,6 +6,7 @@
 	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
 	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
 	<script src="js/lokacijaJS.js"></script>
+	<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 	<link rel="stylesheet" href="webjars/jquery-ui/1.12.1/jquery-ui.min.css"/>
 	<link rel="stylesheet" type="text/css" href="css/basePage.css"/>
 	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
@@ -52,15 +53,16 @@
 		</tr>
 	</table>
 	<ul>
-		<li><a href="Treninzi">treninzi</a></li>
-		<li><a href="TipoviTreninga">tipoviTreninga</a></li>
-		<li><a href="Termini">termini</a></li>
-		<li><a href="ClanskeKarte">clanskeKarte</a></li>
-		<li><a href="Komentari">komentari</a></li>
-		<li><a href="TreninziKorpa">zakazivanje treninga</a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="Treninzi">treninzi</a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="TipoviTreninga">tipoviTreninga</a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="Termini">termini</a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="ClanskeKarte">clanskeKarte</a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="Komentari">komentari</a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="TreninziKorpa">zakazivanje treninga</a></li>
 		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Korisnici">korisnici</a></li>
 		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Sale">sale</a></li>
 		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Izvestaji">izvestaji</a></li>
+		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Popust">specijalni datumi</a></li>
 	</ul>
 	
 	<div th:replace="${content}"></div>

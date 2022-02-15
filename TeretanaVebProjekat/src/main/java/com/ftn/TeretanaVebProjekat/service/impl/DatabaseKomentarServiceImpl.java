@@ -81,7 +81,7 @@ public class DatabaseKomentarServiceImpl implements KomentarService {
 
 	@Override
 	public List<Komentar> find(String tekst, Integer ocenaOd, Integer ocenaDo, 
-			LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String status) {
+			LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String status, String korisnik) {
 		// minimalne inkluzivne vrednosti parametara ako su izostavljeni
 		//1. način bi bilo pozivanje ogovarajuće DAO metode u odnosu na broj parametara 
 		//		gde bi trebalo implementirati više dao metoda tako da pokriju različite situacije
@@ -89,13 +89,13 @@ public class DatabaseKomentarServiceImpl implements KomentarService {
 		
 		//odabran 2.
 		
-		return komentarDAO.find(tekst, ocenaOd, ocenaDo, datumIVremeOd, datumIVremeDo, treningId, status);
+		return komentarDAO.find(tekst, ocenaOd, ocenaDo, datumIVremeOd, datumIVremeDo, treningId, status, korisnik);
 
 	}
 	
 	@Override
 	public List<Komentar> findVer2(String tekst, Integer ocenaOd, Integer ocenaDo, 
-			LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String status) {
+			LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String status, String korisnik) {
 		// maksimalno inkluzivne vrednosti parametara ako su izostavljeni
 		//1. način bi bilo pozivanje ogovarajuće DAO metode u odnosu na broj parametara 
 		//		gde bi trebalo implementirati više dao metoda tako da pokriju različite situacije
@@ -125,6 +125,9 @@ public class DatabaseKomentarServiceImpl implements KomentarService {
 		
 		if(status!=null)
 			mapaArgumenata.put("status", status);
+		
+		if(korisnik!=null)
+			mapaArgumenata.put("korisnik", korisnik);
 		
 		
 		return komentarDAO.find(mapaArgumenata);

@@ -8,7 +8,7 @@
 <body>
 	<div th:fragment="centralniDiv">
 		<form method="get">
-			<table class="tabela">
+			<table class="sortable">
 				<caption>Tipovi treninga</caption>
 				<tr>
 					<th>r. br.</th>
@@ -27,9 +27,9 @@
 				</tr>
 			</table>
 		</form>
-		<ul>
+<!--	<ul>
 			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="TipoviTreninga/Create">dodavanje tipa treninga</a></li>
-		</ul>
+		</ul>  -->
 	</div>
 </body>
 </html>

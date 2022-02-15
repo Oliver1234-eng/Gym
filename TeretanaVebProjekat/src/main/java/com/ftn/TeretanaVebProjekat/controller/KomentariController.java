@@ -62,7 +62,8 @@ public class KomentariController {
 			@RequestParam(required=false) @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate datumDo, 
 			@RequestParam(required=false) @DateTimeFormat(iso=DateTimeFormat.ISO.TIME) LocalTime vremeDo, 
 			@RequestParam(required=false) Long treningId,
-			@RequestParam(required=false) String status, 
+			@RequestParam(required=false) String status,
+			@RequestParam(required=false) String korisnik,
 			HttpSession session) throws IOException {
 		
 		//ako je input tipa text i ništa se ne unese 
@@ -73,6 +74,9 @@ public class KomentariController {
 		if(status!=null && status.trim().equals(""))
 			status=null;
 		
+		if(korisnik!=null && korisnik.trim().equals(""))
+			korisnik=null;
+		
 		// čitanje
 		LocalDateTime datumIVremeOd = null;
 		if(datumOd!=null || vremeOd!=null)
@@ -81,7 +85,7 @@ public class KomentariController {
 		if(datumDo!=null || vremeDo!=null)
 			datumIVremeDo = LocalDateTime.of(datumDo, vremeDo);
 		
-		List<Komentar> komentari = komentarService.find(tekst, ocenaOd, ocenaDo, datumIVremeOd, datumIVremeDo, treningId, status);
+		List<Komentar> komentari = komentarService.find(tekst, ocenaOd, ocenaDo, datumIVremeOd, datumIVremeDo, treningId, status, korisnik);
 		List<Trening> treninzi = treningService.findAll();
 
 		// prosleđivanje
@@ -138,6 +142,7 @@ public class KomentariController {
 			@RequestParam @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate datum, 
 			@RequestParam @DateTimeFormat(iso=DateTimeFormat.ISO.TIME) LocalTime vreme, 
 			@RequestParam Long treningId, @RequestParam(defaultValue="odobren") String status, 
+			@RequestParam(defaultValue="mika") String korisnik,
 			HttpSession session, HttpServletResponse response) throws IOException {
 		// autentikacija, autorizacija
 		Korisnik prijavljeniKorisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);
@@ -156,7 +161,7 @@ public class KomentariController {
 		}
 
 		// kreiranje
-		Komentar komentar = new Komentar(tekst, ocena, datumIVreme, trening, status);
+		Komentar komentar = new Komentar(tekst, ocena, datumIVreme, trening, status, korisnik);
 		komentarService.save(komentar);
 		
 		response.sendRedirect(baseURL + "Komentari");
@@ -169,6 +174,7 @@ public class KomentariController {
 			@RequestParam @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate datum, 
 			@RequestParam @DateTimeFormat(iso=DateTimeFormat.ISO.TIME) LocalTime vreme, 
 			@RequestParam Long treningId, @RequestParam String status,
+			@RequestParam String korisnik,
 			HttpSession session, HttpServletResponse response) throws IOException {
 		// autentikacija, autorizacija
 		Korisnik prijavljeniKorisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);
@@ -198,6 +204,7 @@ public class KomentariController {
 		komentar.setDatumIVreme(datumIVreme);
 		komentar.setTrening(trening);
 		komentar.setStatus(status);
+		komentar.setKorisnik(korisnik);
 		komentarService.update(komentar);
 	
 		response.sendRedirect(baseURL + "Komentari");

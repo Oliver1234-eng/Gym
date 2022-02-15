@@ -107,6 +107,7 @@ CREATE TABLE komentari (
 	datumIVreme DATETIME,
 	treningId BIGINT NOT NULL,
 	status ENUM('naCekanju', 'odobren', 'nijeOdobren') DEFAULT 'odobren',
+	korisnik ENUM('pera', 'mika', 'jova') DEFAULT 'mika',
 	PRIMARY KEY(id),
 	FOREIGN KEY(treningId) REFERENCES treninzi(id)
 		ON DELETE CASCADE
@@ -178,12 +179,12 @@ VALUES (2, '2022-06-21 17:00', 2, 1);
 INSERT INTO termini (id, datumIVreme, treningId, sala)
 VALUES (3, '2022-06-22 19:00', 3, 1);
 
-INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status)
-VALUES (1, 'tekst', 5, '2022-01-01 11:00', 1, 'odobren');
-INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status)
-VALUES (2, 'tekst', 4, '2022-01-02 12:00', 1, 'odobren');
-INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status)
-VALUES (3, 'tekst', 5, '2022-01-03 13:00', 1, 'odobren');
+INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status, korisnik)
+VALUES (1, 'tekst', 5, '2022-01-01 11:00', 1, 'odobren', 'mika');
+INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status, korisnik)
+VALUES (2, 'tekst', 4, '2022-01-02 12:00', 1, 'odobren', 'mika');
+INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status, korisnik)
+VALUES (3, 'tekst', 5, '2022-01-03 13:00', 1, 'odobren', 'jova');
 
 
 

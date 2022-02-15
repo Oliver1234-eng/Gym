@@ -21,8 +21,8 @@ public interface KomentarService {
 	List<Komentar> deleteAll(Trening trening);
 	List<Komentar> deleteAll(List<Trening> treninzi);
 	void delete(List<Long> ids);
-	List<Komentar> find(String tekst, Integer ocenaOd, Integer ocenaDo, LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String status);
-	List<Komentar> findVer2(String tekst, Integer ocenaOd, Integer ocenaDo, LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String status);
+	List<Komentar> find(String tekst, Integer ocenaOd, Integer ocenaDo, LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String status, String korisnik);
+	List<Komentar> findVer2(String tekst, Integer ocenaOd, Integer ocenaDo, LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String status, String korisnik);
 	List<Komentar> findByTreningId(Long treningId);
 
 }

@@ -32,13 +32,14 @@ public class KomentarDAOImpl implements KomentarDAO{
 			Integer komentarOcena = rs.getInt(index++);
 			LocalDateTime komentarDatumIVreme = rs.getTimestamp(index++).toLocalDateTime();
 			String komentarStatus = rs.getString(index++);
+			String komentarKorisnik = rs.getString(index++);
 
 			Long treningId = rs.getLong(index++);
 			String treningNaziv = rs.getString(index++);
 			Integer treningTrajanjeUMinutima = rs.getInt(index++);
 			Trening trening = new Trening(treningId, treningNaziv, treningTrajanjeUMinutima);
 
-			Komentar komentar = new Komentar(komentarId, komentarTekst, komentarOcena, komentarDatumIVreme, trening, komentarStatus);
+			Komentar komentar = new Komentar(komentarId, komentarTekst, komentarOcena, komentarDatumIVreme, trening, komentarStatus, komentarKorisnik);
 			return komentar;
 		}
 
@@ -46,7 +47,7 @@ public class KomentarDAOImpl implements KomentarDAO{
 	@Override
 	public Komentar findOne(Long id) {
 		String sql = 
-				"SELECT p.id, p.tekst, p.ocena, p.datumIVreme, p.status, f.id, f.naziv, f.trajanjeUMinutima FROM komentari p " + 
+				"SELECT p.id, p.tekst, p.ocena, p.datumIVreme, p.status, p.korisnik, f.id, f.naziv, f.trajanjeUMinutima FROM komentari p " + 
 				"LEFT JOIN treninzi f ON p.treningId = f.id " + 
 				"WHERE p.id = ? " + 
 				"ORDER BY p.id";
@@ -55,7 +56,7 @@ public class KomentarDAOImpl implements KomentarDAO{
 	@Override
 	public List<Komentar> findAll() {
 		String sql = 
-				"SELECT p.id, p.tekst, p.ocena, p.datumIVreme, p.status, f.id, f.naziv, f.trajanjeUMinutima FROM komentari p " + 
+				"SELECT p.id, p.tekst, p.ocena, p.datumIVreme, p.status, p.korisnik, f.id, f.naziv, f.trajanjeUMinutima FROM komentari p " + 
 				"LEFT JOIN treninzi f ON p.treningId = f.id " + 
 				"ORDER BY p.id";
 		return jdbcTemplate.query(sql, new KomentarRowMapper());
@@ -63,11 +64,11 @@ public class KomentarDAOImpl implements KomentarDAO{
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public List<Komentar> find(String tekst, Integer ocenaOd, Integer ocenaDo, LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String status) {
+	public List<Komentar> find(String tekst, Integer ocenaOd, Integer ocenaDo, LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String status, String korisnik) {
 		
 		ArrayList<Object> listaArgumenata = new ArrayList<Object>();
 		
-		String sql = "SELECT p.id, p.tekst, p.ocena, p.datumIVreme, p.status, f.id, f.naziv, f.trajanjeUMinutima FROM komentari p " + 
+		String sql = "SELECT p.id, p.tekst, p.ocena, p.datumIVreme, p.status, p.korisnik, f.id, f.naziv, f.trajanjeUMinutima FROM komentari p " + 
 				"LEFT JOIN treninzi f ON p.treningId = f.id ";
 		
 		StringBuffer whereSql = new StringBuffer(" WHERE ");
@@ -131,6 +132,15 @@ public class KomentarDAOImpl implements KomentarDAO{
 			listaArgumenata.add(status);
 		}
 		
+		if(korisnik!=null) {
+			korisnik = "%" + korisnik + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("p.korisnik LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(korisnik);
+		}
+		
 		if(imaArgumenata)
 			sql=sql + whereSql.toString()+" ORDER BY p.id";
 		else
@@ -145,7 +155,7 @@ public class KomentarDAOImpl implements KomentarDAO{
 		
 		ArrayList<Object> listaArgumenata = new ArrayList<Object>();
 		
-		String sql = "SELECT p.id, p.tekst, p.ocena, p.datumIVreme, p.status, f.id, f.naziv, f.trajanjeUMinutima FROM komentari p " + 
+		String sql = "SELECT p.id, p.tekst, p.ocena, p.datumIVreme, p.status, p.korisnik, f.id, f.naziv, f.trajanjeUMinutima FROM komentari p " + 
 				"LEFT JOIN treninzi f ON p.treningId = f.id ";
 		
 		StringBuffer whereSql = new StringBuffer(" WHERE ");
@@ -209,6 +219,15 @@ public class KomentarDAOImpl implements KomentarDAO{
 			listaArgumenata.add(status);
 		}
 		
+		if(mapaArgumenata.containsKey("korisnik")) {
+			String korisnik = "%" + mapaArgumenata.get("korisnik") + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("p.korisnik LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(korisnik);
+		}
+		
 		if(imaArgumenata)
 			sql=sql + whereSql.toString()+" ORDER BY p.id";
 		else
@@ -220,13 +239,13 @@ public class KomentarDAOImpl implements KomentarDAO{
 	
 	@Override
 	public int save(Komentar komentar) {
-		String sql = "INSERT INTO komentari (tekst, ocena, datumIVreme, treningId, status) VALUES (?, ?, ?, ?, ?)";
-		return jdbcTemplate.update(sql, komentar.getTekst(), komentar.getOcena(), komentar.getDatumIVreme(), komentar.getTrening().getId(), komentar.getStatus());
+		String sql = "INSERT INTO komentari (tekst, ocena, datumIVreme, treningId, status, korisnik) VALUES (?, ?, ?, ?, ?, ?)";
+		return jdbcTemplate.update(sql, komentar.getTekst(), komentar.getOcena(), komentar.getDatumIVreme(), komentar.getTrening().getId(), komentar.getStatus(), komentar.getKorisnik());
 	}
 	@Override
 	public int update(Komentar komentar) {
-		String sql = "UPDATE komentari SET tekst = ?, ocena = ?, datumIVreme = ?, treningID = ?, status = ? WHERE id  = ?";
-		return jdbcTemplate.update(sql, komentar.getTekst(), komentar.getOcena(), komentar.getDatumIVreme(), komentar.getTrening().getId(), komentar.getStatus(), komentar.getId());
+		String sql = "UPDATE komentari SET tekst = ?, ocena = ?, datumIVreme = ?, treningID = ?, status = ?, korisnik = ? WHERE id  = ?";
+		return jdbcTemplate.update(sql, komentar.getTekst(), komentar.getOcena(), komentar.getDatumIVreme(), komentar.getTrening().getId(), komentar.getStatus(), komentar.getKorisnik(), komentar.getId());
 	}
 	@Override
 	public int delete(Long id) {
