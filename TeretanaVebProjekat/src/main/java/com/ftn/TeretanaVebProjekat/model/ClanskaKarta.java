@@ -9,48 +9,67 @@ public class ClanskaKarta {
 	private int popust;
 	private int brojPoena;
 	private String registarskiBroj;
-	private Korisnik korisnik;
+	private String korisnik = "jova";
+	private String status = "prihvacen";
 	private List<TreningKorpa> zakazaniTreninzi;
 	
 	public ClanskaKarta() {
 		this.zakazaniTreninzi = new ArrayList<TreningKorpa>();
 	}
 
-	public ClanskaKarta(Long id, int popust, int brojPoena, String registarskiBroj,
+	public ClanskaKarta(Long id, int popust, int brojPoena, String registarskiBroj, String korisnik, String status,
 			List<TreningKorpa> zakazaniTreninzi) {
 		super();
 		this.id = id;
 		this.popust = popust;
 		this.brojPoena = brojPoena;
 		this.registarskiBroj = registarskiBroj;
+		this.korisnik = korisnik;
+		this.status = status;
 		this.zakazaniTreninzi = zakazaniTreninzi;
 	}
 
-	public ClanskaKarta(Long id, int popust, int brojPoena, String registarskiBroj, Korisnik korisnik) {
+	public ClanskaKarta(int popust, int brojPoena, String registarskiBroj, String korisnik, String status,
+			List<TreningKorpa> zakazaniTreninzi) {
+		super();
+		this.popust = popust;
+		this.brojPoena = brojPoena;
+		this.registarskiBroj = registarskiBroj;
+		this.korisnik = korisnik;
+		this.status = status;
+		this.zakazaniTreninzi = zakazaniTreninzi;
+	}
+
+	public ClanskaKarta(Long id, int popust, int brojPoena, String registarskiBroj, String status,
+			List<TreningKorpa> zakazaniTreninzi) {
+		super();
+		this.id = id;
+		this.popust = popust;
+		this.brojPoena = brojPoena;
+		this.registarskiBroj = registarskiBroj;
+		this.status = status;
+		this.zakazaniTreninzi = zakazaniTreninzi;
+	}
+
+	public ClanskaKarta(Long id, int popust, int brojPoena, String registarskiBroj, String korisnik, String status) {
 		super();
 		this.id = id;
 		this.popust = popust;
 		this.brojPoena = brojPoena;
 		this.registarskiBroj = registarskiBroj;
 		this.korisnik = korisnik;
+		this.status = status;
 		this.zakazaniTreninzi = new ArrayList<TreningKorpa>();
 	}
 
-	public ClanskaKarta(int popust, int brojPoena, String registarskiBroj, Korisnik korisnik) {
+	public ClanskaKarta(int popust, int brojPoena, String registarskiBroj, String korisnik, String status) {
 		super();
 		this.popust = popust;
 		this.brojPoena = brojPoena;
 		this.registarskiBroj = registarskiBroj;
 		this.korisnik = korisnik;
+		this.status = status;
 		this.zakazaniTreninzi = new ArrayList<TreningKorpa>();
-	}
-
-	public ClanskaKarta(int popust, int brojPoena, String registarskiBroj, List<TreningKorpa> zakazaniTreninzi) {
-		super();
-		this.popust = popust;
-		this.brojPoena = brojPoena;
-		this.registarskiBroj = registarskiBroj;
-		this.zakazaniTreninzi = zakazaniTreninzi;
 	}
 
 	@Override
@@ -77,7 +96,7 @@ public class ClanskaKarta {
 			return false;
 		return true;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -110,12 +129,20 @@ public class ClanskaKarta {
 		this.registarskiBroj = registarskiBroj;
 	}
 
-	public Korisnik getKorisnik() {
+	public String getKorisnik() {
 		return korisnik;
 	}
 
-	public void setKorisnik(Korisnik korisnik) {
+	public void setKorisnik(String korisnik) {
 		this.korisnik = korisnik;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public List<TreningKorpa> getZakazaniTreninzi() {
@@ -128,9 +155,7 @@ public class ClanskaKarta {
 
 	@Override
 	public String toString() {
-		return "ClanskaKarta [id=" + id + ", korisnik=" + korisnik + "]";
+		return "ClanskaKarta [id=" + id + ", registarskiBroj=" + registarskiBroj + ", korisnik=" + korisnik + "]";
 	}
-	
-	
 	
 }

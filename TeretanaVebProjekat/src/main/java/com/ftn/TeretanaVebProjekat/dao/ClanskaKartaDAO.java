@@ -12,7 +12,7 @@ public interface ClanskaKartaDAO {
 	
 	public ClanskaKarta findOne(Long id);
 	
-	//public ClanskaKarta findOneByRegistarskiBroj(String registarskiBroj);
+	public ClanskaKarta findOneByRegistarskiBroj(String registarskiBroj);
 
 	public List<ClanskaKarta> findAll();
 
@@ -22,7 +22,7 @@ public interface ClanskaKartaDAO {
 
 	public int delete(Long id);
 	
-	public List<ClanskaKarta> find(Integer popust, Integer brojPoenaOd, Integer brojPoenaDo, String registarskiBroj, Long korisnikId);
+	public List<ClanskaKarta> find(Integer popust, Integer brojPoenaOd, Integer brojPoenaDo, String registarskiBroj, String korisnik, String status);
 	
 	public List<ClanskaKarta> find(HashMap<String, Object> mapaArgumenata);
 	

@@ -67,17 +67,16 @@ CREATE TABLE clanskeKarte (
 	popust INT NOT NULL,
 	brojPoena INT NOT NULL,
 	registarskiBroj VARCHAR(50) NOT NULL,
-	korisnikId BIGINT NOT NULL,
-	PRIMARY KEY(id),
-	FOREIGN KEY(korisnikId) REFERENCES korisnici(id)
-		ON DELETE CASCADE
+	korisnik ENUM('pera', 'jova', 'mika') DEFAULT 'jova',
+	status ENUM('prihvacen', 'uObradi', 'odbijen') DEFAULT 'prihvacen',
+	PRIMARY KEY(id)
 );
 
 CREATE TABLE treninziClanskeKarte (
 	treningId BIGINT,
 	clanskaKartaId BIGINT,
 	PRIMARY KEY(treningId, clanskaKartaId),
-	FOREIGN KEY(treningId) REFERENCES treninzi(id)
+	FOREIGN KEY(treningId) REFERENCES treninziKorpa(id)
 		ON DELETE CASCADE,
 	FOREIGN KEY(clanskaKartaId) REFERENCES clanskeKarte(id)
 		ON DELETE CASCADE
@@ -155,19 +154,15 @@ VALUES (2, 'trening2', 'trener1', 'Opis', 'Fitness', 800, 'pojedinacni', 'srednj
 INSERT INTO treninziKorpa (id, naziv, trener, kratakOpis, tipTreninga, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
 VALUES (3, 'trening3', 'trener1', 'Opis', 'Cardio', 1000, 'pojedinacni', 'napredni', 60, 5, false);
 
-INSERT INTO clanskeKarte (id, popust, brojPoena, registarskiBroj, korisnikId)
-VALUES (1, 10, 5, '11', 1);
-INSERT INTO clanskeKarte (id, popust, brojPoena, registarskiBroj, korisnikId)
-VALUES (2, 10, 5, '22', 1);
-INSERT INTO clanskeKarte (id, popust, brojPoena, registarskiBroj, korisnikId)
-VALUES (3, 10, 5, '33', 2);
+INSERT INTO clanskeKarte (id, popust, brojPoena, registarskiBroj, korisnik, status)
+VALUES (1, 10, 5, 11, 'mika', 'prihvacen');
+INSERT INTO clanskeKarte (id, popust, brojPoena, registarskiBroj, korisnik, status)
+VALUES (2, 10, 5, 22, 'jova', 'prihvacen');
 
 INSERT INTO treninziClanskeKarte (treningId, clanskaKartaId)
 VALUES (1, 1);
 INSERT INTO treninziClanskeKarte (treningId, clanskaKartaId)
 VALUES (1, 2);
-INSERT INTO treninziClanskeKarte (treningId, clanskaKartaId)
-VALUES (1, 3);
 
 INSERT INTO sale (id, oznaka, kapacitet)
 VALUES (1, 1, 30);
