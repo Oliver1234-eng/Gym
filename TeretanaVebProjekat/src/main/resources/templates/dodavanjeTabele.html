@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<title>Termin</title>
+</head>
+<body>
+	<div th:fragment="centralniDiv">
+		<form method="post" action="Tabele/Create">
+			<input type="hidden" name="id" value="1">
+			<table class="forma">
+				<caption>dodavanje tabele</caption>
+				<tr>
+					<th>trening:</th>
+					<td>
+						<select name="treningId">
+							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}"></option>
+						</select>	
+					</td>
+				</tr>
+				<tr>
+					<th>korisnik:</th>
+					<td>
+						<select name="korisnik">
+							<option value="pera">pera</option>
+							<option value="mika">mika</option>
+							<option value="jova">jova</option>
+						</select>
+					</td>
+				</tr>
+				<tr><th>cena:</th><td><input type="number"  min="100" value="500" name="cena"/></td></tr>
+				<tr>
+					<th>datum i vreme:</th>
+					<td>
+						<input type="date" th:value="2020-04-01" name="datum"/>&nbsp;
+						<input type="time" value="18:00" name="vreme"/>
+					</td>
+				<tr><th></th><td><input type="submit" value="Dodaj"/></td></tr>
+			</table>
+		</form>
+		<ul>
+			<li><a href="Tabele">povratak</a></li>
+		</ul>
+	</div>
+</body>
+</html>
