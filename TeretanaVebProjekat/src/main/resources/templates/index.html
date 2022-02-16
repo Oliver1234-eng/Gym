@@ -39,6 +39,7 @@
 		<li th:if="${session.prijavljeniKorisnik != null}"><a href="ClanskeKarte">clanskeKarte</a></li>
 		<li th:if="${session.prijavljeniKorisnik != null}"><a href="Komentari">komentari</a></li>
 		<li th:if="${session.prijavljeniKorisnik != null}"><a href="TreninziKorpa">zakazivanje treninga</a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="Tabele">tabelarni pregled treninga</a></li>
 		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Korisnici">korisnici</a></li>
 		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Sale">sale</a></li>
 		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Izvestaji">izvestaji</a></li>

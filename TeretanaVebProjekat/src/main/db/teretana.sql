@@ -113,6 +113,29 @@ CREATE TABLE komentari (
 		ON DELETE CASCADE
 );
 
+CREATE TABLE tabele (
+	id BIGINT AUTO_INCREMENT,
+	treningId BIGINT NOT NULL,
+	korisnik ENUM('pera', 'mika', 'jova') DEFAULT 'mika',
+	cena INT NOT NULL,
+	datumIVreme DATETIME,
+	PRIMARY KEY(id),
+	FOREIGN KEY(treningId) REFERENCES treninzi(id)
+		ON DELETE CASCADE
+);
+
+CREATE TABLE izvestaji (
+	id BIGINT AUTO_INCREMENT,
+	treningId BIGINT NOT NULL,
+	trener ENUM('trener1', 'trener2', 'trener3') DEFAULT 'trener2',
+	datumIVreme DATETIME,
+	brojZakazanihTreninga INT NOT NULL,
+	cena INT NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY(treningId) REFERENCES treninzi(id)
+		ON DELETE CASCADE
+);
+
 
 INSERT INTO korisnici (korisnickoime, lozinka, email, ime, prezime, datumRodjenja, adresa, brojTelefona, datumRegistracije, administrator) 
 VALUES ('pera', 'pera123', 'pera@gmail.com', 'Pera', 'Peric', '1990-12-12 8:00', 'Ulica 1', '0638892283', '2022-12-15 11:00', true);
@@ -185,6 +208,20 @@ INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status, korisni
 VALUES (2, 'tekst', 4, '2022-01-02 12:00', 1, 'odobren', 'mika');
 INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status, korisnik)
 VALUES (3, 'tekst', 5, '2022-01-03 13:00', 1, 'odobren', 'jova');
+
+INSERT INTO tabele (id, treningId, korisnik, cena, datumIVreme)
+VALUES (1, 1, 'mika', 500, '2022-01-01 10:00');
+INSERT INTO tabele (id, treningId, korisnik, cena, datumIVreme)
+VALUES (2, 2, 'mika', 600, '2022-01-02 11:00');
+INSERT INTO tabele (id, treningId, korisnik, cena, datumIVreme)
+VALUES (3, 1, 'jova', 700, '2022-01-03 12:00');
+
+INSERT INTO izvestaji (id, treningId, trener, datumIVreme, brojZakazanihTreninga, cena)
+VALUES (1, 1, 'trener1', '2022-01-01 11:00', 3, 600);
+INSERT INTO izvestaji (id, treningId, trener, datumIVreme, brojZakazanihTreninga, cena)
+VALUES (2, 2, 'trener2', '2022-01-02 12:00', 2, 700);
+INSERT INTO izvestaji (id, treningId, trener, datumIVreme, brojZakazanihTreninga, cena)
+VALUES (3, 1, 'trener1', '2022-01-03 13:00', 4, 500);
 
 
 

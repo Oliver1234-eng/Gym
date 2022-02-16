@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<title>Izvestaj</title>
+</head>
+<body>
+	<div th:fragment="centralniDiv">
+		<form method="post" action="Izvestaji/Create">
+			<input type="hidden" name="id" value="1">
+			<table class="forma">
+				<caption>dodavanje novog izvestaja</caption>
+				<tr>
+					<th>trening:</th>
+					<td>
+						<select name="treningId">
+							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}"></option>
+						</select>	
+					</td>
+				</tr>
+				<tr>
+					<th>trener:</th>
+					<td>
+						<select name="trener">
+							<option value="trener1">trener 1</option>
+							<option value="trener2">trener 2</option>
+							<option value="trener3">trener 3</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>datum i vreme:</th>
+					<td>
+						<input type="date" th:value="2020-04-01" name="datum"/>&nbsp;
+						<input type="time" value="18:00" name="vreme"/>
+					</td>
+				<tr><th>broj zakazanih treninga:</th><td><input type="number" value="1" min="1" name="brojZakazanihTreninga"/></td></tr>
+				<tr><th>cena:</th><td><input type="number"  min="100" value="500" name="cena"/></td></tr>
+				<tr><th></th><td><input type="submit" value="Dodaj"/></td></tr>
+			</table>
+		</form>
+		<ul>
+			<li><a href="Izvestaji">povratak</a></li>
+		</ul>
+	</div>
+</body>
+</html>
