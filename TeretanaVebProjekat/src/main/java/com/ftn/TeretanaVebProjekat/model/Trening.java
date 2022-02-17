@@ -12,7 +12,7 @@ public class Trening {
 	private int cena;
 	private String vrstaTreninga = "pojedinacni";
 	private String nivoTreninga = "amaterski";
-	private int trajanjeUMinutima;
+	private String trajanjeUMinutima = "60";
 	private int prosecnaOcena;
 	private boolean zakazan;
 	
@@ -21,7 +21,7 @@ public class Trening {
 	public Trening() {}
 
 	public Trening(Long id, String naziv, String trener, String kratakOpis, int cena, String vrstaTreninga,
-			String nivoTreninga, int trajanjeUMinutima, int prosecnaOcena, boolean zakazan) {
+			String nivoTreninga, String trajanjeUMinutima, int prosecnaOcena, boolean zakazan) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
@@ -36,7 +36,7 @@ public class Trening {
 	}
 
 	public Trening(String naziv, String trener, String kratakOpis, int cena, String vrstaTreninga, String nivoTreninga,
-			int trajanjeUMinutima, int prosecnaOcena, boolean zakazan) {
+			String trajanjeUMinutima, int prosecnaOcena, boolean zakazan) {
 		super();
 		this.naziv = naziv;
 		this.trener = trener;
@@ -50,7 +50,7 @@ public class Trening {
 	}
 
 	public Trening(Long id, String naziv, String trener, String kratakOpis, int cena, String vrstaTreninga,
-			String nivoTreninga, int trajanjeUMinutima, int prosecnaOcena) {
+			String nivoTreninga, String trajanjeUMinutima, int prosecnaOcena) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
@@ -64,7 +64,7 @@ public class Trening {
 	}
 
 	public Trening(String naziv, String trener, String kratakOpis, int cena, String vrstaTreninga, String nivoTreninga,
-			int trajanjeUMinutima, int prosecnaOcena) {
+			String trajanjeUMinutima, int prosecnaOcena) {
 		super();
 		this.naziv = naziv;
 		this.trener = trener;
@@ -76,7 +76,7 @@ public class Trening {
 		this.prosecnaOcena = prosecnaOcena;
 	}
 
-	public Trening(Long id, String naziv, int trajanjeUMinutima) {
+	public Trening(Long id, String naziv, String trajanjeUMinutima) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
@@ -164,11 +164,11 @@ public class Trening {
 		this.nivoTreninga = nivoTreninga;
 	}
 
-	public int getTrajanjeUMinutima() {
+	public String getTrajanjeUMinutima() {
 		return trajanjeUMinutima;
 	}
 
-	public void setTrajanjeUMinutima(int trajanjeUMinutima) {
+	public void setTrajanjeUMinutima(String trajanjeUMinutima) {
 		this.trajanjeUMinutima = trajanjeUMinutima;
 	}
 

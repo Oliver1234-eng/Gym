@@ -12,7 +12,7 @@ public interface TerminDAO {
 
 	public List<Termin> findAll();
 	
-	public List<Termin> find(LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, Integer sala);
+	public List<Termin> find(LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String sala);
 	
 	public List<Termin> find(HashMap<String, Object> mapaArgumenata);
 	

@@ -25,7 +25,16 @@
 						</select>
 					</td>
 				</tr>
-				<tr><th>sala:</th><td><input type="number" th:value="${termin.sala}" min="1" name="sala"/></td></tr>
+				<tr>
+					<th>sala:</th>
+					<td>
+						<select name="sala">
+							<option value="1" th:selected="${#strings.equals(termin.sala, '1')}">1</option>
+							<option value="2" th:selected="${#strings.equals(termin.sala, '2')}">2</option>
+							<option value="3" th:selected="${#strings.equals(termin.sala, '3')}">3</option>
+						</select>
+					</td>
+				</tr>
 				<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
 			</table>
 		</form>
@@ -41,7 +50,16 @@
 			<tr>
 				<th>trening:</th><td><a th:href="|Treninzi/Details?id=${termin.trening.id}|" th:text="${termin.trening.naziv}"></a></td>
 			</tr>
-			<tr><th>sala:</th><td th:text="${termin.sala}"></td></tr>
+			<tr>
+				<th>sala:</th>
+				<td>
+					<select name="sala">
+						<option value="1" th:selected="${#strings.equals(termin.sala, '1')}">1</option>
+						<option value="2" th:selected="${#strings.equals(termin.sala, '2')}">2</option>
+						<option value="3" th:selected="${#strings.equals(termin.sala, '3')}">3</option>
+					</select>
+				</td>
+			</tr>
 		</table>
 	</div>	
 </body>

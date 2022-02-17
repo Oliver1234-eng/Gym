@@ -19,7 +19,7 @@
 				<tr><th>vrsta treninga:</th><td><input type="text" th:value="${treningKorpa.vrstaTreninga}" name="vrstaTreninga"/></td></tr>
 				<tr><th>nivo treninga:</th><td><input type="text" th:value="${treningKorpa.nivoTreninga}" name="nivoTreninga"/></td></tr>
 				<tr><th>trajanje u minutima:</th><td><input type="number" min="60" th:value="${treningKorpa.trajanjeUMinutima}" name="trajanjeUMinutima"/></td></tr>
-				<tr><th>prosecna ocena:</th><td><input type="number" min="1" th:value="${treningKorpa.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
+				<tr><th>prosecna ocena:</th><td><input type="number" min="1" max="5" th:value="${treningKorpa.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
 				<tr><th></th><td><a th:href="Termini">termini</a></td></tr>
 				<tr><th></th><td><a th:href="Sale">sala</a></td></tr>
 				<tr><th></th><td><a th:href="Komentari">komentari</a></td></tr>
@@ -42,7 +42,7 @@
 				<tr><th>vrsta treninga:</th><td><input type="text" th:value="${treningKorpa.vrstaTreninga}" name="vrstaTreninga"/></td></tr>
 				<tr><th>nivo treninga:</th><td><input type="text" th:value="${treningKorpa.nivoTreninga}" name="nivoTreninga"/></td></tr>
 				<tr><th>trajanje u minutima:</th><td><input type="number" min="60" th:value="${treningKorpa.trajanjeUMinutima}" name="trajanjeUMinutima"/></td></tr>
-				<tr><th>prosecna ocena:</th><td><input type="number" min="1" th:value="${treningKorpa.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
+				<tr><th>prosecna ocena:</th><td><input type="number" min="1" max="5" th:value="${treningKorpa.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
 				<tr><th></th><td><a th:href="Termini">termini</a></td></tr>
 				<tr><th></th><td><a th:href="Sale">sala</a></td></tr>
 				<tr><th></th><td><a th:href="Komentari">komentari</a></td></tr>

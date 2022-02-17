@@ -36,7 +36,7 @@ public class KomentarDAOImpl implements KomentarDAO{
 
 			Long treningId = rs.getLong(index++);
 			String treningNaziv = rs.getString(index++);
-			Integer treningTrajanjeUMinutima = rs.getInt(index++);
+			String treningTrajanjeUMinutima = rs.getString(index++);
 			Trening trening = new Trening(treningId, treningNaziv, treningTrajanjeUMinutima);
 
 			Komentar komentar = new Komentar(komentarId, komentarTekst, komentarOcena, komentarDatumIVreme, trening, komentarStatus, komentarKorisnik);

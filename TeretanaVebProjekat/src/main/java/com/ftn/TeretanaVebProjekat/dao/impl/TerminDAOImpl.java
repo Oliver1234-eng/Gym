@@ -29,11 +29,11 @@ public class TerminDAOImpl implements TerminDAO{
 			int index = 1;
 			Long terminId = rs.getLong(index++);
 			LocalDateTime terminDatumIVreme = rs.getTimestamp(index++).toLocalDateTime();
-			Integer terminSala = rs.getInt(index++);
+			String terminSala = rs.getString(index++);
 
 			Long treningId = rs.getLong(index++);
 			String treningNaziv = rs.getString(index++);
-			Integer treningTrajanjeUMinutima = rs.getInt(index++);
+			String treningTrajanjeUMinutima = rs.getString(index++);
 			Trening trening = new Trening(treningId, treningNaziv, treningTrajanjeUMinutima);
 
 			Termin termin = new Termin(terminId, terminDatumIVreme, trening, terminSala);
@@ -59,7 +59,7 @@ public class TerminDAOImpl implements TerminDAO{
 		return jdbcTemplate.query(sql, new TerminRowMapper());
 	}
 	@Override
-	public List<Termin> find(LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, Integer sala) {
+	public List<Termin> find(LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String sala) {
 		
 		ArrayList<Object> listaArgumenata = new ArrayList<Object>();
 		
@@ -94,9 +94,10 @@ public class TerminDAOImpl implements TerminDAO{
 		}
 		
 		if(sala!=null) {
+			sala = "%" + sala + "%";
 			if(imaArgumenata)
 				whereSql.append(" AND ");
-			whereSql.append("p.sala = ?");
+			whereSql.append("p.sala LIKE ?");
 			imaArgumenata = true;
 			listaArgumenata.add(sala);
 		}
@@ -148,7 +149,7 @@ public class TerminDAOImpl implements TerminDAO{
 		if(mapaArgumenata.containsKey("sala")) {
 			if(imaArgumenata)
 				whereSql.append(" AND ");
-			whereSql.append("p.sala = ?");
+			whereSql.append("p.sala LIKE ?");
 			imaArgumenata = true;
 			listaArgumenata.add(mapaArgumenata.get("sala"));
 		}

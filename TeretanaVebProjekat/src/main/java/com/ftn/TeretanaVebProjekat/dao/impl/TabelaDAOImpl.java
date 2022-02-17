@@ -36,7 +36,7 @@ public class TabelaDAOImpl implements TabelaDAO{
 
 			Long treningId = rs.getLong(index++);
 			String treningNaziv = rs.getString(index++);
-			Integer treningTrajanjeUMinutima = rs.getInt(index++);
+			String treningTrajanjeUMinutima = rs.getString(index++);
 			Trening trening = new Trening(treningId, treningNaziv, treningTrajanjeUMinutima);
 
 			Tabela tabela = new Tabela(tabelaId, trening, tabelaKorisnik, tabelaCena, tabelaDatumIVreme);

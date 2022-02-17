@@ -80,7 +80,7 @@ public class DatabaseTerminServiceImpl implements TerminService {
 	}
 
 	@Override
-	public List<Termin> find(LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, Integer sala) {
+	public List<Termin> find(LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String sala) {
 		// minimalne inkluzivne vrednosti parametara ako su izostavljeni
 		//1. način bi bilo pozivanje ogovarajuće DAO metode u odnosu na broj parametara 
 		//		gde bi trebalo implementirati više dao metoda tako da pokriju različite situacije
@@ -93,7 +93,7 @@ public class DatabaseTerminServiceImpl implements TerminService {
 	}
 	
 	@Override
-	public List<Termin> findVer2(LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, Integer sala) {
+	public List<Termin> findVer2(LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String sala) {
 		// maksimalno inkluzivne vrednosti parametara ako su izostavljeni
 		//1. način bi bilo pozivanje ogovarajuće DAO metode u odnosu na broj parametara 
 		//		gde bi trebalo implementirati više dao metoda tako da pokriju različite situacije

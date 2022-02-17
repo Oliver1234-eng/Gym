@@ -25,7 +25,7 @@ CREATE TABLE treninzi (
 	cena INT NOT NULL,
 	vrstaTreninga ENUM('pojedinacni', 'grupni') DEFAULT 'pojedinacni',
 	nivoTreninga ENUM('amaterski', 'srednji', 'napredni') DEFAULT 'amaterski',
-	trajanjeUMinutima INT NOT NULL,
+	trajanjeUMinutima ENUM('30', '60', '90') DEFAULT '60',
 	prosecnaOcena INT NOT NULL,
 	zakazan BOOLEAN NOT NULL,
 	PRIMARY KEY(id)
@@ -94,7 +94,7 @@ CREATE TABLE termini (
 	id BIGINT AUTO_INCREMENT,
 	datumIVreme DATETIME,
 	treningId BIGINT NOT NULL,
-	sala INT NOT NULL,
+	sala ENUM('1', '2', '3') DEFAULT '2',
 	PRIMARY KEY(id),
 	FOREIGN KEY(treningId) REFERENCES treninzi(id)
 		ON DELETE CASCADE
@@ -107,7 +107,7 @@ CREATE TABLE komentari (
 	datumIVreme DATETIME,
 	treningId BIGINT NOT NULL,
 	status ENUM('naCekanju', 'odobren', 'nijeOdobren') DEFAULT 'odobren',
-	korisnik ENUM('pera', 'mika', 'jova') DEFAULT 'mika',
+	korisnik ENUM('pera', 'mika', 'jova', 'anonimno') DEFAULT 'mika',
 	PRIMARY KEY(id),
 	FOREIGN KEY(treningId) REFERENCES treninzi(id)
 		ON DELETE CASCADE
@@ -148,13 +148,13 @@ VALUES ('jova@gmail.com', 'jova123', 'jova', 'Jova', 'Jovic', '1995-02-27 10:00'
 
 
 INSERT INTO treninzi (id, naziv, trener, kratakOpis, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
-VALUES (1, 'trening1', 'trener1', 'Opis', 500, 'pojedinacni', 'amaterski', 60, 4, false);
+VALUES (1, 'trening1', 'trener1', 'Opis', 500, 'pojedinacni', 'amaterski', '60', 4, false);
 
 INSERT INTO treninzi (id, naziv, trener, kratakOpis, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
-VALUES (2, 'trening2', 'trener1', 'Opis', 800, 'pojedinacni', 'srednji', 60, 3, false);
+VALUES (2, 'trening2', 'trener1', 'Opis', 800, 'pojedinacni', 'srednji', '60', 3, false);
 
 INSERT INTO treninzi (id, naziv, trener, kratakOpis, cena, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcena, zakazan)
-VALUES (3, 'trening3', 'trener1', 'Opis', 1000, 'pojedinacni', 'napredni', 60, 5, false);
+VALUES (3, 'trening3', 'trener1', 'Opis', 1000, 'pojedinacni', 'napredni', '60', 5, false);
 
 INSERT INTO tipTreninga (id, naziv) VALUES (1, 'Joga');
 INSERT INTO tipTreninga (id, naziv) VALUES (2, 'Fitness');
@@ -196,16 +196,16 @@ INSERT INTO sale (id, oznaka,kapacitet)
 VALUES (3, 3, 30);
 
 INSERT INTO termini (id, datumIVreme, treningId, sala)
-VALUES (1, '2022-06-20 15:00', 1, 1);
+VALUES (1, '2022-06-20 15:00', 1, '1');
 INSERT INTO termini (id, datumIVreme, treningId, sala)
-VALUES (2, '2022-06-21 17:00', 2, 1);
+VALUES (2, '2022-06-21 17:00', 2, '2');
 INSERT INTO termini (id, datumIVreme, treningId, sala)
-VALUES (3, '2022-06-22 19:00', 3, 1);
+VALUES (3, '2022-06-22 19:00', 3, '1');
 
 INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status, korisnik)
 VALUES (1, 'tekst', 5, '2022-01-01 11:00', 1, 'odobren', 'mika');
 INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status, korisnik)
-VALUES (2, 'tekst', 4, '2022-01-02 12:00', 1, 'odobren', 'mika');
+VALUES (2, 'tekst', 4, '2022-01-02 12:00', 1, 'odobren', 'anonimno');
 INSERT INTO komentari (id, tekst, ocena, datumIVreme, treningId, status, korisnik)
 VALUES (3, 'tekst', 5, '2022-01-03 13:00', 1, 'odobren', 'jova');
 

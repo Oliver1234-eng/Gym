@@ -54,8 +54,12 @@
 						</select>
 					</th>
 					<th>
-						od:<input type="number" min="0" th:value="${param.trajanjeUMinutimaOd}?: '0'" name="trajanjeUMinutimaOd"/><br/>
-						do:<input type="number" min="0" th:value="${param.trajanjeUMinutimaDo}?: '240'" name="trajanjeUMinutimaDo"/>
+						<select name="trajanjeUMinutima">
+							<option value="">odaberi</option>
+							<option value="30" th:selected="${#strings.equals(param.trajanjeUMinutima, '30')}">30</option>
+							<option value="60" th:selected="${#strings.equals(param.trajanjeUMinutima, '60')}">60</option>
+							<option value="90" th:selected="${#strings.equals(param.trajanjeUMinutima, '90')}">90</option>
+						</select>
 					</th>
 					<th>
 						od:<input type="number" min="0" th:value="${param.prosecnaOcenaOd}?: '0'" name="prosecnaOd"/><br/>
@@ -76,7 +80,7 @@
 					<td class="broj" th:text="${itTrening.cena}"></td>
 					<td th:text="${itTrening.vrstaTreninga}"></td>
 					<td th:text="${itTrening.nivoTreninga}"></td>
-					<td class="broj" th:text="${itTrening.trajanjeUMinutima}"></td>
+					<td th:text="${itTrening.trajanjeUMinutima}"></td>
 					<td class="broj" th:text="${itTrening.prosecnaOcena}"></td>
 					<td>
 						<a th:href="|Termini?treningId=${itTrening.id}|">termini</a>

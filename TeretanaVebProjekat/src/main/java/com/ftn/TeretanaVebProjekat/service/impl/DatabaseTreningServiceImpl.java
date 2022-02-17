@@ -74,7 +74,7 @@ public class DatabaseTreningServiceImpl implements TreningService {
 	@Override
 	public List<Trening> find(String naziv, Long tipTreningaId,String trener, String kratakOpis, 
 			Integer cenaOd, Integer cenaDo, String vrstaTreninga, 
-			String nivoTreninga, Integer trajanjeUMinutimaOd, Integer trajanjeUMinutimaDo, 
+			String nivoTreninga, String trajanjeUMinutima,
 			Integer prosecnaOcenaOd, Integer prosecnaOcenaDo) {
 			
 		List<Trening> treninzi = treningDAO.findAll();
@@ -113,12 +113,8 @@ public class DatabaseTreningServiceImpl implements TreningService {
 			nivoTreninga = "";
 		}
 		
-		if (trajanjeUMinutimaOd == null) {
-			trajanjeUMinutimaOd = 0;
-		}
-		
-		if (trajanjeUMinutimaDo == null) {
-			trajanjeUMinutimaDo = Integer.MAX_VALUE;
+		if (trajanjeUMinutima == null) {
+			trajanjeUMinutima = "";
 		}
 		
 		if (prosecnaOcenaOd == null) {
@@ -170,7 +166,7 @@ public class DatabaseTreningServiceImpl implements TreningService {
 				continue;
 			}
 			
-			if (!(itTrening.getTrajanjeUMinutima() >= trajanjeUMinutimaOd && itTrening.getTrajanjeUMinutima() <= trajanjeUMinutimaDo)) {
+			if (!itTrening.getTrajanjeUMinutima().toLowerCase().contains(trajanjeUMinutima.toLowerCase())) {
 				continue;
 			}
 			

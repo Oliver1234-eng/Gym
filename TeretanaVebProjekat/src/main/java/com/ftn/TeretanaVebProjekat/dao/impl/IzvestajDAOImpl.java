@@ -37,7 +37,7 @@ public class IzvestajDAOImpl implements IzvestajDAO{
 
 			Long treningId = rs.getLong(index++);
 			String treningNaziv = rs.getString(index++);
-			Integer treningTrajanjeUMinutima = rs.getInt(index++);
+			String treningTrajanjeUMinutima = rs.getString(index++);
 			Trening trening = new Trening(treningId, treningNaziv, treningTrajanjeUMinutima);
 
 			Izvestaj izvestaj = new Izvestaj(izvestajId, trening, izvestajTrener, izvestajDatumIVreme, izvestajBrojZakazanihTreninga, izvestajCena);

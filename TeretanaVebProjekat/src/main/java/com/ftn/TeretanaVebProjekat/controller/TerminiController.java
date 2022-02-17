@@ -59,7 +59,7 @@ public class TerminiController {
 			@RequestParam(required=false) @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate datumDo, 
 			@RequestParam(required=false) @DateTimeFormat(iso=DateTimeFormat.ISO.TIME) LocalTime vremeDo, 
 			@RequestParam(required=false) Long treningId, 
-			@RequestParam(required=false) Integer sala,
+			@RequestParam(required=false) String sala,
 			HttpSession session) throws IOException {
 		
 		// čitanje
@@ -125,7 +125,7 @@ public class TerminiController {
 	public void Create(
 			@RequestParam @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate datum, 
 			@RequestParam @DateTimeFormat(iso=DateTimeFormat.ISO.TIME) LocalTime vreme, 
-			@RequestParam Long treningId, @RequestParam int sala, 
+			@RequestParam Long treningId, @RequestParam(defaultValue="2") String sala, 
 			HttpSession session, HttpServletResponse response) throws IOException {
 		// autentikacija, autorizacija
 		Korisnik prijavljeniKorisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);
@@ -155,7 +155,7 @@ public class TerminiController {
 			@RequestParam Long id, 
 			@RequestParam @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate datum, 
 			@RequestParam @DateTimeFormat(iso=DateTimeFormat.ISO.TIME) LocalTime vreme, 
-			@RequestParam Long treningId, @RequestParam int sala, 
+			@RequestParam Long treningId, @RequestParam String sala, 
 			HttpSession session, HttpServletResponse response) throws IOException {
 		// autentikacija, autorizacija
 		Korisnik prijavljeniKorisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);

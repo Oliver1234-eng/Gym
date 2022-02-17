@@ -48,7 +48,7 @@ public class TreningDAOImpl implements TreningDAO {
 			Integer cena = resultSet.getInt(index++);
 			String vrstaTreninga = resultSet.getString(index++);
 			String nivoTreninga = resultSet.getString(index++);
-			Integer trajanjeUMinutima = resultSet.getInt(index++);
+			String trajanjeUMinutima = resultSet.getString(index++);
 			Integer prosecnaOcena = resultSet.getInt(index++);
 			boolean zakazan = resultSet.getBoolean(index++);
 
@@ -117,7 +117,7 @@ public class TreningDAOImpl implements TreningDAO {
 				preparedStatement.setInt(index++, trening.getCena());
 				preparedStatement.setString(index++, trening.getVrstaTreninga());
 				preparedStatement.setString(index++, trening.getNivoTreninga());
-				preparedStatement.setInt(index++, trening.getTrajanjeUMinutima());
+				preparedStatement.setString(index++, trening.getTrajanjeUMinutima());
 				preparedStatement.setInt(index++, trening.getProsecnaOcena());
 				preparedStatement.setBoolean(index++, trening.isZakazan());
 
@@ -178,7 +178,7 @@ public class TreningDAOImpl implements TreningDAO {
 			Integer treningCena = rs.getInt(index++);
 			String treningVrstaTreninga = rs.getString(index++);
 			String treningNivoTreninga = rs.getString(index++);
-			Integer treningTrajanjeUMinutima = rs.getInt(index++);
+			String treningTrajanjeUMinutima = rs.getString(index++);
 			Integer treningProsecnaOcena = rs.getInt(index++);
 
 			Trening trening = new Trening(treningId, treningNaziv, treningTrener, treningKratakOpis, 
@@ -192,7 +192,7 @@ public class TreningDAOImpl implements TreningDAO {
 	@Override
 	public List<Trening> find(String naziv, Long tipTreningaId, String trener, String kratakOpis, 
 			Integer cenaOd, Integer cenaDo, String vrstaTreninga, 
-			String nivoTreninga, Integer trajanjeUMinutimaOd, Integer trajanjeUMinutimaDo, 
+			String nivoTreninga, String trajanjeUMinutima, 
 			Integer prosecnaOcenaOd, Integer prosecnaOcenaDo) {
 		
 		ArrayList<Object> listaArgumenata = new ArrayList<Object>();
@@ -264,20 +264,13 @@ public class TreningDAOImpl implements TreningDAO {
 			listaArgumenata.add(nivoTreninga);
 		}
 		
-		if(trajanjeUMinutimaOd!=null) {
+		if(trajanjeUMinutima!=null) {
+			trajanjeUMinutima = "%" + trajanjeUMinutima + "%";
 			if(imaArgumenata)
 				whereSql.append(" AND ");
-			whereSql.append("t.trajanjeUMinutima >= ?");
+			whereSql.append("t.trajanjeUMinutima LIKE ?");
 			imaArgumenata = true;
-			listaArgumenata.add(trajanjeUMinutimaOd);
-		}
-		
-		if(trajanjeUMinutimaDo!=null) {
-			if(imaArgumenata)
-				whereSql.append(" AND ");
-			whereSql.append("t.trajanjeUMinutima <= ?");
-			imaArgumenata = true;
-			listaArgumenata.add(trajanjeUMinutimaDo);
+			listaArgumenata.add(trajanjeUMinutima);
 		}
 		
 		if(prosecnaOcenaOd!=null) {

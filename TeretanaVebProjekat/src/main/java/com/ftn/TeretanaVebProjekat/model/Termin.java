@@ -8,11 +8,11 @@ public class Termin {
 	private Long id;
 	private LocalDateTime datumIVreme;
 	private Trening trening;
-	private int sala;
+	private String sala = "2";
 	
 	public Termin() {}
 
-	public Termin(Long id, LocalDateTime datumIVreme, Trening trening, int sala) {
+	public Termin(Long id, LocalDateTime datumIVreme, Trening trening, String sala) {
 		super();
 		this.id = id;
 		this.datumIVreme = datumIVreme;
@@ -20,7 +20,7 @@ public class Termin {
 		this.sala = sala;
 	}
 
-	public Termin(LocalDateTime datumIVreme, Trening trening, int sala) {
+	public Termin(LocalDateTime datumIVreme, Trening trening, String sala) {
 		super();
 		this.datumIVreme = datumIVreme;
 		this.trening = trening;
@@ -76,11 +76,11 @@ public class Termin {
 		this.trening = trening;
 	}
 
-	public int getSala() {
+	public String getSala() {
 		return sala;
 	}
 
-	public void setSala(int sala) {
+	public void setSala(String sala) {
 		this.sala = sala;
 	}
 

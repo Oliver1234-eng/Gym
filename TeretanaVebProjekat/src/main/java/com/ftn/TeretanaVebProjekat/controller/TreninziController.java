@@ -65,8 +65,7 @@ public class TreninziController implements ServletContextAware {
 			@RequestParam(required=false) Integer cenaDo,
 			@RequestParam(required=false) String vrstaTreninga,
 			@RequestParam(required=false) String nivoTreninga,
-			@RequestParam(required=false) Integer trajanjeUMinutimaOd, 
-			@RequestParam(required=false) Integer trajanjeUMinutimaDo,
+			@RequestParam(required=false) String trajanjeUMinutima,
 			@RequestParam(required=false) Integer prosecnaOcenaOd, 
 			@RequestParam(required=false) Integer prosecnaOcenaDo,
 			HttpSession session)  throws IOException {
@@ -87,8 +86,11 @@ public class TreninziController implements ServletContextAware {
 		if(nivoTreninga!=null && nivoTreninga.trim().equals(""))
 			nivoTreninga=null;
 		
+		if(trajanjeUMinutima!=null && trajanjeUMinutima.trim().equals(""))
+			trajanjeUMinutima=null;
+		
 		// čitanje
-		List<Trening> treninzi = treningService.find(naziv, tipTreningaId, trener, kratakOpis, cenaOd, cenaDo, vrstaTreninga, nivoTreninga, trajanjeUMinutimaOd, trajanjeUMinutimaDo, prosecnaOcenaOd, prosecnaOcenaDo);
+		List<Trening> treninzi = treningService.find(naziv, tipTreningaId, trener, kratakOpis, cenaOd, cenaDo, vrstaTreninga, nivoTreninga, trajanjeUMinutima, prosecnaOcenaOd, prosecnaOcenaDo);
 		List<TipTreninga> tipoviTreninga = tipTreningaService.findAll();
 
 		// prosleđivanje
@@ -148,7 +150,8 @@ public class TreninziController implements ServletContextAware {
 			@RequestParam String kratakOpis, @RequestParam int cena, 
 			@RequestParam(defaultValue="pojedinacni") String vrstaTreninga,
 			@RequestParam(defaultValue="amaterski") String nivoTreninga,
-			@RequestParam int trajanjeUMinutima, @RequestParam int prosecnaOcena,  
+			@RequestParam(defaultValue="60") String trajanjeUMinutima, 
+			@RequestParam int prosecnaOcena,  
 			@RequestParam(name="tipTreningaId", required=false) Long[] tipTreningaIds, 
 			HttpSession session, HttpServletResponse response) throws IOException {
 		// autentikacija, autorizacija
@@ -171,7 +174,7 @@ public class TreninziController implements ServletContextAware {
 			@RequestParam String naziv, 
 			@RequestParam String trener, @RequestParam String kratakOpis,
 			@RequestParam int cena, @RequestParam String vrstaTreninga,
-			@RequestParam String nivoTreninga, @RequestParam int trajanjeUMinutima,
+			@RequestParam String nivoTreninga, @RequestParam String trajanjeUMinutima,
 			@RequestParam int prosecnaOcena,
 			@RequestParam(name="tipTreningaId", required=false) Long[] tipTreningaIds, 
 			HttpSession session, HttpServletResponse response) throws IOException {
@@ -191,7 +194,7 @@ public class TreninziController implements ServletContextAware {
 		if (naziv == null || naziv.equals("") || trener == null || trener.equals("") || 
 				kratakOpis == null || kratakOpis.equals("") || cena < 100 ||
 				vrstaTreninga == null || vrstaTreninga.equals("") || nivoTreninga == null ||
-				nivoTreninga.equals("") || trajanjeUMinutima < 60 || prosecnaOcena < 1) {
+				nivoTreninga.equals("") || trajanjeUMinutima.equals("") || prosecnaOcena < 1) {
 			response.sendRedirect(baseURL + "Treninzi/Details?id=" + id);
 			return;
 		}

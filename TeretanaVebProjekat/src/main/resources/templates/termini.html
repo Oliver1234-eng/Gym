@@ -29,14 +29,21 @@
 							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}" th:selected="${#strings.equals(itTrening.id, param.treningId)}"></option>
 						</select>
 					</th>
-					<th><input type="number" th:value="${param.sala?: ''}" min="1" name="sala"/></th>
+					<th>
+						<select name="sala">
+							<option value="">odaberi</option>
+							<option value="1" th:selected="${#strings.equals(param.sala, '1')}">1</option>
+							<option value="2" th:selected="${#strings.equals(param.sala, '2')}">2</option>
+							<option value="3" th:selected="${#strings.equals(param.sala, '3')}">3</option>
+						</select>
+					</th>
 					<th><input type="submit" value="Pretrazi"/></th>
 				</tr>
 				<tr th:each="itTermin, status: ${termini}">
 					<td class="broj" th:value="${status.index}"></td>
 					<td><a th:href="|Termini/Details?id=${itTermin.id}|" th:text="${#temporals.format(itTermin.datumIVreme, 'dd.MM.yyy . HH:mm')}"></a></td>
 					<td><a th:href="|Treninzi/Details?id=${itTermin.trening.id}|" th:text="${itTermin.trening.naziv}"></a></td>
-					<td class="broj" th:text="${itTermin.sala}"></td>
+					<td th:text="${itTermin.sala}"></td>
 					<td></td>
 				</tr>
 			</table>

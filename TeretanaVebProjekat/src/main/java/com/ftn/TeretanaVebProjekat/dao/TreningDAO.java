@@ -18,6 +18,6 @@ public interface TreningDAO {
 		
 		List<Trening> find(String naziv, Long tipTreningaId, String trener, String kratakOpis, 
 				Integer cenaOd, Integer cenaDo, String vrstaTreninga, 
-				String nivoTreninga, Integer trajanjeUMinutimaOd, Integer trajanjeUMinutimaDo, 
+				String nivoTreninga, String trajanjeUMinutima, 
 				Integer prosecnaOcenaOd, Integer prosecnaOcenaDo);
 }

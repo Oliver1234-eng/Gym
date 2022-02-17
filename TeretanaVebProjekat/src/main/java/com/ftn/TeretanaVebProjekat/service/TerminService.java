@@ -21,8 +21,8 @@ public interface TerminService {
 	List<Termin> deleteAll(Trening trening);
 	List<Termin> deleteAll(List<Trening> treninzi);
 	void delete(List<Long> ids);
-	List<Termin> find(LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, Integer sala);
-	List<Termin> findVer2(LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, Integer sala);
+	List<Termin> find(LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String sala);
+	List<Termin> findVer2(LocalDateTime datumIVremeOd, LocalDateTime datumIVremeDo, Long treningId, String sala);
 	List<Termin> findByTreningId(Long treningId);
 
 
