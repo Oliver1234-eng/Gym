@@ -2,48 +2,57 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<title>Film</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="post" action="Treninzi/Edit" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
 			<input type="hidden" name="id" th:value="${trening.id}"/>
 			<table class="forma">
-				<caption>Trening</caption>
-				<tr><th>naziv:</th><td><input type="text" th:value="${trening.naziv}" name="naziv"/></td></tr>
+				<caption th:text="#{trening}"></caption>
+				<tr><th th:text="#{naziv}"></th><td><input type="text" th:value="${trening.naziv}" name="naziv"/></td></tr>
 				<tr>
-					<th>tip treninga:</th>
+					<th th:text="#{tipTreninga}"></th>
 					<td>
 						<th:block th:each="itTipTreninga: ${tipoviTreninga}">
 							<input type="checkbox" name="tipTreningaId" th:value="${itTipTreninga.id}" th:checked="${#lists.contains(trening.tipoviTreninga, itTipTreninga)}"/><span th:text="${itTipTreninga.naziv}"></span><br>
 						</th:block>
 					</td>
 				</tr>
-				<tr><th>trener:</th><td><input type="text" th:value="${trening.trener}" name="trener"/></td></tr>
-				<tr><th>kratak opis:</th><td><input type="text" th:value="${trening.kratakOpis}" name="kratakOpis"/></td></tr>
-				<tr><th>cena:</th><td><input type="number" min="100" th:value="${trening.cena}" name="cena"/></td></tr>
+				<tr><th th:text="#{trener}"></th><td><input type="text" th:value="${trening.trener}" name="trener"/></td></tr>
+				<tr><th th:text="#{kratakOpis}"></th><td><input type="text" th:value="${trening.kratakOpis}" name="kratakOpis"/></td></tr>
+				<tr><th th:text="#{cena}"></th><td><input type="number" min="100" th:value="${trening.cena}" name="cena"/></td></tr>
 				<tr>
-					<th>vrsta treninga:</th>
+					<th th:text="#{vrstaTreninga}"></th>
 					<td>
 						<select name="vrstaTreninga">
-							<option value="pojedinacni" th:selected="${#strings.equals(trening.vrstaTreninga, 'pojedinacni')}">pojedinacni</option>
-							<option value="grupni" th:selected="${#strings.equals(trening.vrstaTreninga, 'grupni')}">grupni</option>
+							<option value="pojedinacni" th:selected="${#strings.equals(trening.vrstaTreninga, 'pojedinacni')}">pojedinacni - individual</option>
+							<option value="grupni" th:selected="${#strings.equals(trening.vrstaTreninga, 'grupni')}">grupni - group</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<th>nivo treninga:</th>
+					<th th:text="#{nivoTreninga}"></th>
 					<td>
 						<select name="nivoTreninga">
-							<option value="amaterski" th:selected="${#strings.equals(trening.nivoTreninga, 'amaterski')}">amaterski</option>
-							<option value="srednji" th:selected="${#strings.equals(trening.nivoTreninga, 'srednji')}">srednji</option>
-							<option value="napredni" th:selected="${#strings.equals(trening.nivoTreninga, 'napredni')}">napredni</option>
+							<option value="amaterski" th:selected="${#strings.equals(trening.nivoTreninga, 'amaterski')}">amaterski - amateur</option>
+							<option value="srednji" th:selected="${#strings.equals(trening.nivoTreninga, 'srednji')}">srednji - intermediate</option>
+							<option value="napredni" th:selected="${#strings.equals(trening.nivoTreninga, 'napredni')}">napredni - advanced</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<th>trajanje u minutima:</th>
+					<th th:text="#{trajanje}"></th>
 					<td>
 						<select name="trajanjeUMinutima">
 							<option value="30" th:selected="${#strings.equals(trening.trajanjeUMinutima, '30')}">30</option>
@@ -52,67 +61,77 @@
 						</select>
 					</td>
 				</tr>
-				<tr><th>prosecna ocena:</th><td><input type="number" min="1" max="5" th:value="${trening.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
-				<tr><th></th><td><a th:href="|Termini?treningId=${trening.id}|">termini</a></td></tr>
-				<tr><th></th><td><a th:href="Sale">sala</a></td></tr>
-				<tr><th></th><td><a th:href="Komentari">komentari</a></td></tr>
-				<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+				<tr><th th:text="#{prosecnaOcena}"></th><td><input type="number" min="1" max="5" th:value="${trening.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
+				<tr><th></th><td><a th:href="|Termini?treningId=${trening.id}|" th:text="#{termini}"></a></td></tr>
+				<tr><th></th><td><a th:href="Sale" th:text="#{sale}"></a></td></tr>
+				<tr><th></th><td><a th:href="Komentari" th:text="#{komentari}"></a></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{izmeni}"/></td></tr>
 			</table>
 		</form>
 		<form method="post" action="Treninzi/Delete" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
 			<input type="hidden" name="id" th:value="${trening.id}"/>
 			<table class="forma">
-				<tr><th></th><td><input type="submit" value="Obrisi"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{obrisi}"/></td></tr>
 			</table>
 		</form>
 		<table class="forma" th:if="${session.prijavljeniKorisnik == null or not session.prijavljeniKorisnik.administrator}">
-			<caption>Trening</caption>
-				<tr><th>naziv:</th><td><input type="text" th:value="${trening.naziv}" name="naziv"/></td></tr>
-				<tr>
-					<th>tip treninga:</th>
-					<td>
-						<th:block th:each="itTipTreninga: ${tipoviTreninga}">
-							<input type="checkbox" name="tipTreningaId" th:value="${itTipTreninga.id}" th:checked="${#lists.contains(trening.tipoviTreninga, itTipTreninga)}"/><span th:text="${itTipTreninga.naziv}"></span><br>
-						</th:block>
-					</td>
-				</tr>
-				<tr><th>trener:</th><td><input type="text" th:value="${trening.trener}" name="trener"/></td></tr>
-				<tr><th>kratak opis:</th><td><input type="text" th:value="${trening.kratakOpis}" name="kratakOpis"/></td></tr>
-				<tr><th>cena:</th><td><input type="number" min="100" th:value="${trening.cena}" name="cena"/></td></tr>
-				<tr>
-					<th>vrsta treninga:</th>
-					<td>
-						<select name="vrstaTreninga">
-							<option value="pojedinacni" th:selected="${#strings.equals(trening.vrstaTreninga, 'pojedinacni')}">pojedinacni</option>
-							<option value="grupni" th:selected="${#strings.equals(trening.vrstaTreninga, 'grupni')}">grupni</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>nivo treninga:</th>
-					<td>
-						<select name="nivoTreninga">
-							<option value="amaterski" th:selected="${#strings.equals(trening.nivoTreninga, 'amaterski')}">amaterski</option>
-							<option value="srednji" th:selected="${#strings.equals(trening.nivoTreninga, 'srednji')}">srednji</option>
-							<option value="napredni" th:selected="${#strings.equals(trening.nivoTreninga, 'napredni')}">napredni</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>trajanje u minutima:</th>
-					<td>
-						<select name="trajanjeUMinutima">
-							<option value="30" th:selected="${#strings.equals(trening.trajanjeUMinutima, '30')}">30</option>
-							<option value="60" th:selected="${#strings.equals(trening.trajanjeUMinutima, '60')}">60</option>
-							<option value="90" th:selected="${#strings.equals(trening.trajanjeUMinutima, '90')}">90</option>
-						</select>
-					</td>
-				</tr>
-				<tr><th>prosecna ocena:</th><td><input type="number" min="1" max="5" th:value="${trening.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
-				<tr><th></th><td><a th:href="|Termini?treningId=${trening.id}|">termini</a></td></tr>
-				<tr><th></th><td><a th:href="Sale">sala</a></td></tr>
-				<tr><th></th><td><a th:href="Komentari">komentari</a></td></tr>
+			<caption th:text="#{trening}"></caption>
+			<tr><th th:text="#{naziv}"></th><td><input type="text" th:value="${trening.naziv}" name="naziv"/></td></tr>
+			<tr>
+				<th th:text="#{tipTreninga}"></th>
+				<td>
+					<th:block th:each="itTipTreninga: ${tipoviTreninga}">
+						<input type="checkbox" name="tipTreningaId" th:value="${itTipTreninga.id}" th:checked="${#lists.contains(trening.tipoviTreninga, itTipTreninga)}"/><span th:text="${itTipTreninga.naziv}"></span><br>
+					</th:block>
+				</td>
+			</tr>
+			<tr><th th:text="#{trener}"></th><td><input type="text" th:value="${trening.trener}" name="trener"/></td></tr>
+			<tr><th th:text="#{kratakOpis}"></th><td><input type="text" th:value="${trening.kratakOpis}" name="kratakOpis"/></td></tr>
+			<tr><th th:text="#{cena}"></th><td><input type="number" min="100" th:value="${trening.cena}" name="cena"/></td></tr>
+			<tr>
+				<th th:text="#{vrstaTreninga}"></th>
+				<td>
+					<select name="vrstaTreninga">
+						<option value="pojedinacni" th:selected="${#strings.equals(trening.vrstaTreninga, 'pojedinacni')}">pojedinacni - individual</option>
+						<option value="grupni" th:selected="${#strings.equals(trening.vrstaTreninga, 'grupni')}">grupni - group</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th th:text="#{nivoTreninga}"></th>
+				<td>
+					<select name="nivoTreninga">
+						<option value="amaterski" th:selected="${#strings.equals(trening.nivoTreninga, 'amaterski')}">amaterski - amateur</option>
+						<option value="srednji" th:selected="${#strings.equals(trening.nivoTreninga, 'srednji')}">srednji - intermediate</option>
+						<option value="napredni" th:selected="${#strings.equals(trening.nivoTreninga, 'napredni')}">napredni - advanced</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th th:text="#{trajanje}"></th>
+				<td>
+					<select name="trajanjeUMinutima">
+						<option value="30" th:selected="${#strings.equals(trening.trajanjeUMinutima, '30')}">30</option>
+						<option value="60" th:selected="${#strings.equals(trening.trajanjeUMinutima, '60')}">60</option>
+						<option value="90" th:selected="${#strings.equals(trening.trajanjeUMinutima, '90')}">90</option>
+					</select>
+				</td>
+			</tr>
+			<tr><th th:text="#{prosecnaOcena}"></th><td><input type="number" min="1" max="5" th:value="${trening.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
+			<tr><th></th><td><a th:href="|Termini?treningId=${trening.id}|" th:text="#{termini}"></a></td></tr>
+			<tr><th></th><td><a th:href="Sale" th:text="#{sale}"></a></td></tr>
+			<tr><th></th><td><a th:href="Komentari" th:text="#{komentari}"></a></td></tr>
 		</table>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('Treninzi/Details?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

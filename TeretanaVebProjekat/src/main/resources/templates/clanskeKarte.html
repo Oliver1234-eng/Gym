@@ -2,21 +2,30 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">    
 	<head>     
 		<meta charset="UTF-8">     
-		<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
+		<base th:href="@{/}">
+		<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+		<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<title>Clanske karte</title>     
 		<link rel="stylesheet"  type="text/css"  href="css/StiloviTabela.css"/>        
 	 </head>     
-	 <body>   
+	 <body>
+	 <span th:text="#{lang.change}"></span>
+	 <select id="locales">
+		 <option value=""></option>
+		 <option value="sr" th:text="#{lang.ser}"></option>
+		 <option value="en" th:text="#{lang.eng}"></option>
+	 </select>
 	 	<div th:fragment="centralniDiv">    
 	 		<table class = "sortable">     
-	 			<caption>Clanske karte</caption>     
+	 			<caption th:text="#{clanskeKarte}"></caption>
 	 			<tr>     
-	 				<th>R. br.</th>
-	 				 <th>Popust</th> 
-	 				 <th>Broj poena</th> 
-	 				<th>Registarski broj</th>     
-	 				<th>Vlasnik</th>  
-	 				<th>Status</th> 
+	 				<th th:text="#{redniBroj}"></th>
+					<th th:text="#{popustCena}"></th>
+					<th th:text="#{brojPoena}"></th>
+	 				<th th:text="#{registarskiBroj}"></th>
+	 				<th th:text="#{vlasnik}"></th>
+	 				<th th:text="#{status}"></th>
 	 				<th></th>    
 	 			</tr>
 	 			<tr th:each="itClanskaKarta, status: ${clanskeKarte}">     
@@ -27,13 +36,23 @@
 	 				<td th:text="${itClanskaKarta.korisnik}"></td> 
 	 				<td th:text="${itClanskaKarta.status}"></td> 
 	 				<td>
-	 					<a th:href="|ClanskeKarte/details?registarskiBroj=${itClanskaKarta.registarskiBroj}|">Vidi detalje</a> 
+	 					<a th:href="|ClanskeKarte/details?registarskiBroj=${itClanskaKarta.registarskiBroj}|" th:text="#{vidiDetalje}"></a>
 	 				</td>   
 	 			</tr>
 	 		</table>
 	 	<ul>
-			<li><a href="ClanskeKarte/add">Dodaj novu clansku kartu</a></li>
+			<li><a href="ClanskeKarte/add" th:text="#{dodajNovuClanskuKartu}"></a></li>
 		</ul>
 		</div>
+	 <script type="text/javascript">
+		 $(document).ready(function() {
+			 $("#locales").change(function () {
+				 var selectedOption = $('#locales').val();
+				 if (selectedOption != ''){
+					 window.location.replace('ClanskeKarte?lang=' + selectedOption);
+				 }
+			 });
+		 });
+	 </script>
 	 </body>   
  </html>

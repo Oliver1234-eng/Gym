@@ -2,25 +2,34 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviTabela.css"/>
 	<title>Treninzi</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="get">
 			<table class="sortable">
-				<caption>Treninzi</caption>
+				<caption th:text="#{treninzi}"></caption>
 				<tr>
-					<th>r. br.</th>
-					<th>naziv</th>
-					<th>trener</th>
-					<th>kratak opis</th>
-					<th>tip treninga</th>
-					<th>cena</th>
-					<th>vrstaTreninga</th>
-					<th>nivoTreninga</th>
-					<th>trajanje u minutima</th>
-					<th>prosecna ocena</th>
+					<th th:text="#{redniBroj}"></th>
+					<th th:text="#{naziv}"></th>
+					<th th:text="#{trener}"></th>
+					<th th:text="#{kratakOpis}"></th>
+					<th th:text="#{tipTreninga}"></th>
+					<th th:text="#{cena}"></th>
+					<th th:text="#{vrstaTreninga}"></th>
+					<th th:text="#{nivoTreninga}"></th>
+					<th th:text="#{trajanje}"></th>
+					<th th:text="#{prosecnaOcena}"></th>
 					<th></th>
 				</tr>
 				<tr>
@@ -30,20 +39,20 @@
 					<th><input type="search" name="kratakOpis" th:value="${param.kratakOpis}?: null"/></th>
 					<th><input type="search" name="tipTreninga" th:value="${param.tipTreninga}?: null"/></th>
 					<th>
-						od:<input type="number" min="0" th:value="${param.cenaOd}?: '0'" name="cenaOd"/><br/>
-						do:<input type="number" min="0" th:value="${param.cenaDo}?: '2000'" name="cenaDo"/>
+						<label th:text="#{od}"></label><input type="number" min="0" th:value="${param.cenaOd}?: '0'" name="cenaOd"/><br/>
+						<label th:text="#{do}"></label><input type="number" min="0" th:value="${param.cenaDo}?: '2000'" name="cenaDo"/>
 					</th>
 					<th><input type="search" name="vrstaTreninga" th:value="${param.vrstaTreninga}?: null"/></th>
 					<th><input type="search" name="nivoTreninga" th:value="${param.nivoTreninga}?: null"/></th>
 					<th>
-						od:<input type="number" min="0" th:value="${param.trajanjeUMinutimaOd}?: '0'" name="trajanjeUMinutimaOd"/><br/>
-						do:<input type="number" min="0" th:value="${param.trajanjeUMinutimaDo}?: '240'" name="trajanjeUMinutimaDo"/>
+						<label th:text="#{od}"></label><input type="number" min="0" th:value="${param.trajanjeUMinutimaOd}?: '0'" name="trajanjeUMinutimaOd"/><br/>
+						<label th:text="#{do}"></label><input type="number" min="0" th:value="${param.trajanjeUMinutimaDo}?: '240'" name="trajanjeUMinutimaDo"/>
 					</th>
 					<th>
-						od:<input type="number" min="0" th:value="${param.prosecnaOcenaOd}?: '0'" name="prosecnaOd"/><br/>
-						do:<input type="number" min="0" th:value="${param.prosecnaOcenaDo}?: '5'" name="prosecnaOcenaDo"/>
+						<label th:text="#{od}"></label><input type="number" min="0" th:value="${param.prosecnaOcenaOd}?: '0'" name="prosecnaOd"/><br/>
+						<label th:text="#{do}"></label><input type="number" min="0" th:value="${param.prosecnaOcenaDo}?: '5'" name="prosecnaOcenaDo"/>
 					</th>
-					<th><input type="submit" value="Pretrazi"/></th>
+					<th><input type="submit" th:value="#{pretrazi}"/></th>
 				</tr>
 				<tr th:each="itTreningKorpa, status: ${treninziKorpa}">
 					<td class="broj" th:text="${status.index + 1}"></td>
@@ -60,8 +69,18 @@
 			</table>
 		</form>
 		<ul>
-			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="TreninziKorpa/add">dodavanje treninga</a></li>
+			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="TreninziKorpa/add" th:text="#{dodavanjeTreninga}"></a></li>
 		</ul>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('TreninziKorpa?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

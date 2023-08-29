@@ -2,31 +2,50 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<title>Tip treninga</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="post" action="TipoviTreninga/Edit" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
 			<input type="hidden" name="id" th:value="${tipTreninga.id}">
 			<table class="forma">
-				<caption>Tip treninga</caption>
-				<tr><th>naziv:</th><td><input type="text" th:value="${tipTreninga.naziv}" name="naziv"/></td></tr>
-				<tr><th></th><td><a th:href="|Treninzi?tipTreningaId=${tipTreninga.id}|">treninzi</a></td></tr>
-				<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+				<caption th:text="#{tipTreninga}"></caption>
+				<tr><th th:text="#{naziv}"></th><td><input type="text" th:value="${tipTreninga.naziv}" name="naziv"/></td></tr>
+				<tr><th></th><td><a th:href="|Treninzi?tipTreningaId=${tipTreninga.id}|" th:value="#{treninziMalim}"></a></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{izmeni}"/></td></tr>
 			</table>
 		</form>
 		<form method="post" action="TipoviTreninga/Delete" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
 			<input type="hidden" name="id" th:value="${tipTreninga.id}">
 			<table class="forma">
-				<tr><th></th><td><input type="submit" value="Obrisi"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{obrisi}"/></td></tr>
 			</table>
 		</form>
 		<table class="forma" th:if="${session.prijavljeniKorisnik == null or not session.prijavljeniKorisnik.administrator}">
-			<caption>Tip treninga</caption>
-			<tr><th>naziv:</th><td th:text=${tipTreninga.naziv}>fantazija</td>
-			<tr><th></th><td><a th:href="|Treninzi?tipTreningaId=${tipTreninga.id}|">treninzi</a></td></tr>
+			<caption th:text="#{tipTreninga}"></caption>
+			<tr><th th:text="#{naziv}"></th><td th:text=${tipTreninga.naziv} th:text="#{fantazija}"></td>
+			<tr><th></th><td><a th:href="|Treninzi?tipTreningaId=${tipTreninga.id}|" th:text="#{treninziMalim}"></a></td></tr>
 		</table>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('TipoviTreninga/Details?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

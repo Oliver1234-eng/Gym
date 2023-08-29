@@ -3,47 +3,66 @@
 <head>
 	<meta charset="UTF-8">
 	<base th:href="@{/}">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviKorisnik.css"/>
 	<title>Prijava</title>
 </head>
 <body>
-	<h2>Teretana</h2>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
+	<h2 th:text="#{teretana}"></h2>
 	<ul>
-		<li><a href="">pocetna</a></li>
+		<li><a href="" th:text="#{pocetna}"></a></li>
 	</ul>
 	<table class="korisnik" th:unless="${session.prijavljeniKorisnik == null}">
-		<tr><th>Prijavljeni ste kao</th><td><a th:href="|Korisnici/Details?korisnickoIme=${session.prijavljeniKorisnik.korisnickoIme}|" th:text="${session.prijavljeniKorisnik.korisnickoIme}"></a>.</td></tr>
+		<tr><th th:text="#{prijavljeni}"></th><td><a th:href="|Korisnici/Details?korisnickoIme=${session.prijavljeniKorisnik.korisnickoIme}|" th:text="${session.prijavljeniKorisnik.korisnickoIme}"></a>.</td></tr>
 		<tr>
 			<td colspan="2">
 				<ul>
-					<li><a href="Korisnici/Logout">odjava</a></li>
+					<li><a href="Korisnici/Logout" th:text="#{odjava}"></a></li>
 				</ul>
 			</td>
 		</tr>
 	</table>
 	<table class="korisnik" th:if="${session.prijavljeniKorisnik == null}">
-		<tr><th>Niste prijavljeni</th></tr>
+		<tr><th th:text="#{nistePrijavljeni}"></th></tr>
 		<tr>
 			<td>
 				<ul>
-					<li><a href="registracija.html">registracija</a></li>
-					<li><a href="prijava.html">prijava</a></li>
+					<li><a href="registracija.html" th:text="#{registracija}"></a></li>
+					<li><a href="prijava.html" th:text="#{prijava}"></a></li>
 				</ul>
 			</td>
 		</tr>
 	</table>
 	<ul>
-		<li th:if="${session.prijavljeniKorisnik != null}"><a href="Treninzi">treninzi</a></li>
-		<li th:if="${session.prijavljeniKorisnik != null}"><a href="TipoviTreninga">tipoviTreninga</a></li>
-		<li th:if="${session.prijavljeniKorisnik != null}"><a href="Termini">termini</a></li>
-		<li th:if="${session.prijavljeniKorisnik != null}"><a href="ClanskeKarte">clanskeKarte</a></li>
-		<li th:if="${session.prijavljeniKorisnik != null}"><a href="Komentari">komentari</a></li>
-		<li th:if="${session.prijavljeniKorisnik != null}"><a href="TreninziKorpa">zakazivanje treninga</a></li>
-		<li th:if="${session.prijavljeniKorisnik != null}"><a href="Tabele">tabelarni pregled treninga</a></li>
-		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Korisnici">korisnici</a></li>
-		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Sale">sale</a></li>
-		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Izvestaji">izvestaji</a></li>
-		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Popust">specijalni datumi</a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="Treninzi" th:text="#{treninziMalim}"></a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="TipoviTreninga" th:text="#{tipoviTreninga}"></a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="Termini" th:text="#{termini}"></a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="ClanskeKarte" th:text="#{clanskeKarte}"></a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="Komentari" th:text="#{komentari}"></a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="TreninziKorpa" th:text="#{zakazivanjeTreninga}"></a></li>
+		<li th:if="${session.prijavljeniKorisnik != null}"><a href="Tabele" th:text="#{tabele}"></a></li>
+		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Korisnici" th:text="#{korisnici}"></a></li>
+		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Sale" th:text="#{sale}"></a></li>
+		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Izvestaji" th:text="#{izvestaji}"></a></li>
+		<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Popust" th:text="#{popust}"></a></li>
 	</ul>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

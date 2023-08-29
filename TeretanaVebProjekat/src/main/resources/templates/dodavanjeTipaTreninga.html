@@ -2,21 +2,40 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<title>Dodavanje tipa treninga</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="post" action="TipoviTreninga/Create">
 			<table class="forma">
-				<caption>Dodavanje tipa treninga</caption>
-				<tr><th>naziv:</th><td><input type="text" name="naziv"/></td></tr>
-				<tr><th></th><td><input type="submit" value="Dodaj"/></td></tr>
+				<caption th:text="#{dodavanjeTipaTreninga}"></caption>
+				<tr><th th:text="#{naziv}"></th><td><input type="text" name="naziv"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{dodaj}"/></td></tr>
 			</table>
 		</form>
 		<ul>
-			<li><a href="TipoviTreninga">povratak</a></li>
+			<li><a href="TipoviTreninga" th:text="#{povratak}"></a></li>
 		</ul>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('TipoviTreninga/Create?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

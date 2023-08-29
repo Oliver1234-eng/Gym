@@ -2,25 +2,35 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviTabela.css"/>
 	<title>Treninzi</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="get">
 			<table class="sortable">
-				<caption>Treninzi</caption>
+			<table>
+				<caption th:text="#{treninzi}"></caption>
 				<tr>
-					<th>r. br.</th>
-					<th>naziv</th>
-					<th>tip treninga</th>
-					<th>trener</th>
-					<th>kratak opis</th>
-					<th>cena</th>
-					<th>vrstaTreninga</th>
-					<th>nivoTreninga</th>
-					<th>trajanje u minutima</th>
-					<th>prosecna ocena</th>
+					<th th:text="#{redniBroj}"></th>
+					<th th:text="#{naziv}"></th>
+					<th th:text="#{tipTreninga}"></th>
+					<th th:text="#{trener}"></th>
+					<th th:text="#{kratakOpis}"></th>
+					<th th:text="#{cena}"></th>
+					<th th:text="#{vrstaTreninga}"></th>
+					<th th:text="#{nivoTreninga}"></th>
+					<th th:text="#{trajanje}"></th>
+					<th th:text="#{prosecnaOcena}"></th>
 					<th></th>
 				</tr>
 				<tr>
@@ -28,44 +38,44 @@
 					<th><input type="search" name="naziv" th:value="${param.naziv}?: null"/></th>
 					<th>
 						<select name="tipTreningaId">
-							<option value="">odaberi</option>
+							<option value="">odaberi - choose</option>
 							<option th:each="itTipTreninga: ${tipoviTreninga}" th:value="${itTipTreninga.id}" th:text="${itTipTreninga.naziv}" th:selected="${#strings.equals(itTipTreninga.id, param.tipTreningaId)}"></option>
 						</select>
 					</th>
 					<th><input type="search" name="trener" th:value="${param.trener}?: null"/></th>
 					<th><input type="search" name="kratakOpis" th:value="${param.kratakOpis}?: null"/></th>
 					<th>
-						od:<input type="number" min="0" th:value="${param.cenaOd}?: '0'" name="cenaOd"/><br/>
-						do:<input type="number" min="0" th:value="${param.cenaDo}?: '2000'" name="cenaDo"/>
+						<label th:text="#{od}"></label><input type="number" min="0" th:value="${param.cenaOd}?: '0'" name="cenaOd"/><br/>
+						<label th:text="#{do}"></label><input type="number" min="0" th:value="${param.cenaDo}?: '2000'" name="cenaDo"/>
 					</th>
 					<th>
 						<select name="vrstaTreninga">
-							<option value="">odaberi</option>
-							<option value="pojedinacni" th:selected="${#strings.equals(param.vrstaTreninga, 'pojedinacni')}">pojedinacni</option>
-							<option value="grupni" th:selected="${#strings.equals(param.vrstaTreninga, 'grupni')}">grupni</option>
+							<option value="">odaberi - choose</option>
+							<option value="pojedinacni" th:selected="${#strings.equals(param.vrstaTreninga, 'pojedinacni')}">pojedinacni - individual</option>
+							<option value="grupni" th:selected="${#strings.equals(param.vrstaTreninga, 'grupni')}">grupni - group</option>
 						</select>
 					</th>
 					<th>
 						<select name="nivoTreninga">
-							<option value="">odaberi</option>
-							<option value="amaterski" th:selected="${#strings.equals(param.nivoTreninga, 'amaterski')}">amaterski</option>
-							<option value="srednji" th:selected="${#strings.equals(param.nivoTreninga, 'srednji')}">srednji</option>
-							<option value="napredni" th:selected="${#strings.equals(param.nivoTreninga, 'napredni')}">napredni</option>
+							<option value="">odaberi - choose</option>
+							<option value="amaterski" th:selected="${#strings.equals(param.nivoTreninga, 'amaterski')}">amaterski - amateur</option>
+							<option value="srednji" th:selected="${#strings.equals(param.nivoTreninga, 'srednji')}">srednji - intermediate</option>
+							<option value="napredni" th:selected="${#strings.equals(param.nivoTreninga, 'napredni')}">napredni - advanced</option>
 						</select>
 					</th>
 					<th>
 						<select name="trajanjeUMinutima">
-							<option value="">odaberi</option>
+							<option value="">odaberi - choose</option>
 							<option value="30" th:selected="${#strings.equals(param.trajanjeUMinutima, '30')}">30</option>
 							<option value="60" th:selected="${#strings.equals(param.trajanjeUMinutima, '60')}">60</option>
 							<option value="90" th:selected="${#strings.equals(param.trajanjeUMinutima, '90')}">90</option>
 						</select>
 					</th>
 					<th>
-						od:<input type="number" min="0" th:value="${param.prosecnaOcenaOd}?: '0'" name="prosecnaOd"/><br/>
-						do:<input type="number" min="0" th:value="${param.prosecnaOcenaDo}?: '5'" name="prosecnaOcenaDo"/>
+						<label th:text="#{od}"></label><input type="number" min="0" th:value="${param.prosecnaOcenaOd}?: '0'" name="prosecnaOd"/><br/>
+						<label th:text="#{do}"></label><input type="number" min="0" th:value="${param.prosecnaOcenaDo}?: '5'" name="prosecnaOcenaDo"/>
 					</th>
-					<th><input type="submit" value="Pretrazi"/></th>
+					<th><input type="submit" th:value="#{pretrazi}"/></th>
 				</tr>
 				<tr th:each="itTrening, status: ${treninzi}">
 					<td class="broj" th:text="${status.index + 1}"></td>
@@ -83,14 +93,24 @@
 					<td th:text="${itTrening.trajanjeUMinutima}"></td>
 					<td class="broj" th:text="${itTrening.prosecnaOcena}"></td>
 					<td>
-						<a th:href="|Termini?treningId=${itTrening.id}|">termini</a>
+						<a th:href="|Termini?treningId=${itTrening.id}|" th:text="#{termini}"></a>
 					</td>
 				</tr>
 			</table>
 		</form>
 		<ul>
-			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Treninzi/Create">dodavanje treninga</a></li>
+			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Treninzi/Create" th:text="#{dodavanjeTreninga}"></a></li>
 		</ul>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('Treninzi?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

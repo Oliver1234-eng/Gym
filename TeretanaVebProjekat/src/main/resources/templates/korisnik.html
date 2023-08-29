@@ -2,46 +2,65 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<title>Korisnik</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="post" action="Korisnici/Edit">
 			<input type="hidden" name="korisnickoIme" th:value="${korisnik.korisnickoIme}"/>
 			<table class="forma">
-				<caption>Korisnik</caption>
-				<tr><th>korisničko ime:</th><td th:text="${korisnik.korisnickoIme}"></td></tr>
-				<tr><th>lozinka:</th><td><input type="password" name="lozinka"/></td></tr>
-				<tr><th>e-mail:</th><td><input type="text" name="email" th:value="${korisnik.email}"/></td></tr>
-				<tr><th>ime:</th><td><input type="text" name="ime" th:value="${korisnik.ime}"/></td></tr>
-				<tr><th>prezime:</th><td><input type="text" name="prezime" th:value="${korisnik.prezime}"/></td></tr>
+				<caption th:text="#{korisnik}"></caption>
+				<tr><th th:text="#{korisnickoIme}"></th><td th:text="${korisnik.korisnickoIme}"></td></tr>
+				<tr><th th:text="#{lozinka}"></th><td><input type="password" name="lozinka"/></td></tr>
+				<tr><th th:text="#{email}"></th><td><input type="text" name="email" th:value="${korisnik.email}"/></td></tr>
+				<tr><th th:text="#{ime}"></th><td><input type="text" name="ime" th:value="${korisnik.ime}"/></td></tr>
+				<tr><th th:text="#{prezime}"></th><td><input type="text" name="prezime" th:value="${korisnik.prezime}"/></td></tr>
 				<tr>
-					<th>datum i vreme rodjenja:</th>
+					<th th:text="#{datumIVremeRodjenja}"></th>
 					<td>
 						<input type="date" th:value="${#temporals.format(korisnik.datumRodjenja, 'yyyy-MM-dd')}" name="datumRodjenja"/>&nbsp;
 						<input type="time" th:value="${#temporals.format(korisnik.datumRodjenja, 'HH:mm')}" name="vremeRodjenja"/>
 					</td>
 				<tr>
-				<tr><th>adresa:</th><td><input type="text" name="adresa" th:value="${korisnik.adresa}"/></td></tr>
-				<tr><th>broj telefona:</th><td><input type="text" name="brojTelefona" th:value="${korisnik.brojTelefona}"/></td></tr>
+				<tr><th th:text="#{adresa}"></th><td><input type="text" name="adresa" th:value="${korisnik.adresa}"/></td></tr>
+				<tr><th th:text="#{brojTelefona}"></th><td><input type="text" name="brojTelefona" th:value="${korisnik.brojTelefona}"/></td></tr>
 				<tr>
-					<th>datum i vreme registracije:</th>
+					<th th:text="#{datumIVremeRegistracije}"></th>
 					<td>
 						<input type="date" th:value="${#temporals.format(korisnik.datumRegistracije, 'yyyy-MM-dd')}" name="datumRegistracije"/>&nbsp;
 						<input type="time" th:value="${#temporals.format(korisnik.datumRegistracije, 'HH:mm')}" name="vremeRegistracije"/>
 					</td>
 				<tr>
-				<tr th:if="${session.prijavljeniKorisnik.administrator and session.prijavljeniKorisnik != korisnik}"><th>administrator:</th><td><input type="checkbox" name="administrator" th:checked="${korisnik.administrator}"/></td></tr>
-				<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+				<tr th:if="${session.prijavljeniKorisnik.administrator and session.prijavljeniKorisnik != korisnik}"><th th:text="#{administrator}"></th><td><input type="checkbox" name="administrator" th:checked="${korisnik.administrator}"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{izmeni}"/></td></tr>
 			</table>
 		</form>
 		<form method="post" action="Korisnici/Delete">
 			<input type="hidden" name="korisnickoIme" th:value="${korisnik.korisnickoIme}"/>
 			<table class="forma">
-				<tr><th></th><td><input type="submit" value="Obrisi"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{obrisi}"/></td></tr>
 			</table>
 		</form>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('Korisnici/Details?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

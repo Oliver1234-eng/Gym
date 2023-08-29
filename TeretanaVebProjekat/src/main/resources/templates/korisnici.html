@@ -2,55 +2,43 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviTabela.css"/>
 	<title>Korisnici</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="get">
 			<table class="sortable">
-				<caption>Korisnici</caption>
+				<caption th:text="#{korisnici}"></caption>
 				<tr>
-					<th>r. br.</th>
-					<th>korisnicko ime</th>
-<!-- 				<th>e-mail</th>
-					<th>ime</th>
-					<th>prezime</th>
-					<th>datum rodjenja</th>
-					<th>adresa</th>
-					<th>broj telefona</th>   -->
-					<th>datum registracije</th>
-					<th>administrator</th>
+					<th th:text="#{redniBroj}"></th>
+					<th th:text="#{korisnickoIme}"></th>
+					<th th:text="#{datumRegistracije}"></th>
+					<th th:text="#{administrator}"></th>
 					<th></th>
 				</tr>
 				<tr>
 					<th></th>
 					<th><input type="search" name="korisnickoIme" th:value="${param.korisnickoIme}?: null"/></th>
-<!-- 				<th><input type="search" name="email" th:value="${param.email}?: null"/></th>
-					<th><input type="search" name="ime" th:value="${param.ime}?: null"/></th>
-					<th><input type="search" name="prezime" th:value="${param.prezime}?: null"/></th>
 					<th>
-						od:<input type="date" th:value="${param.datumRodjenjaOd?: '1980-01-01'}" name="datumRodjenjaOd"/><input type="time" th:value="${param.vremeRodjenjaOd?: '08:00'}" name="vremeRodjenjaOd"/><br/>
-						do:<input type="date" th:value="${param.datumRodjenjaDo?: '3000-01-01'}" name="datumRodjenjaDo"/><input type="time" th:value="${param.vremeRodjenjaDo?: '23:00'}"  name="vremeRodjenjaDo"/>
-					</th>
-					<th><input type="search" name="adresa" th:value="${param.adresa}?: null"/></th>
-					<th><input type="search" name="brojTelefona" th:value="${param.brojTelefona}?: null"/></th> -->
-					<th>
-						od:<input type="date" th:value="${param.datumRegistracijeOd?: '2020-01-01'}" name="datumRegistracijeOd"/><input type="time" th:value="${param.vremeRegistracijeOd?: '08:00'}" name="vremeRegistracijeOd"/><br/>
-						do:<input type="date" th:value="${param.datumRegistracijeDo?: '3000-01-01'}" name="datumRegistracijeDo"/><input type="time" th:value="${param.vremeRegistracijeDo?: '23:00'}"  name="vremeRegistracijeDo"/>
+						<label th:text="#{od}"></label><input type="date" th:value="${param.datumRegistracijeOd?: '2020-01-01'}" name="datumRegistracijeOd"/><input type="time" th:value="${param.vremeRegistracijeOd?: '08:00'}" name="vremeRegistracijeOd"/><br/>
+						<label th:text="#{do}"></label><input type="date" th:value="${param.datumRegistracijeDo?: '3000-01-01'}" name="datumRegistracijeDo"/><input type="time" th:value="${param.vremeRegistracijeDo?: '23:00'}"  name="vremeRegistracijeDo"/>
 					</th>
 					<th><input type="checkbox" name="administrator" th:checked="${param.administrator != null}"/></th>
-					<th><input type="submit" value="Pretrazi"/></th>
+					<th><input type="submit" th:value="#{pretrazi}"/></th>
 				</tr>
 				<tr th:each="itKorisnik, status: ${korisnici}">
 					<td th:value="${status.index + 1}"></td>
 					<td><a th:href="|Korisnici/Details?korisnickoIme=${itKorisnik.korisnickoIme}|" th:text="${itKorisnik.korisnickoIme}"></a></td>
-<!--				<td th:text="${itKorisnik.email}"></td>
-					<td th:text="${itKorisnik.ime}"></td>
-					<td th:text="${itKorisnik.prezime}"></td>
-					<td th:text="${#temporals.format(itKorisnik.datumRodjenja, 'dd.MM.yyy . HH:mm')}"></td>
-					<td th:text="${itKorisnik.adresa}"></td>
-					<td th:text="${itKorisnik.brojTelefona}"></td>  -->
 					<td th:text="${#temporals.format(itKorisnik.datumRegistracije, 'dd.MM.yyy . HH:mm')}"></td>
 					<td th:text="${itKorisnik.administrator}? 'da': 'ne'"></td>
 					<td></td>
@@ -58,8 +46,18 @@
 			</table>
 		</form>
 		<ul>
-			<li><a href="Korisnici/Create">dodavanje korisnika</a></li>
+			<li><a href="Korisnici/Create" th:text="#{dodavanjeKorisnika}"></a></li>
 		</ul>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('Korisnici?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

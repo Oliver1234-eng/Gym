@@ -3,6 +3,7 @@ package com.ftn.TeretanaVebProjekat.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ftn.TeretanaVebProjekat.model.Korisnik;
@@ -27,6 +29,7 @@ import com.ftn.TeretanaVebProjekat.model.Trening;
 import com.ftn.TeretanaVebProjekat.model.TreningStatistika;
 import com.ftn.TeretanaVebProjekat.service.TipTreningaService;
 import com.ftn.TeretanaVebProjekat.service.TreningService;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 @Controller
 @RequestMapping(value="/Treninzi")

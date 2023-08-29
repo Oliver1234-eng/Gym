@@ -2,42 +2,61 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<title>Registracija</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="post" action="Korisnici/Create">
 			<table class="forma">
-				<caption>Dodavanje korisnika</caption>
-				<tr><th>korisnicko ime:</th><td><input type="text" name="korisnickoIme"/></td></tr>
-				<tr><th>lozinka:</th><td><input type="password" name="lozinka"/></td></tr>
-				<tr><th>e-mail:</th><td><input type="text" name="email"/></td></tr>
-				<tr><th>ime:</th><td><input type="text" name="ime"/></td></tr>
-				<tr><th>prezime:</th><td><input type="text" name="prezime"/></td></tr>
+				<caption th:text="#{dodavanjeKorisnika}"></caption>
+				<tr><th th:text="#{korisnickoIme}"></th><td><input type="text" name="korisnickoIme"/></td></tr>
+				<tr><th th:text="#{lozinka}"></th><td><input type="password" name="lozinka"/></td></tr>
+				<tr><th th:text="#{email}"></th><td><input type="text" name="email"/></td></tr>
+				<tr><th th:text="#{ime}"></th><td><input type="text" name="ime"/></td></tr>
+				<tr><th th:text="#{prezime}"></th><td><input type="text" name="prezime"/></td></tr>
 				<tr>
-					<th>datum i vreme rodjenja:</th>
+					<th th:text="#{datumIVremeRodjenja}"></th>
 					<td>
 						<input type="date" th:value="2000-01-01" name="datumRodjenja"/>&nbsp;
 						<input type="time" value="12:00" name="vremeRodjenja"/>
 					</td>
 				<tr>
-				<tr><th>adresa:</th><td><input type="text" name="adresa"/></td></tr>
-				<tr><th>broj telefona:</th><td><input type="text" name="brojTelefona"/></td></tr>
+				<tr><th th:text="#{adresa}"></th><td><input type="text" name="adresa"/></td></tr>
+				<tr><th th:text="#{brojTelefona}"></th><td><input type="text" name="brojTelefona"/></td></tr>
 				<tr>
-					<th>datum i vreme registracije:</th>
+					<th th:text="#{datumIVremeRegistracije}"></th>
 					<td>
 						<input type="date" th:value="2020-01-01" name="datumRegistracije"/>&nbsp;
 						<input type="time" value="12:00" name="vremeRegistracije"/>
 					</td>
 				<tr>
-				<tr><th>administrator:</th><td><input type="checkbox" name="administrator"/></td></tr>
-				<tr><th></th><td><input type="submit" value="Dodaj"/></td></tr>
+				<tr><th th:text="#{administrator}"></th><td><input type="checkbox" name="administrator"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{dodaj}"/></td></tr>
 			</table>
 		</form>
 		<ul>
-			<li><a href="Korisnici">povratak</a></li>
+			<li><a href="Korisnici" th:text="#{povratak}"></a></li>
 		</ul>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('Korisnici/Create?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

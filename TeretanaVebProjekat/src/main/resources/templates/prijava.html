@@ -2,20 +2,39 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Prijava</title>
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<title>Prijava</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="post" action="Korisnici/Login">
 			<table class="forma">
-				<caption>Prijava</caption>
-				<tr><th>korisnicko ime:</th><td><input type="text" name="korisnickoIme"/></td></tr>
-				<tr><th>lozinka:</th><td><input type="password" name="lozinka"/></td></tr>
-				<tr><th></th><td><input type="submit" value="Prijava"/></td></tr>
+				<caption>Prijava na sistem - Log in</caption>
+				<tr><th>Korisnicko ime - Username:</th><td><input type="text" name="korisnickoIme"/></td></tr>
+				<tr><th>Lozinka - Password:</th><td><input type="password" name="lozinka"/></td></tr>
+				<tr><th></th><td><input type="submit" value="Prijava-Login"/></td></tr>
 			</table>
 		</form>
 		<p class="greska" th:text="${poruka}"></p>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('prijava.html?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

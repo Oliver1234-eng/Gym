@@ -3,12 +3,15 @@ $(document).ready(
 					$("#locales").change(
 							function() {
 								var selectedOption = $('#locales').val();
+								console.log('Selected Option: ' + selectedOption);
 								var locatin = window.location.href;
+								console.log('Current Location: ' + locatin);
 								var newLocatin = '';
 								
 								if (selectedOption != '') {
 									var params = new window.URLSearchParams(window.location.search);
 									var localeParam = params.get('locale');
+									console.log('Locale Param: ' + localeParam);
 									if(localeParam!=null){
 										var positionStart = locatin.indexOf('locale=')+7;
 										var positionEnd = positionStart+localeParam.length;

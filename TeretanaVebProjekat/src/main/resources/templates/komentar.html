@@ -2,25 +2,34 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<title>Termin</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="post" action="Komentari/Edit" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
 			<input type="hidden" name="id" th:value="${komentar.id}">
 			<table class="forma">
-				<caption>Termin</caption>
-				<tr><th>naziv:</th><td><input type="text" th:value="${komentar.tekst}" name="tekst"/></td></tr>
-				<tr><th>ocena:</th><td><input type="number" min="1" th:value="${komentar.ocena}" name="ocena"/></td></tr>
+				<caption th:text="#{komentar}"></caption>
+				<tr><th th:text="#{naziv}"></th><td><input type="text" th:value="${komentar.tekst}" name="tekst"/></td></tr>
+				<tr><th th:text="#{ocena}"></th><td><input type="number" min="1" th:value="${komentar.ocena}" name="ocena"/></td></tr>
 				<tr>
-					<th>datum i vreme:</th>
+					<th th:text="#{datumIVreme}"></th>
 					<td>
 						<input type="date" th:value="${#temporals.format(komentar.datumIVreme, 'yyyy-MM-dd')}" name="datum"/>&nbsp;
 						<input type="time" th:value="${#temporals.format(komentar.datumIVreme, 'HH:mm')}" name="vreme"/>
 					</td>
 				<tr>
-					<th>trening:</th>
+					<th th:text="#{treningMalim}"></th>
 					<td>
 						<select name="treningId">
 							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}" th:selected="${itTrening == komentar.trening}"></option>
@@ -28,75 +37,85 @@
 					</td>
 				</tr>
 				<tr>
-					<th>status komentara:</th>
+					<th th:text="#{status}"></th>
 					<td>
 						<select name="status">
-							<option value="naCekanju" th:selected="${#strings.equals(komentar.status, 'naCekanju')}">na cekanju</option>
-							<option value="odobren" th:selected="${#strings.equals(komentar.status, 'odobren')}">odobren</option>
-							<option value="nijeOdobren" th:selected="${#strings.equals(komentar.status, 'nijeOdobren')}">nije odobren</option>
+							<option value="naCekanju" th:selected="${#strings.equals(komentar.status, 'naCekanju')}">na cekanju - pending</option>
+							<option value="odobren" th:selected="${#strings.equals(komentar.status, 'odobren')}">odobren - approved</option>
+							<option value="nijeOdobren" th:selected="${#strings.equals(komentar.status, 'nijeOdobren')}">nije odobren - not approved</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<th>autor komentara:</th>
+					<th th:text="#{autorKomentara}"></th>
 					<td>
 						<select name="korisnik">
 							<option value="pera" th:selected="${#strings.equals(komentar.korisnik, 'pera')}">pera</option>
 							<option value="mika" th:selected="${#strings.equals(komentar.korisnik, 'mika')}">mika</option>
 							<option value="jova" th:selected="${#strings.equals(komentar.korisnik, 'jova')}">jova</option>
-							<option value="anonimno" th:selected="${#strings.equals(komentar.korisnik, 'anonimno')}">anonimno</option>
+							<option value="anonimno" th:selected="${#strings.equals(komentar.korisnik, 'anonimno')}">anonimno - anonymous</option>
 						</select>
 					</td>
 				</tr>
-				<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{izmeni}"/></td></tr>
 			</table>
 		</form>
 		<form method="post" action="Komentari/Delete" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
 			<input type="hidden" name="id" th:value="${komentar.id}">
 			<table class="forma">
-				<tr><th></th><td><input type="submit" value="Obrisi"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{obrisi}"/></td></tr>
 			</table>
 		</form>
 		<table class="forma" th:if="${session.prijavljeniKorisnik == null or not session.prijavljeniKorisnik.administrator}">
-			<caption>Termin</caption>
-				<tr><th>naziv:</th><td><input type="text" th:value="${komentar.tekst}" name="tekst"/></td></tr>
-				<tr><th>ocena:</th><td><input type="number" min="1" th:value="${komentar.ocena}" name="ocena"/></td></tr>
-				<tr>
-					<th>datum i vreme:</th>
-					<td>
-						<input type="date" th:value="${#temporals.format(komentar.datumIVreme, 'yyyy-MM-dd')}" name="datum"/>&nbsp;
-						<input type="time" th:value="${#temporals.format(komentar.datumIVreme, 'HH:mm')}" name="vreme"/>
-					</td>
-				<tr>
-					<th>trening:</th>
-					<td>
-						<select name="treningId">
-							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}" th:selected="${itTrening == komentar.trening}"></option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>status komentara</th>
-					<td>
-						<select name="status">
-							<option value="naCekanju" th:selected="${#strings.equals(komentar.status, 'naCekanju')}">na cekanju</option>
-							<option value="odobren" th:selected="${#strings.equals(komentar.status, 'odobren')}">odobren</option>
-							<option value="nijeOdobren" th:selected="${#strings.equals(komentar.status, 'nijeOdobren')}">nije odobren</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>autor komentara:</th>
-					<td>
-						<select name="korisnik">
-							<option value="pera" th:selected="${#strings.equals(komentar.korisnik, 'pera')}">pera</option>
-							<option value="mika" th:selected="${#strings.equals(komentar.korisnik, 'mika')}">mika</option>
-							<option value="jova" th:selected="${#strings.equals(komentar.korisnik, 'jova')}">jova</option>
-							<option value="anonimno" th:selected="${#strings.equals(komentar.korisnik, 'anonimno')}">anonimno</option>
-						</select>
-					</td>
-				</tr>
+			<caption th:text="#{komentar}"></caption>
+			<tr><th th:text="#{naziv}"></th><td><input type="text" th:value="${komentar.tekst}" name="tekst"/></td></tr>
+			<tr><th th:text="#{ocena}"></th><td><input type="number" min="1" th:value="${komentar.ocena}" name="ocena"/></td></tr>
+			<tr>
+				<th th:text="#{datumIVreme}"></th>
+				<td>
+					<input type="date" th:value="${#temporals.format(komentar.datumIVreme, 'yyyy-MM-dd')}" name="datum"/>&nbsp;
+					<input type="time" th:value="${#temporals.format(komentar.datumIVreme, 'HH:mm')}" name="vreme"/>
+				</td>
+			<tr>
+				<th th:text="#{treningMalim}"></th>
+				<td>
+					<select name="treningId">
+						<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}" th:selected="${itTrening == komentar.trening}"></option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th th:text="#{status}"></th>
+				<td>
+					<select name="status">
+						<option value="naCekanju" th:selected="${#strings.equals(komentar.status, 'naCekanju')}">na cekanju - pending</option>
+						<option value="odobren" th:selected="${#strings.equals(komentar.status, 'odobren')}">odobren - approved</option>
+						<option value="nijeOdobren" th:selected="${#strings.equals(komentar.status, 'nijeOdobren')}">nije odobren - not approved</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th th:text="#{autorKomentara}"></th>
+				<td>
+					<select name="korisnik">
+						<option value="pera" th:selected="${#strings.equals(komentar.korisnik, 'pera')}">pera</option>
+						<option value="mika" th:selected="${#strings.equals(komentar.korisnik, 'mika')}">mika</option>
+						<option value="jova" th:selected="${#strings.equals(komentar.korisnik, 'jova')}">jova</option>
+						<option value="anonimno" th:selected="${#strings.equals(komentar.korisnik, 'anonimno')}">anonimno - anonymous</option>
+					</select>
+				</td>
+			</tr>
 		</table>
-	</div>	
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('Komentari/Details?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

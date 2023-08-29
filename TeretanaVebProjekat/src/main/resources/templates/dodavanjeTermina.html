@@ -2,23 +2,32 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<title>Termin</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="post" action="Termini/Create">
 			<input type="hidden" name="id" value="1">
 			<table class="forma">
-				<caption>dodavanje termina</caption>
+				<caption th:text="#{dodavanjeTermina}"></caption>
 				<tr>
-					<th>datum i vreme:</th>
+					<th th:text="#{datumIVreme}"></th>
 					<td>
 						<input type="date" th:value="2020-04-01" name="datum"/>&nbsp;
 						<input type="time" value="18:00" name="vreme"/>
 					</td>
 				<tr>
-					<th>trening:</th>
+					<th th:text="#{treningMalim}"></th>
 					<td>
 						<select name="treningId">
 							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}"></option>
@@ -26,7 +35,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>sala:</th>
+					<th th:text="#{sala}"></th>
 					<td>
 						<select name="sala">
 							<option value="1">1</option>
@@ -35,12 +44,22 @@
 						</select>
 					</td>
 				</tr>
-				<tr><th></th><td><input type="submit" value="Dodaj"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{dodaj}"/></td></tr>
 			</table>
 		</form>
 		<ul>
-			<li><a href="Termini">povratak</a></li>
+			<li><a href="Termini" th:text="#{povratak}"></a></li>
 		</ul>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('Termini/Create?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

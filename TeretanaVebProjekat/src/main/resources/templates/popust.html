@@ -2,22 +2,41 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<title>Korisnik</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
-		<h2>Lista specijalnih datuma u 2022. godini, gde je moguce ostvariti popust na trening</h2>
+		<h2 th:text="#{prviRed}"></h2>
 	<ul>
-		<li>1, 2, 3. januar (Nova godina)</li>
-		<li>7. januar (Božić)</li>
-		<li>15. i 16. februar (Dan državnosti)</li>
-		<li>15, 16, 17, 18. april (Katolički Uskrs)</li>
-		<li>22, 23, 24, 25. april (Uskrs)</li>
-		<li>1, 2, 3. maj (Praznik rada)</li>
-		<li>11. novembar (Dan primirja u Prvom svetskom ratu)</li>
-		<li>25. decembar (Katolički Božić)</li>
+		<li th:text="#{drugiRed}"></li>
+		<li th:text="#{treciRed}"></li>
+		<li th:text="#{cetvrtiRed}"></li>
+		<li th:text="#{petiRed}"></li>
+		<li th:text="#{sestiRed}"></li>
+		<li th:text="#{sedmiRed}"></li>
+		<li th:text="#{osmiRed}"></li>
+		<li th:text="#{devetiRed}"></li>
 	</ul>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('Popusti?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

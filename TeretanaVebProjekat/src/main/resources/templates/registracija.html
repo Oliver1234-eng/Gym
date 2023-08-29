@@ -1,40 +1,59 @@
 <!DOCTYPE html>
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<title>Registracija</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="post" action="Korisnici/Register">
 			<table class="forma">
-				<caption>Registracija</caption>
-				<tr><th>korisnicko ime:</th><td><input type="text" name="korisnickoIme"/></td></tr>
-				<tr><th>lozinka:</th><td><input type="password" name="lozinka"/></td></tr>
-				<tr><th>ponovljena lozinka:</th><td><input type="password" name="ponovljenaLozinka"/></td></tr>
-				<tr><th>e-mail:</th><td><input type="text" name="email"/></td></tr>
-				<tr><th>ime:</th><td><input type="text" name="ime"/></td></tr>
-				<tr><th>prezime:</th><td><input type="text" name="prezime"/></td></tr>
+				<caption>Registracija - Register</caption>
+				<tr><th>korisnicko ime - username</th><td><input type="text" name="korisnickoIme"/></td></tr>
+				<tr><th>lozinka - password</th><td><input type="password" name="lozinka"/></td></tr>
+				<tr><th>ponovljena lozinka - repeated password</th><td><input type="password" name="ponovljenaLozinka"/></td></tr>
+				<tr><th>imejl - email</th><td><input type="text" name="email"/></td></tr>
+				<tr><th>ime - name</th><td><input type="text" name="ime"/></td></tr>
+				<tr><th>prezime - surname</th><td><input type="text" name="prezime"/></td></tr>
 				<tr>
-				<th>datum rodjenja:</th>
+				<th>datum rodjenja - date of birth</th>
 					<td>
 						<input type="date" th:value="2000-01-01" name="datumRodjenja"/>&nbsp;
 						<input type="time" value="12:00" name="vremeRodjenja"/>
 					</td>
 				<tr>
-				<tr><th>adresa:</th><td><input type="text" name="adresa"/></td></tr>
-				<tr><th>broj telefona:</th><td><input type="text" name="brojTelefona"/></td></tr>
+				<tr><th>adresa - address</th><td><input type="text" name="adresa"/></td></tr>
+				<tr><th>broj telefona - phone number</th><td><input type="text" name="brojTelefona"/></td></tr>
 				<tr>
-				<th>datum registracije:</th>
+				<th>datum registracije - date of register</th>
 					<td>
 						<input type="date" th:value="2000-01-01" name="datumRegistracije"/>&nbsp;
 						<input type="time" value="12:00" name="vremeRegistracije"/>
 					</td>
 				<tr>
-				<tr><th></th><td><input type="submit" value="Registracija"/></td></tr>
+				<tr><th></th><td><input type="submit" value="Registracija-Register"/></td></tr>
 			</table>
 		</form>
 		<p class="greska" th:text="${poruka}"></p>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('registracija.html?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

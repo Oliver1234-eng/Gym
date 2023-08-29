@@ -3,19 +3,28 @@
  <head>    
  	<meta charset="UTF-8">    
  	<base href="bURL">    
- 	<title>Dodaj clansku kartu</title>    
+ 	<title>Dodaj clansku kartu</title>
+	 <script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	 <script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
  	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>     
  </head>    
- <body>    
+ <body>
+ 	<span th:text="#{lang.change}"></span>
+ 	<select id="locales">
+	 	<option value=""></option>
+	 	<option value="sr" th:text="#{lang.ser}"></option>
+	 	<option value="en" th:text="#{lang.eng}"></option>
+	</select>
  	<div th:fragment="centralniDiv">    
  	<form method="post" action="ClanskeKarte/add">    
  		<table>    
- 			<caption>Clanska karta</caption> 
- 			<tr><th>popust:</th><td><input type="number"  min="5" value="5" name="popust"/></td></tr>   
- 			<tr><th>broj poena:</th><td><input type="number"  min="5" value="5" name="brojPoena"/></td></tr>
- 			<tr><th>Registarski broj:</th><td><input type="text" value="" name="registarskiBroj"/></td></tr>   
+ 			<caption th:text="#{clanskaKarta}"></caption>
+ 			<tr><th th:text="#{popustCena}"></th><td><input type="number"  min="5" value="5" name="popust"/></td></tr>
+ 			<tr><th th:text="#{brojPoena}"></th><td><input type="number"  min="5" value="5" name="brojPoena"/></td></tr>
+ 			<tr><th th:text="#{registarskiBroj}"></th><td><input type="text" value="" name="registarskiBroj"/></td></tr>
  			<tr>
-				<th>korisnik:</th>
+				<th th:text="#{vlasnik}"></th>
 				<td>
 					<select name="korisnik">
 						<option value="pera">pera</option>
@@ -25,22 +34,32 @@
 				</td>
 			</tr>
 			<tr>
-				<th>status clanske karte:</th>
+				<th th:text="#{status}"></th>
 				<td>
 					<select name="status">
-						<option value="prihvacen">prihvacen</option>
-						<option value="uObradi">u obradi</option>
-						<option value="odbijen">odbijen</option>
+						<option value="prihvacen">prihvacen - accepted</option>
+						<option value="uObradi">u obradi - in processing</option>
+						<option value="odbijen">odbijen - rejected</option>
 					</select>
 				</td>
 			</tr>     
- 			<tr><th></th><td><input type="submit" value="Dodaj"/></td>    
+ 			<tr><th></th><td><input type="submit" th:value="#{dodaj}"/></td>
  		</table>    
  	</form>
  	<ul>
-			<li><a href="ClanskeKarte">povratak</a></li>
+			<li><a href="ClanskeKarte" th:text="#{povratak}"></a></li>
 		</ul>
  	</div>
- 	<br/>  
+ 	<br/>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('ClanskeKarte/Create?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
  </body>  
  </html>  

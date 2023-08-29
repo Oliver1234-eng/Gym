@@ -2,49 +2,58 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviTabela.css"/>
 	<title>Izvestaji</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="get">
 			<table class="sortable">
-				<caption>Termini</caption>
+				<caption th:text="#{termini}"></caption>
 				<tr>
-					<th>r. br.</th>
-					<th>trening</th>
-					<th>trener</th>
-					<th>datum i vreme</th>
-					<th>broj zakazanih treninga</th>
-					<th>cena</th>
+					<th th:text="#{redniBroj}"></th>
+					<th th:text="#{treningMalim}"></th>
+					<th th:text="#{trener}"></th>
+					<th th:text="#{datumIVreme}"></th>
+					<th th:text="#{brojZakazanihTreninga}"></th>
+					<th th:text="#{cena}"></th>
 					<th></th>
 				</tr>
 				<tr>
 					<th></th>
 					<th>
 						<select name="treningId">
-							<option value="">odaberi</option>
+							<option value="">odaberi - choose</option>
 							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}" th:selected="${#strings.equals(itTrening.id, param.treningId)}"></option>
 						</select>
 					</th>
 					<th>
 						<select name="trener">
-							<option value="">odaberi</option>
+							<option value="">odaberi - choose</option>
 							<option value="trener1" th:selected="${#strings.equals(param.trener, 'trener1')}">trener 1</option>
 							<option value="trener2" th:selected="${#strings.equals(param.trener, 'trener2')}">trener 2</option>
 							<option value="trener3" th:selected="${#strings.equals(param.trener, 'trener3')}">trener 3</option>
 						</select>
 					</th>
 					<th>
-						od:<input type="date" th:value="${param.datumOd?: '2020-01-01'}" name="datumOd"/><input type="time" th:value="${param.vremeOd?: '08:00'}" name="vremeOd"/><br/>
-						do:<input type="date" th:value="${param.datumDo?: '3000-01-01'}" name="datumDo"/><input type="time" th:value="${param.vremeDo?: '23:00'}"  name="vremeDo"/>
+						<label th:text="#{od}"></label><input type="date" th:value="${param.datumOd?: '2020-01-01'}" name="datumOd"/><input type="time" th:value="${param.vremeOd?: '08:00'}" name="vremeOd"/><br/>
+						<label th:text="#{do}"></label><input type="date" th:value="${param.datumDo?: '3000-01-01'}" name="datumDo"/><input type="time" th:value="${param.vremeDo?: '23:00'}"  name="vremeDo"/>
 					</th>
 					<th><input type="number" th:value="${param.brojZakazanihTreninga?: ''}" min="1" name="brojZakazanihTreninga"/></th>
 					<th>
-						od:<input type="number" min="0" th:value="${param.cenaOd}?: '0'" name="cenaOd"/><br/>
-						do:<input type="number" min="0" th:value="${param.cenaDo}?: '2000'" name="cenaDo"/>
+						<label th:text="#{od}"></label><input type="number" min="0" th:value="${param.cenaOd}?: '0'" name="cenaOd"/><br/>
+						<label th:text="#{do}"></label><input type="number" min="0" th:value="${param.cenaDo}?: '2000'" name="cenaDo"/>
 					</th>
-					<th><input type="submit" value="Pretrazi"/></th>
+					<th><input type="submit" th:value="#{pretrazi}"/></th>
 				</tr>
 				<tr th:each="itIzvestaj, status: ${izvestaji}">
 					<td class="broj" th:value="${status.index}"></td>
@@ -58,8 +67,18 @@
 			</table>
 		</form>
 		<ul>
-			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Izvestaji/Create">dodavanje izvestaja</a></li>
+			<li th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}"><a href="Izvestaji/Create" th:text="#{dodavanjeNovogIzvestaja}"></a></li>
 		</ul>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('Izvestaji?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

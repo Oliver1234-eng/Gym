@@ -4,22 +4,31 @@
 		<meta charset="UTF-8">
 		<base th:href="@{/}">
 		<title>Treninzi</title>
+		<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+		<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/StiloviTabela.css"/>
 	</head>
 	<body>
+		<span th:text="#{lang.change}"></span>
+		<select id="locales">
+			<option value=""></option>
+			<option value="sr" th:text="#{lang.ser}"></option>
+			<option value="en" th:text="#{lang.eng}"></option>
+		</select>
 		<div th:fragment="centralniDiv">
 			<table class = "sortable">
-			<caption>Zeljeni treninzi</caption> 
+			<caption th:text="#{zeljeniTreninzi}"></caption>
 			<tr>
-					<th>naziv</th>
-					<th>trener</th>
-					<th>kratak opis</th>
-					<th>tip treninga</th>
-					<th>cena</th>
-					<th>vrstaTreninga</th>
-					<th>nivoTreninga</th>
-					<th>trajanje u minutima</th>
-					<th>prosecna ocena</th>
+					<th th:text="#{naziv}"></th>
+					<th th:text="#{trener}"></th>
+					<th th:text="#{kratakOpis}"></th>
+					<th th:text="#{tipTreninga}"></th>
+					<th th:text="#{cena}"></th>
+					<th th:text="#{vrstaTreninga}"></th>
+					<th th:text="#{nivoTreninga}"></th>
+					<th th:text="#{trajanje}"></th>
+					<th th:text="#{prosecnaOcena}"></th>
 					<th></th>
 			</tr>
 			
@@ -36,7 +45,7 @@
  				<td>
 					<form method="post" action="TreninziKorpa/zeljene/ukloni">
 						<input type="hidden" name="idTreninga" th:value="${itTreningKorpa.id}">
-						<input type="submit" value="Ukloni iz zeljenih">
+						<input type="submit" th:value="#{ukloniIzZeljenih}">
 					</form>
 				</td>  
  			</tr>
@@ -44,11 +53,21 @@
 		<br/>
 		<form method="post" action="ClanskeKarte/zakaziTreninge">
 			<table>
-			<caption>Zakazi treninge</caption>
-				<tr><th>Registarski broj clanske karte</th><td><input type="text" name="registarskiBroj"></td>
-				<tr><th></th><td><input type="submit" value="Izdaj"></td>
+			<caption th:text="#{zakaziTreninge}"></caption>
+				<tr><th th:text="#{registarskiBrojClanskeKarte}"></th><td><input type="text" name="registarskiBroj"></td>
+				<tr><th></th><td><input type="submit" th:value="#{zakazi}"></td>
 			</table>
 		</form>
 	</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#locales").change(function () {
+					var selectedOption = $('#locales').val();
+					if (selectedOption != ''){
+						window.location.replace('TreninziKorpa/zeljene?lang=' + selectedOption);
+					}
+				});
+			});
+		</script>
 	</body>
 </html>

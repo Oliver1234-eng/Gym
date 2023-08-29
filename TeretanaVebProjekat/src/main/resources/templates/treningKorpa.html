@@ -2,58 +2,77 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<title>Film</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="post" action="TreninziKorpa/edit" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
 			<input type="hidden" name="id" th:value="${treningKorpa.id}"/>
 			<table class="forma">
-				<caption>Trening</caption>
-				<tr><th>naziv:</th><td><input type="text" th:value="${treningKorpa.naziv}" name="naziv"/></td></tr>
-				<tr><th>trener:</th><td><input type="text" th:value="${treningKorpa.trener}" name="trener"/></td></tr>
-				<tr><th>kratak opis:</th><td><input type="text" th:value="${treningKorpa.kratakOpis}" name="kratakOpis"/></td></tr>
-				<tr><th>tip treninga:</th><td><input type="text" th:value="${treningKorpa.tipTreninga}" name="tipTreninga"/></td></tr>
-				<tr><th>cena:</th><td><input type="number" min="100" th:value="${treningKorpa.cena}" name="cena"/></td></tr>
-				<tr><th>vrsta treninga:</th><td><input type="text" th:value="${treningKorpa.vrstaTreninga}" name="vrstaTreninga"/></td></tr>
-				<tr><th>nivo treninga:</th><td><input type="text" th:value="${treningKorpa.nivoTreninga}" name="nivoTreninga"/></td></tr>
-				<tr><th>trajanje u minutima:</th><td><input type="number" min="60" th:value="${treningKorpa.trajanjeUMinutima}" name="trajanjeUMinutima"/></td></tr>
-				<tr><th>prosecna ocena:</th><td><input type="number" min="1" max="5" th:value="${treningKorpa.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
-				<tr><th></th><td><a th:href="Termini">termini</a></td></tr>
-				<tr><th></th><td><a th:href="Sale">sala</a></td></tr>
-				<tr><th></th><td><a th:href="Komentari">komentari</a></td></tr>
-				<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+				<caption th:text="#{trening}"></caption>
+				<tr><th th:text="#{naziv}"></th><td><input type="text" th:value="${treningKorpa.naziv}" name="naziv"/></td></tr>
+				<tr><th th:text="#{trener}"></th><td><input type="text" th:value="${treningKorpa.trener}" name="trener"/></td></tr>
+				<tr><th th:text="#{kratakOpis}"></th><td><input type="text" th:value="${treningKorpa.kratakOpis}" name="kratakOpis"/></td></tr>
+				<tr><th th:text="#{tipTreninga}"></th><td><input type="text" th:value="${treningKorpa.tipTreninga}" name="tipTreninga"/></td></tr>
+				<tr><th th:text="#{cena}"></th><td><input type="number" min="100" th:value="${treningKorpa.cena}" name="cena"/></td></tr>
+				<tr><th th:text="#{vrstaTreninga}"></th><td><input type="text" th:value="${treningKorpa.vrstaTreninga}" name="vrstaTreninga"/></td></tr>
+				<tr><th th:text="#{nivoTreninga}"></th><td><input type="text" th:value="${treningKorpa.nivoTreninga}" name="nivoTreninga"/></td></tr>
+				<tr><th th:text="#{trajanje}"></th><td><input type="number" min="60" th:value="${treningKorpa.trajanjeUMinutima}" name="trajanjeUMinutima"/></td></tr>
+				<tr><th th:text="#{prosecnaOcena}"></th><td><input type="number" min="1" max="5" th:value="${treningKorpa.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
+				<tr><th></th><td><a th:href="Termini" th:text="#{termini}"></a></td></tr>
+				<tr><th></th><td><a th:href="Sale" th:text="#{sala}"></a></td></tr>
+				<tr><th></th><td><a th:href="Komentari" th:text="#{komentari}"></a></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{izmeni}"/></td></tr>
 			</table>
 		</form>
 		<form method="post" action="TreninziKorpa/delete" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
 			<input type="hidden" name="id" th:value="${treningKorpa.id}"/>
 			<table class="forma">
-				<tr><th></th><td><input type="submit" value="Obrisi"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{obrisi}"/></td></tr>
 			</table>
 		</form>
 		<table class="forma" th:if="${session.prijavljeniKorisnik == null or not session.prijavljeniKorisnik.administrator}">
-			<caption>Trening</caption>
-				<tr><th>naziv:</th><td><input type="text" th:value="${treningKorpa.naziv}" name="naziv"/></td></tr>
-				<tr><th>trener:</th><td><input type="text" th:value="${treningKorpa.trener}" name="trener"/></td></tr>
-				<tr><th>kratak opis:</th><td><input type="text" th:value="${treningKorpa.kratakOpis}" name="kratakOpis"/></td></tr>
-				<tr><th>tip treninga:</th><td><input type="text" th:value="${treningKorpa.tipTreninga}" name="tipTreninga"/></td></tr>
-				<tr><th>cena:</th><td><input type="number" min="100" th:value="${treningKorpa.cena}" name="cena"/></td></tr>
-				<tr><th>vrsta treninga:</th><td><input type="text" th:value="${treningKorpa.vrstaTreninga}" name="vrstaTreninga"/></td></tr>
-				<tr><th>nivo treninga:</th><td><input type="text" th:value="${treningKorpa.nivoTreninga}" name="nivoTreninga"/></td></tr>
-				<tr><th>trajanje u minutima:</th><td><input type="number" min="60" th:value="${treningKorpa.trajanjeUMinutima}" name="trajanjeUMinutima"/></td></tr>
-				<tr><th>prosecna ocena:</th><td><input type="number" min="1" max="5" th:value="${treningKorpa.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
-				<tr><th></th><td><a th:href="Termini">termini</a></td></tr>
-				<tr><th></th><td><a th:href="Sale">sala</a></td></tr>
-				<tr><th></th><td><a th:href="Komentari">komentari</a></td></tr>
+			<caption th:text="#{trening}"></caption>
+			<tr><th th:text="#{naziv}"></th><td><input type="text" th:value="${treningKorpa.naziv}" name="naziv"/></td></tr>
+			<tr><th th:text="#{trener}"></th><td><input type="text" th:value="${treningKorpa.trener}" name="trener"/></td></tr>
+			<tr><th th:text="#{kratakOpis}"></th><td><input type="text" th:value="${treningKorpa.kratakOpis}" name="kratakOpis"/></td></tr>
+			<tr><th th:text="#{tipTreninga}"></th><td><input type="text" th:value="${treningKorpa.tipTreninga}" name="tipTreninga"/></td></tr>
+			<tr><th th:text="#{cena}"></th><td><input type="number" min="100" th:value="${treningKorpa.cena}" name="cena"/></td></tr>
+			<tr><th th:text="#{vrstaTreninga}"></th><td><input type="text" th:value="${treningKorpa.vrstaTreninga}" name="vrstaTreninga"/></td></tr>
+			<tr><th th:text="#{nivoTreninga}"></th><td><input type="text" th:value="${treningKorpa.nivoTreninga}" name="nivoTreninga"/></td></tr>
+			<tr><th th:text="#{trajanje}"></th><td><input type="number" min="60" th:value="${treningKorpa.trajanjeUMinutima}" name="trajanjeUMinutima"/></td></tr>
+			<tr><th th:text="#{prosecnaOcena}"></th><td><input type="number" min="1" max="5" th:value="${treningKorpa.prosecnaOcena}" name="prosecnaOcena"/></td></tr>
+			<tr><th></th><td><a th:href="Termini" th:text="#{termini}"></a></td></tr>
+			<tr><th></th><td><a th:href="Sale" th:text="#{sala}"></a></td></tr>
+			<tr><th></th><td><a th:href="Komentari" th:text="#{komentari}"></a></td></tr>
 		</table>
 		<form method="post" action="TreninziKorpa/zeljene/dodaj" th:if="${not treningKorpa.zakazan}">
 		<input type="hidden" name="idTreninga" th:value="${treningKorpa.id}">
 		<table>
-			<caption>Dodaj u zeljene treninge</caption>	
-			<tr><th></th><td><input type="submit" value="Dodaj"></td> 
+			<caption th:text="#{dodajUZeljeneTreninge}"></caption>
+			<tr><th></th><td><input type="submit" th:value="#{dodaj}"></td>
 		</table> 
 	</form>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('TreninziKorpa/Details?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

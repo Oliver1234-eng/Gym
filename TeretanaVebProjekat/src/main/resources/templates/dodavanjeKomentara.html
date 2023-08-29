@@ -3,24 +3,33 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<title>Komentar</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="post" action="Komentari/Create">
 			<input type="hidden" name="id" value="1">
 			<table class="forma">
-				<caption>dodavanje komentara</caption>
-				<tr><th>tekst:</th><td><input type="text" name="tekst"/></td></tr>
-				<tr><th>ocena:</th><td><input type="number"  min="1" value="5" max = "5" name="ocena"/></td></tr>
+				<caption th:text="#{dodavanjeKomentara}"></caption>
+				<tr><th th:text="#{tekst}"></th><td><input type="text" name="tekst"/></td></tr>
+				<tr><th th:text="#{ocena}"></th><td><input type="number"  min="1" value="5" max = "5" name="ocena"/></td></tr>
 				<tr>
-					<th>datum i vreme:</th>
+					<th th:text="#{datumIVreme}"></th>
 					<td>
 						<input type="date" th:value="2020-04-01" name="datum"/>&nbsp;
 						<input type="time" value="18:00" name="vreme"/>
 					</td>
 				<tr>
-					<th>trening:</th>
+					<th th:text="#{treningMalim}"></th>
 					<td>
 						<select name="treningId">
 							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}"></option>
@@ -28,32 +37,42 @@
 					</td>
 				</tr>
 				<tr>
-					<th>status komentara:</th>
+					<th th:text="#{status}"></th>
 					<td>
 						<select name="status">
-							<option value="naCekanju">na cekanju</option>
-							<option value="odobren">odobren</option>
-							<option value="nijeOdobren">nije odobren</option>
+							<option value="naCekanju">na cekanju - pending</option>
+							<option value="odobren">odobren - approved</option>
+							<option value="nijeOdobren">nije odobren - not approved</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<th>autor komentara:</th>
+					<th th:text="#{autorKomentara}"></th>
 					<td>
 						<select name="korisnik">
 							<option value="pera">pera</option>
 							<option value="mika">mika</option>
 							<option value="jova">jova</option>
-							<option value="anonimno">anonimno</option>
+							<option value="anonimno">anonimno - anonymous</option>
 						</select>
 					</td>
 				</tr>
-				<tr><th></th><td><input type="submit" value="Dodaj"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{dodaj}"/></td></tr>
 			</table>
 		</form>
 		<ul>
-			<li><a href="Komentari">povratak</a></li>
+			<li><a href="Komentari" th:text="#{povratak}"></a></li>
 		</ul>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('Komentari/Create?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

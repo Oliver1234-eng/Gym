@@ -2,25 +2,34 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}"  xmlns:th="http://www.thymeleaf.org">     
 	<head>     
 		<meta charset="UTF-8">     
-		<base th:href="@{/}"><!-- popuni href atribut vrednosšću context path-a -->
-		<title>Clanska karta</title>     
+		<base th:href="@{/}"><
+		<title>Clanska karta</title>
+		<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+		<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<link rel="stylesheet"  type="text/css"  href="css/StiloviTabela.css"/>      
 	 </head>     
-	 <body>   
+	 <body>
+	 <span th:text="#{lang.change}"></span>
+	 <select id="locales">
+		 <option value=""></option>
+		 <option value="sr" th:text="#{lang.ser}"></option>
+		 <option value="en" th:text="#{lang.eng}"></option>
+	 </select>
 	 	<div th:fragment="centralniDiv">
 	 	<form method="post" action="ClanskeKarte/edit" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
 	 	<input type="hidden" name="id" th:value="${clanskaKarta.id}"/>
 	 		<table>     
-	 			<caption>Clanska karta</caption> 
-	 			<tr><th>popust:</th><td><input type="number" min="5" th:value="${clanskaKarta.popust}" name="popust"/></td></tr>
-	 			<tr><th>broj poena:</th><td><input type="number" min="5" th:value="${clanskaKarta.brojPoena}" name="brojPoena"/></td></tr>    
+	 			<caption th:text="#{clanskaKarta}"></caption>
+	 			<tr><th th:text="#{popustCena}"></th><td><input type="number" min="5" th:value="${clanskaKarta.popust}" name="popust"/></td></tr>
+	 			<tr><th th:text="#{brojPoena}"></th><td><input type="number" min="5" th:value="${clanskaKarta.brojPoena}" name="brojPoena"/></td></tr>
 	 			<tr>     
-	 				<th>Registarski broj</th> 
+	 				<th th:text="#{registarskiBroj}"></th>
 	 				<td th:text="${clanskaKarta.registarskiBroj}"></td>     
 	 				  
 	 			</tr>
 	 			<tr>
-					<th>vlasnik:</th>
+					<th th:text="#{vlasnik}"></th>
 					<td>
 						<select name="korisnik">
 							<option value="pera" th:selected="${#strings.equals(clanskaKarta.korisnik, 'pera')}">pera</option>
@@ -30,7 +39,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>vrsta treninga:</th>
+					<th th:text="#{vrstaTreninga}"></th>
 					<td>
 						<select name="status">
 							<option value="prihvacen" th:selected="${#strings.equals(clanskaKarta.status, 'prihvacen')}">prihvacen</option>
@@ -39,28 +48,28 @@
 						</select>
 					</td>
 				</tr>
-				<tr><th></th><td><input type="submit" value="Izmeni"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{izmeni}"/></td></tr>
 	 		</table>
 	 		</form>
 	 		<form method="post" action="ClanskeKarte/delete" th:if="${session.prijavljeniKorisnik != null and session.prijavljeniKorisnik.administrator}">
 			<input type="hidden" name="id" th:value="${clanskaKarta.id}"/>
 			<table class="forma">
-				<tr><th></th><td><input type="submit" value="Obrisi"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{obrisi}"/></td></tr>
 			</table>
 		</form>
 	 		<table>     
-	 			<caption>Zakazani treninzi</caption>     
+	 			<caption th:text="#{zakazaniTreninzi}"></caption>
 	 			<tr>  
-	 				<th>r. br.</th>
-					<th>naziv</th>
-					<th>trener</th>
-					<th>kratak opis</th>
-					<th>tip treninga</th>
-					<th>cena</th>
-					<th>vrstaTreninga</th>
-					<th>nivoTreninga</th>
-					<th>trajanje u minutima</th>
-					<th>prosecna ocena</th>
+	 				<th th:text="#{redniBroj}"></th>
+					<th th:text="#{naziv}"></th>
+					<th th:text="#{trener}"></th>
+					<th th:text="#{kratakOpis}"></th>
+					<th th:text="#{tipTreninga}"></th>
+					<th th:text="#{cena}"></th>
+					<th th:text="#{vrstaTreninga}"></th>
+					<th th:text="#{nivoTreninga}"></th>
+					<th th:text="#{trajanje}"></th>
+					<th th:text="#{prosecnaOcena}"></th>
 					<th></th>   
 	 			</tr>
 	 			<tr th:each="itTreningKorpa, status: ${clanskaKarta.zakazaniTreninzi}">
@@ -73,15 +82,18 @@
 					<td th:text="${itTreningKorpa.nivoTreninga}"></td>
 					<td class="broj" th:text="${itTreningKorpa.trajanjeUMinutima}"></td>
 					<td class="broj" th:text="${itTreningKorpa.prosecnaOcena}"></td>
-<!-- 					<td>    
-	 					<form method="post" action="clanskeKarte/zakaziTreninge" >     
-	 						<input type="hidden"  name="idTreninga"  th:value="${itTreningKorpa.id}">
-							<input type="hidden" name="registarskiBroj" th:value="${clanskaKarta.registarskiBroj}">
-	 						<input type="submit"  value="Zakazi trening" >    
-	 					</form>    
-	 				</td> -->
 				</tr>
 	 		</table>
 	 	</div>
+	 <script type="text/javascript">
+		 $(document).ready(function() {
+			 $("#locales").change(function () {
+				 var selectedOption = $('#locales').val();
+				 if (selectedOption != ''){
+					 window.location.replace('ClanskeKarte/Details?lang=' + selectedOption);
+				 }
+			 });
+		 });
+	 </script>
 	 </body>   
  </html>

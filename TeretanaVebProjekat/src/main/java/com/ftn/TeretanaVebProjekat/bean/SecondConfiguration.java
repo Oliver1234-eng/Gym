@@ -17,7 +17,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
-public class SecondConfiguration {
+public class SecondConfiguration implements WebMvcConfigurer {
 
 	@Bean(name= {"memorijaAplikacije"}, 
 			initMethod="init", destroyMethod="destroy")
@@ -64,7 +64,6 @@ public class SecondConfiguration {
 		@Bean
 		public LocaleResolver localeResolver() {
 		    SessionLocaleResolver slr = new SessionLocaleResolver();
-		    //postavljanje default lokalizacije
 		    slr.setDefaultLocale(Locale.forLanguageTag("sr"));
 		    return slr;
 		}
@@ -74,8 +73,13 @@ public class SecondConfiguration {
 		@Bean
 		public LocaleChangeInterceptor localeChangeInterceptor() {
 		    LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-		    lci.setParamName("locale");
+		    lci.setParamName("lang");
 		    return lci;
+		}
+
+		@Override
+		public void addInterceptors(InterceptorRegistry registry) {
+			registry.addInterceptor(localeChangeInterceptor());
 		}
 		
 		//Restracija presretača se postiže dodavanjem presretača u InterceptorRegistry i  
@@ -140,4 +144,6 @@ public class SecondConfiguration {
 				}
 			}
 		}
+
+
 }

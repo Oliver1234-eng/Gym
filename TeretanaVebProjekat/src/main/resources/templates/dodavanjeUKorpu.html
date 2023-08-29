@@ -2,29 +2,48 @@
 <html th:replace="~{fragments/base.html :: layout(~{::title},~{::link},~{::centralniDiv})}" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
 	<title>Dodavanje treninga</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="post" action="TreninziKorpa/add">
 			<table class="forma">
-				<caption>Dodavanje treninga</caption>
-				<tr><th>naziv:</th><td><input type="text" name="naziv"/></td></tr>
-				<tr><th>trener:</th><td><input type="text" name="trener"/></td></tr>
-				<tr><th>kratak opis:</th><td><input type="text" name="kratakOpis"/></td></tr>
-				<tr><th>tip treninga:</th><td><input type="text" name="tipTreninga"/></td></tr>
-				<tr><th>cena:</th><td><input type="number"  min="100" value="500" name="cena"/></td></tr>
-				<tr><th>vrsta treninga:</th><td><input type="text" name="vrstaTreninga"/></td></tr>
-				<tr><th>nivo treninga:</th><td><input type="text" name="nivoTreninga"/></td></tr>
-				<tr><th>trajanje u minutima:</th><td><input type="number"  min="1" value="60" name="trajanjeUMinutima"/></td></tr>
-				<tr><th>prosecna ocena:</th><td><input type="number"  min="1" max="5" value="5" name="prosecnaOcena"/></td></tr>
-				<tr><th></th><td><input type="submit" value="Dodaj"/></td></tr>
+				<caption th:text="#{dodavanjeTreninga}"></caption>
+				<tr><th th:text="#{naziv}"></th><td><input type="text" name="naziv"/></td></tr>
+				<tr><th th:text="#{trener}"></th><td><input type="text" name="trener"/></td></tr>
+				<tr><th th:text="#{kratakOpis}"></th><td><input type="text" name="kratakOpis"/></td></tr>
+				<tr><th th:text="#{tipTreninga}"></th><td><input type="text" name="tipTreninga"/></td></tr>
+				<tr><th th:text="#{cena}"></th><td><input type="number"  min="100" value="500" name="cena"/></td></tr>
+				<tr><th th:text="#{vrstaTreninga}"></th><td><input type="text" name="vrstaTreninga"/></td></tr>
+				<tr><th th:text="#{nivoTreninga}"></th><td><input type="text" name="nivoTreninga"/></td></tr>
+				<tr><th th:text="#{trajanje}"></th><td><input type="number"  min="1" value="60" name="trajanjeUMinutima"/></td></tr>
+				<tr><th th:text="#{prosecnaOcena}"></th><td><input type="number"  min="1" max="5" value="5" name="prosecnaOcena"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{dodaj}"/></td></tr>
 			</table>
 		</form>
 		<ul>
-			<li><a href="TreninziKorpa">povratak</a></li>
+			<li><a href="TreninziKorpa" th:text="#{povratak}"></a></li>
 		</ul>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('TreninziKorpa/Create?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

@@ -3,16 +3,25 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="css/StiloviForma.css"/>
+	<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<title>Termin</title>
 </head>
 <body>
+	<span th:text="#{lang.change}"></span>
+	<select id="locales">
+		<option value=""></option>
+		<option value="sr" th:text="#{lang.ser}"></option>
+		<option value="en" th:text="#{lang.eng}"></option>
+	</select>
 	<div th:fragment="centralniDiv">
 		<form method="post" action="Tabele/Create">
 			<input type="hidden" name="id" value="1">
 			<table class="forma">
-				<caption>dodavanje tabele</caption>
+				<caption th:text="#{dodavanjeTabele}"></caption>
 				<tr>
-					<th>trening:</th>
+					<th th:text="#{treningMalim}"></th>
 					<td>
 						<select name="treningId">
 							<option th:each="itTrening: ${treninzi}" th:value="${itTrening.id}" th:text="${itTrening.naziv}"></option>
@@ -20,7 +29,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>korisnik:</th>
+					<th th:text="#{korisnik}"></th>
 					<td>
 						<select name="korisnik">
 							<option value="pera">pera</option>
@@ -29,19 +38,29 @@
 						</select>
 					</td>
 				</tr>
-				<tr><th>cena:</th><td><input type="number"  min="100" value="500" name="cena"/></td></tr>
+				<tr><th th:text="#{cena}"></th><td><input type="number"  min="100" value="500" name="cena"/></td></tr>
 				<tr>
-					<th>datum i vreme:</th>
+					<th th:text="#{datumIVreme}"></th>
 					<td>
 						<input type="date" th:value="2020-04-01" name="datum"/>&nbsp;
 						<input type="time" value="18:00" name="vreme"/>
 					</td>
-				<tr><th></th><td><input type="submit" value="Dodaj"/></td></tr>
+				<tr><th></th><td><input type="submit" th:value="#{dodaj}"/></td></tr>
 			</table>
 		</form>
 		<ul>
-			<li><a href="Tabele">povratak</a></li>
+			<li><a href="Tabele" th:text="#{povratak}"></a></li>
 		</ul>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").change(function () {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != ''){
+					window.location.replace('Tabele/Create?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
 </body>
 </html>
